@@ -7,7 +7,7 @@ class DavModule extends AApiModule
 	public function init() 
 	{
 		parent::init();
-		$this->oApiDavManager = $this->GetManager('');
+		$this->oApiDavManager = $this->GetManager();
 		$this->AddEntry('dav', 'EntryDav');
 		
 		$this->subscribeEvent('Calendar::GetCalendars::after', array($this, 'onAfterGetCalendars'));
