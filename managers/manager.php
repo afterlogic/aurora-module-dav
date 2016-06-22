@@ -223,7 +223,7 @@ class CApiDavManager extends AApiManager
 	{
 		$oSettings =& CApi::GetSettings();
 		$oSettings->SetConf('Common/EnableMobileSync', $bMobileSyncEnable);
-		return (bool) $oSettings->SaveToXml();
+		return (bool) $oSettings->Save();
 	}
 
 	/**

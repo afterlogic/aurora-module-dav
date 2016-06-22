@@ -98,7 +98,7 @@ class DavModule extends AApiModule
 		$bMobileSyncEnable = $this->getParamValue('MobileSyncEnable', false); 
 		$oSettings =& CApi::GetSettings();
 		$oSettings->SetConf('Common/EnableMobileSync', $bMobileSyncEnable);
-		return (bool) $oSettings->SaveToXml();
+		return (bool) $oSettings->Save();
 	}	
 	
 	public function TestConnection()
