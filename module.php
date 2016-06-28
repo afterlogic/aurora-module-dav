@@ -36,33 +36,27 @@ class DavModule extends AApiModule
 	
 	public function GetDavClient()
 	{
-		$mResult = false;
-		$oAccount = $this->getParamValue('Account', null); 
-		if ($oAccount && $oAccount instanceof CAccount)
-		{
-			$mResult = $this->oApiDavManager->GetDAVClient($oAccount);
-		}
-		return $mResult;
+		return $this->oApiDavManager->GetDAVClient(\CApi::getLogginedUserId());
 	}
 	
 	public function GetServerUrl()
 	{
 		return $this->oApiDavManager->getServerUrl(
-			$this->getParamValue('Account', null)
+			\CApi::getLogginedUserId()
 		);
 	}
 	
 	public function GetServerHost()
 	{
 		return $this->oApiDavManager->getServerHost(
-			$this->getParamValue('Account', null)
+			\CApi::getLogginedUserId()
 		);
 	}
 	
 	public function GetServerPort()
 	{
 		return $this->oApiDavManager->getServerPort(
-			$this->getParamValue('Account', null)
+			\CApi::getLogginedUserId()
 		);
 	}
 	
@@ -115,11 +109,9 @@ class DavModule extends AApiModule
 		);
 	}	
 	
-	public function GetVCardObject()
+	public function GetVCardObject($Data)
 	{
-		return $this->oApiDavManager->getVCardObject(
-			$this->getParamValue('Data', '')
-		);
+		return $this->oApiDavManager->getVCardObject($Data);
 	}	
 	
 	public function GetPublicUser()

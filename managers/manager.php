@@ -26,36 +26,36 @@ class CApiDavManager extends AApiManager
 	}
 
 	/**
-	 * @param CAccount $oAccount
+	 * @param int $iUserId
 	 * @return CDAVClient|false
 	 */
-	public function &GetDAVClient($oAccount)
+	public function &GetDAVClient($iUserId)
 	{
 		$mResult = false;
-		if (!isset($this->aDavClients[$oAccount->Email]))
+		if (!isset($this->aDavClients[$iUserId]))
 		{
-			$this->aDavClients[$oAccount->Email] = new CDAVClient(
-				$this->getServerUrl($oAccount), $oAccount->Email, $oAccount->IncomingMailPassword);
+			$this->aDavClients[$iUserId] = new CDAVClient(
+				$this->getServerUrl($iUserId), $iUserId, $iUserId);
 		}
 
-		if (isset($this->aDavClients[$oAccount->Email]))
+		if (isset($this->aDavClients[$iUserId]))
 		{
-			$mResult =& $this->aDavClients[$oAccount->Email];
+			$mResult =& $this->aDavClients[$iUserId];
 		}
 
 		return $mResult;
 	}
 
 	/**
-	 * @param CAccount $oAccount Default null
+	 * @param CAccount $iUserId Default null
 	 * 
 	 * @return string
 	 */
-	public function getServerUrl($oAccount = null)
+	public function getServerUrl($iUserId = null)
 	{
-		return rtrim($oAccount
-			? $oAccount->Domain->ExternalHostNameOfDAVServer
-			: \CApi::GetSettingsConf('WebMail/ExternalHostNameOfDAVServer'), '/');
+		// TODO: 
+		
+		return rtrim(\CApi::GetSettingsConf('WebMail/ExternalHostNameOfDAVServer'), '/');
 	}
 
 	/**
