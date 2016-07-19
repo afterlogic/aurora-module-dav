@@ -7,6 +7,9 @@ class DavModule extends AApiModule
 	public function init() 
 	{
 		parent::init();
+
+		$this->incClass('dav-client');
+		
 		$this->oApiDavManager = $this->GetManager();
 		$this->AddEntry('dav', 'EntryDav');
 		

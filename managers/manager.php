@@ -20,7 +20,6 @@ class CApiDavManager extends AApiManager
 	public function __construct(CApiGlobalManager &$oManager, $sForcedStorage = '', AApiModule $oModule = null)
 	{
 		parent::__construct('', $oManager, $oModule);
-		$this->incClass('dav-client');
 
 		$this->aDavClients = array();
 	}
