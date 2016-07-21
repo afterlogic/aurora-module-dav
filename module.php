@@ -4,6 +4,10 @@ class DavModule extends AApiModule
 {
 	public $oApiDavManager = null;
 	
+	protected $aSettingsMap = array(
+		'ExternalHostNameOfDAVServer' => array('', 'string')
+	);	
+	
 	public function init() 
 	{
 		parent::init();
@@ -14,6 +18,7 @@ class DavModule extends AApiModule
 		$this->AddEntry('dav', 'EntryDav');
 		
 		$this->subscribeEvent('Calendar::GetCalendars::after', array($this, 'onAfterGetCalendars'));
+		$this->subscribeEvent('MobileSync::GetInfo', array($this, 'onGetMobileSyncInfo'));
 	}
 	
 	public function EntryDav()
@@ -66,7 +71,7 @@ class DavModule extends AApiModule
 	public function GetPrincipalUrl()
 	{
 		return $this->oApiDavManager->getPrincipalUrl(
-			$this->getParamValue('Account', null)
+			\CApi::getLogginedUserId()
 		);
 	}
 
@@ -74,14 +79,14 @@ class DavModule extends AApiModule
 	public function IsUseSsl()
 	{
 		return $this->oApiDavManager->IsUseSsl(
-			$this->getParamValue('Account', null)
+			\CApi::getLogginedUserId()
 		);
 	}
 	
 	public function GetLogin()
 	{
 		return $this->oApiDavManager->getLogin(
-			$this->getParamValue('Account', null)
+			\CApi::getLogginedUserId()
 		);
 	}
 	
@@ -101,14 +106,14 @@ class DavModule extends AApiModule
 	public function TestConnection()
 	{
 		return $this->oApiDavManager->testConnection(
-			$this->getParamValue('Account', null)
+			\CApi::getLogginedUserId()
 		);
 	}	
 	
 	public function DeletePrincipal()
 	{
 		return $this->oApiDavManager->deletePrincipal(
-			$this->getParamValue('Account', null)
+			\CApi::getLogginedUserId()
 		);
 	}	
 	
@@ -143,5 +148,16 @@ class DavModule extends AApiModule
 		);		
 		
 		return ($mResult !== false && isset($mResult['id'])) ? $mResult['id'] : false;
+	}
+	
+    public function onGetMobileSyncInfo(&$aData)
+	{
+		$sDavLogin = $this->GetLogin();
+		$sDavServer = $this->GetServerUrl();
+		
+		$aData['EnableDav'] = true;
+		$aData['Dav']['Login'] = $sDavLogin;
+		$aData['Dav']['Server'] = $sDavServer;
+		$aData['Dav']['PrincipalUrl'] = $this->GetPrincipalUrl();
 	}
 }

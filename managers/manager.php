@@ -53,8 +53,7 @@ class CApiDavManager extends AApiManager
 	public function getServerUrl($iUserId = null)
 	{
 		// TODO: 
-		
-		return rtrim(\CApi::GetSettingsConf('WebMail/ExternalHostNameOfDAVServer'), '/');
+		return $this->oModule->getConfig('ExternalHostNameOfDAVServer', '/');		
 	}
 
 	/**
@@ -143,16 +142,16 @@ class CApiDavManager extends AApiManager
 	}
 
 	/**
-	 * @param CAccount $oAccount
+	 * @param int $iUserId
 	 * 
 	 * @return string
 	 */
-	public function getPrincipalUrl($oAccount)
+	public function getPrincipalUrl($iUserId)
 	{
 		$mResult = false;
 		try
 		{
-			$sServerUrl = $this->getServerUrl($oAccount);
+			$sServerUrl = $this->getServerUrl($iUserId);
 			if (!empty($sServerUrl))
 			{
 				$aUrlParts = parse_url($sServerUrl);
@@ -172,7 +171,7 @@ class CApiDavManager extends AApiManager
 
 					if ($this->getCalendarStorageType() === 'caldav' || $this->getContactsStorageType() === 'carddav')
 					{
-						$oDav =& $this->GetDAVClient($oAccount);
+						$oDav =& $this->GetDAVClient($iUserId);
 						if ($oDav && $oDav->Connect())
 						{
 							$mResult = $sServerUrl.$oDav->GetCurrentPrincipal();
@@ -180,7 +179,7 @@ class CApiDavManager extends AApiManager
 					}
 					else
 					{
-						$mResult = $sServerUrl . $sPath .'/principals/' . $oAccount->Email;
+						$mResult = $sServerUrl . $sPath .'/principals/' . $iUserId;
 					}
 				}
 			}
@@ -194,13 +193,13 @@ class CApiDavManager extends AApiManager
 	}
 
 	/**
-	 * @param CAccount $oAccount
+	 * @param int $iUserId
 	 * 
 	 * @return string
 	 */
-	public function getLogin($oAccount)
+	public function getLogin($iUserId)
 	{
-		return $oAccount->Email;
+		return $iUserId;
 	}
 
 	/**
