@@ -44,34 +44,34 @@ class DavModule extends AApiModule
 	
 	public function GetDavClient()
 	{
-		return $this->oApiDavManager->GetDAVClient(\CApi::getLogginedUserId());
+		return $this->oApiDavManager->GetDAVClient(\CApi::getAuthenticatedUserId());
 	}
 	
 	public function GetServerUrl()
 	{
 		return $this->oApiDavManager->getServerUrl(
-			\CApi::getLogginedUserId()
+			\CApi::getAuthenticatedUserId()
 		);
 	}
 	
 	public function GetServerHost()
 	{
 		return $this->oApiDavManager->getServerHost(
-			\CApi::getLogginedUserId()
+			\CApi::getAuthenticatedUserId()
 		);
 	}
 	
 	public function GetServerPort()
 	{
 		return $this->oApiDavManager->getServerPort(
-			\CApi::getLogginedUserId()
+			\CApi::getAuthenticatedUserId()
 		);
 	}
 	
 	public function GetPrincipalUrl()
 	{
 		return $this->oApiDavManager->getPrincipalUrl(
-			\CApi::getLogginedUserId()
+			\CApi::getAuthenticatedUserId()
 		);
 	}
 
@@ -79,14 +79,14 @@ class DavModule extends AApiModule
 	public function IsUseSsl()
 	{
 		return $this->oApiDavManager->IsUseSsl(
-			\CApi::getLogginedUserId()
+			\CApi::getAuthenticatedUserId()
 		);
 	}
 	
 	public function GetLogin()
 	{
 		return $this->oApiDavManager->getLogin(
-			\CApi::getLogginedUserId()
+			\CApi::getAuthenticatedUserId()
 		);
 	}
 	
@@ -106,14 +106,14 @@ class DavModule extends AApiModule
 	public function TestConnection()
 	{
 		return $this->oApiDavManager->testConnection(
-			\CApi::getLogginedUserId()
+			\CApi::getAuthenticatedUserId()
 		);
 	}	
 	
 	public function DeletePrincipal()
 	{
 		return $this->oApiDavManager->deletePrincipal(
-			\CApi::getLogginedUserId()
+			\CApi::getAuthenticatedUserId()
 		);
 	}	
 	
