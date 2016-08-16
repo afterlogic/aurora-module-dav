@@ -6,9 +6,9 @@ class DavModule extends AApiModule
 	
 	protected $aSettingsMap = array(
 		'ExternalHostNameOfDAVServer' => array('', 'string')
-	);	
+	);
 	
-	public function init() 
+	public function init()
 	{
 		parent::init();
 
@@ -21,135 +21,25 @@ class DavModule extends AApiModule
 		$this->subscribeEvent('MobileSync::GetInfo', array($this, 'onGetMobileSyncInfo'));
 	}
 	
-	public function EntryDav()
-	{
-		set_error_handler(function ($errno, $errstr, $errfile, $errline ) {
-			
-			throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
-		});
-
-		@set_time_limit(3000);
-
-		$sBaseUri = '/';
-		$oHttp = \MailSo\Base\Http::NewInstance();
-		if (false !== \strpos($oHttp->GetUrl(), 'index.php/dav/')) {
-			
-			$aPath = \trim($oHttp->GetPath(), '/\\ ');
-			$sBaseUri = (0 < \strlen($aPath) ? '/'.$aPath : '').'/index.php/dav/';
-		}
-		
-		\Afterlogic\DAV\Server::getInstance($sBaseUri)->exec();
-		return '';
-	}	
-	
-	public function GetDavClient()
-	{
-		return $this->oApiDavManager->GetDAVClient(\CApi::getAuthenticatedUserId());
-	}
-	
-	public function GetServerUrl()
-	{
-		return $this->oApiDavManager->getServerUrl(
-			\CApi::getAuthenticatedUserId()
-		);
-	}
-	
-	public function GetServerHost()
-	{
-		return $this->oApiDavManager->getServerHost(
-			\CApi::getAuthenticatedUserId()
-		);
-	}
-	
-	public function GetServerPort()
-	{
-		return $this->oApiDavManager->getServerPort(
-			\CApi::getAuthenticatedUserId()
-		);
-	}
-	
-	public function GetPrincipalUrl()
-	{
-		return $this->oApiDavManager->getPrincipalUrl(
-			\CApi::getAuthenticatedUserId()
-		);
-	}
-
-
-	public function IsUseSsl()
-	{
-		return $this->oApiDavManager->IsUseSsl(
-			\CApi::getAuthenticatedUserId()
-		);
-	}
-	
-	public function GetLogin()
-	{
-		return $this->oApiDavManager->getLogin(
-			\CApi::getAuthenticatedUserId()
-		);
-	}
-	
-	public function IsMobileSyncEnabled()
-	{
-		return $this->oApiDavManager->isMobileSyncEnabled();
-	}	
-	
-	public function SetMobileSyncEnable()
-	{
-		$bMobileSyncEnable = $this->getParamValue('MobileSyncEnable', false); 
-		$oSettings =& CApi::GetSettings();
-		$oSettings->SetConf('Common/EnableMobileSync', $bMobileSyncEnable);
-		return (bool) $oSettings->Save();
-	}	
-	
-	public function TestConnection()
-	{
-		return $this->oApiDavManager->testConnection(
-			\CApi::getAuthenticatedUserId()
-		);
-	}	
-	
-	public function DeletePrincipal()
-	{
-		return $this->oApiDavManager->deletePrincipal(
-			\CApi::getAuthenticatedUserId()
-		);
-	}	
-	
-	public function GetVCardObject($Data)
-	{
-		return $this->oApiDavManager->getVCardObject($Data);
-	}	
-	
-	public function GetPublicUser()
-	{
-		return \Afterlogic\DAV\Constants::DAV_PUBLIC_PRINCIPAL;
-	}
-	
+	/***** private functions *****/
+	/**
+	 * Writes in $aParameters DAV server URL.
+	 * @ignore
+	 * @param array $aParameters
+	 */
 	public function onAfterGetCalendars(&$aParameters)
 	{
-		if (isset($aParameters['@Result']) && $aParameters['@Result'] !== false) {
-			
+		if (isset($aParameters['@Result']) && $aParameters['@Result'] !== false)
+		{
 			$aParameters['@Result']['ServerUrl'] = $this->GetServerUrl();
 		}
 	}
 	
-	public function Login($Login, $Password)
-	{
-		$mResult = false;
-		$this->broadcastEvent('Login', array(
-			array(
-				'Login' => $Login,
-				'Password' => $Password,
-				'SignMe' =>false
-			),
-			&$mResult)
-		);		
-		
-		return ($mResult !== false && isset($mResult['id'])) ? $mResult['id'] : false;
-	}
-	
+	/**
+	 * Writes in $aData information about DAV server.
+	 * @ignore
+	 * @param array $aData
+	 */
     public function onGetMobileSyncInfo(&$aData)
 	{
 		$sDavLogin = $this->GetLogin();
@@ -160,4 +50,171 @@ class DavModule extends AApiModule
 		$aData['Dav']['Server'] = $sDavServer;
 		$aData['Dav']['PrincipalUrl'] = $this->GetPrincipalUrl();
 	}
+	/***** private functions *****/
+	
+	/***** public functions *****/
+	/**
+	 * @ignore
+	 * @return string
+	 */
+	public function EntryDav()
+	{
+		set_error_handler(function ($errno, $errstr, $errfile, $errline ) {
+			throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+		});
+
+		@set_time_limit(3000);
+
+		$sBaseUri = '/';
+		$oHttp = \MailSo\Base\Http::NewInstance();
+		if (false !== \strpos($oHttp->GetUrl(), 'index.php/dav/'))
+		{
+			$aPath = \trim($oHttp->GetPath(), '/\\ ');
+			$sBaseUri = (0 < \strlen($aPath) ? '/'.$aPath : '').'/index.php/dav/';
+		}
+		
+		\Afterlogic\DAV\Server::getInstance($sBaseUri)->exec();
+		return '';
+	}
+	
+	/**
+	 * Returns DAV client.
+	 * 
+	 * @return CDAVClient|false
+	 */
+	public function GetDavClient()
+	{
+		return $this->oApiDavManager->GetDAVClient(\CApi::getAuthenticatedUserId());
+	}
+	
+	/**
+	 * Returns VCARD object.
+	 * @param string|resource $Data
+	 * @return Document
+	 */
+	public function GetVCardObject($Data)
+	{
+		return $this->oApiDavManager->getVCardObject($Data);
+	}	
+	/***** public functions *****/
+	
+	/***** public functions might be called with web API *****/
+	/**
+	 * Returns DAV server URL.
+	 * @return string
+	 */
+	public function GetServerUrl()
+	{
+		return $this->oApiDavManager->getServerUrl(
+			\CApi::getAuthenticatedUserId()
+		);
+	}
+	
+	/**
+	 * Returns DAV server host.
+	 * @return string
+	 */
+	public function GetServerHost()
+	{
+		return $this->oApiDavManager->getServerHost(
+			\CApi::getAuthenticatedUserId()
+		);
+	}
+	
+	/**
+	 * Returns DAV server port.
+	 * @return int
+	 */
+	public function GetServerPort()
+	{
+		return $this->oApiDavManager->getServerPort(
+			\CApi::getAuthenticatedUserId()
+		);
+	}
+	
+	/**
+	 * Returns DAV principal URL.
+	 * @return string
+	 */
+	public function GetPrincipalUrl()
+	{
+		return $this->oApiDavManager->getPrincipalUrl(
+			\CApi::getAuthenticatedUserId()
+		);
+	}
+
+	/**
+	 * Returns **true** if connection to DAV should use SSL.
+	 * @return bool
+	 */
+	public function IsUseSsl()
+	{
+		return $this->oApiDavManager->IsUseSsl(
+			\CApi::getAuthenticatedUserId()
+		);
+	}
+	
+	/**
+	 * Returns DAV login.
+	 * @return string
+	 */
+	public function GetLogin()
+	{
+		return $this->oApiDavManager->getLogin(
+			\CApi::getAuthenticatedUserId()
+		);
+	}
+	
+	/**
+	 * Returns **true** if mobile sync enabled.
+	 * @return bool
+	 */
+	public function IsMobileSyncEnabled()
+	{
+		return $this->oApiDavManager->isMobileSyncEnabled();
+	}
+	
+	/**
+	 * Sets mobile sync enabled/disabled.
+	 * @param bool $MobileSyncEnable Indicates if mobile sync should be enabled.
+	 * @return bool
+	 */
+	public function SetMobileSyncEnable($MobileSyncEnable)
+	{
+		$oSettings =& CApi::GetSettings();
+		$oSettings->SetConf('Common/EnableMobileSync', $MobileSyncEnable);
+		return (bool) $oSettings->Save();
+	}
+	
+	/**
+	 * Tests connection and returns **true** if connection was successful.
+	 * @return bool
+	 */
+	public function TestConnection()
+	{
+		return $this->oApiDavManager->testConnection(
+			\CApi::getAuthenticatedUserId()
+		);
+	}
+	
+	/**
+	 * Deletes principal.
+	 * @return bool
+	 */
+	public function DeletePrincipal()
+	{
+		return $this->oApiDavManager->deletePrincipal(
+			\CApi::getAuthenticatedUserId()
+		);
+	}
+	
+	/**
+	 * Returns public user.
+	 * @return string
+	 */
+	public function GetPublicUser()
+	{
+		return \Afterlogic\DAV\Constants::DAV_PUBLIC_PRINCIPAL;
+	}
+	/***** public functions might be called with web API *****/
 }
