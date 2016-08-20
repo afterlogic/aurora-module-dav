@@ -105,6 +105,8 @@ class DavModule extends AApiModule
 	 */
 	public function GetServerUrl()
 	{
+		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
+		
 		return $this->oApiDavManager->getServerUrl(
 			\CApi::getAuthenticatedUserId()
 		);
@@ -116,6 +118,8 @@ class DavModule extends AApiModule
 	 */
 	public function GetServerHost()
 	{
+		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
+		
 		return $this->oApiDavManager->getServerHost(
 			\CApi::getAuthenticatedUserId()
 		);
@@ -127,6 +131,8 @@ class DavModule extends AApiModule
 	 */
 	public function GetServerPort()
 	{
+		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
+		
 		return $this->oApiDavManager->getServerPort(
 			\CApi::getAuthenticatedUserId()
 		);
@@ -138,6 +144,8 @@ class DavModule extends AApiModule
 	 */
 	public function GetPrincipalUrl()
 	{
+		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
+		
 		return $this->oApiDavManager->getPrincipalUrl(
 			\CApi::getAuthenticatedUserId()
 		);
@@ -149,6 +157,8 @@ class DavModule extends AApiModule
 	 */
 	public function IsUseSsl()
 	{
+		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
+		
 		return $this->oApiDavManager->IsUseSsl(
 			\CApi::getAuthenticatedUserId()
 		);
@@ -160,6 +170,8 @@ class DavModule extends AApiModule
 	 */
 	public function GetLogin()
 	{
+		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
+		
 		return $this->oApiDavManager->getLogin(
 			\CApi::getAuthenticatedUserId()
 		);
@@ -171,6 +183,8 @@ class DavModule extends AApiModule
 	 */
 	public function IsMobileSyncEnabled()
 	{
+		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
+		
 		return $this->oApiDavManager->isMobileSyncEnabled();
 	}
 	
@@ -181,6 +195,8 @@ class DavModule extends AApiModule
 	 */
 	public function SetMobileSyncEnable($MobileSyncEnable)
 	{
+		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
+		
 		$oSettings =& CApi::GetSettings();
 		$oSettings->SetConf('Common/EnableMobileSync', $MobileSyncEnable);
 		return (bool) $oSettings->Save();
@@ -192,6 +208,8 @@ class DavModule extends AApiModule
 	 */
 	public function TestConnection()
 	{
+		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
+		
 		return $this->oApiDavManager->testConnection(
 			\CApi::getAuthenticatedUserId()
 		);
@@ -203,6 +221,8 @@ class DavModule extends AApiModule
 	 */
 	public function DeletePrincipal()
 	{
+		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
+		
 		return $this->oApiDavManager->deletePrincipal(
 			\CApi::getAuthenticatedUserId()
 		);
@@ -214,6 +234,8 @@ class DavModule extends AApiModule
 	 */
 	public function GetPublicUser()
 	{
+		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
+		
 		return \Afterlogic\DAV\Constants::DAV_PUBLIC_PRINCIPAL;
 	}
 	/***** public functions might be called with web API *****/
