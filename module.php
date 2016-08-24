@@ -84,6 +84,8 @@ class DavModule extends AApiModule
 	 */
 	public function GetDavClient()
 	{
+		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
+		
 		return $this->oApiDavManager->GetDAVClient(\CApi::getAuthenticatedUserId());
 	}
 	
@@ -94,6 +96,8 @@ class DavModule extends AApiModule
 	 */
 	public function GetVCardObject($Data)
 	{
+		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
+		
 		return $this->oApiDavManager->getVCardObject($Data);
 	}	
 	/***** public functions *****/
