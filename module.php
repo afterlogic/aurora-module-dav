@@ -35,6 +35,21 @@ class DavModule extends AApiModule
 		}
 	}
 	
+	public function Login($Login, $Password)
+	{
+		$mResult = false;
+		$this->broadcastEvent('Login', array(
+			array (
+				'Login' => $Login,
+				'Password' => $Password,
+				'SignMe' => false
+			),
+			&$mResult
+		));
+
+		return $mResult;
+	}
+	
 	/**
 	 * Writes in $aData information about DAV server.
 	 * @ignore
