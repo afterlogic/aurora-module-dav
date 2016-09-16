@@ -8,6 +8,12 @@ class DavModule extends AApiModule
 		'ExternalHostNameOfDAVServer' => array('', 'string')
 	);
 	
+	/***** private functions *****/
+	/**
+	 * Initializes DAV Module.
+	 * 
+	 * @ignore
+	 */
 	public function init()
 	{
 		parent::init();
@@ -21,9 +27,9 @@ class DavModule extends AApiModule
 		$this->subscribeEvent('MobileSync::GetInfo', array($this, 'onGetMobileSyncInfo'));
 	}
 	
-	/***** private functions *****/
 	/**
 	 * Writes in $aParameters DAV server URL.
+	 * 
 	 * @ignore
 	 * @param array $aParameters
 	 */
@@ -35,23 +41,9 @@ class DavModule extends AApiModule
 		}
 	}
 	
-	public function Login($Login, $Password)
-	{
-		$mResult = false;
-		$this->broadcastEvent('Login', array(
-			array (
-				'Login' => $Login,
-				'Password' => $Password,
-				'SignMe' => false
-			),
-			&$mResult
-		));
-
-		return $mResult;
-	}
-	
 	/**
 	 * Writes in $aData information about DAV server.
+	 * 
 	 * @ignore
 	 * @param array $aData
 	 */
@@ -106,6 +98,7 @@ class DavModule extends AApiModule
 	
 	/**
 	 * Returns VCARD object.
+	 * 
 	 * @param string|resource $Data
 	 * @return Document
 	 */
@@ -119,7 +112,31 @@ class DavModule extends AApiModule
 	
 	/***** public functions might be called with web API *****/
 	/**
+	 * Broadcasts Login event to attempt to authenticate user. Method is called from mobile devices when dav-URL for syncronization is opened.
+	 * 
+	 * @param string $Login Account login.
+	 * @param string $Password Account password.
+	 * 
+	 * @return boolean
+	 */
+	public function Login($Login, $Password)
+	{
+		$mResult = false;
+		$this->broadcastEvent('Login', array(
+			array (
+				'Login' => $Login,
+				'Password' => $Password,
+				'SignMe' => false
+			),
+			&$mResult
+		));
+
+		return $mResult;
+	}
+	
+	/**
 	 * Returns DAV server URL.
+	 * 
 	 * @return string
 	 */
 	public function GetServerUrl()
@@ -133,6 +150,7 @@ class DavModule extends AApiModule
 	
 	/**
 	 * Returns DAV server host.
+	 * 
 	 * @return string
 	 */
 	public function GetServerHost()
@@ -146,6 +164,7 @@ class DavModule extends AApiModule
 	
 	/**
 	 * Returns DAV server port.
+	 * 
 	 * @return int
 	 */
 	public function GetServerPort()
@@ -159,6 +178,7 @@ class DavModule extends AApiModule
 	
 	/**
 	 * Returns DAV principal URL.
+	 * 
 	 * @return string
 	 */
 	public function GetPrincipalUrl()
@@ -172,6 +192,7 @@ class DavModule extends AApiModule
 
 	/**
 	 * Returns **true** if connection to DAV should use SSL.
+	 * 
 	 * @return bool
 	 */
 	public function IsUseSsl()
@@ -185,6 +206,7 @@ class DavModule extends AApiModule
 	
 	/**
 	 * Returns DAV login.
+	 * 
 	 * @return string
 	 */
 	public function GetLogin()
@@ -198,6 +220,7 @@ class DavModule extends AApiModule
 	
 	/**
 	 * Returns **true** if mobile sync enabled.
+	 * 
 	 * @return bool
 	 */
 	public function IsMobileSyncEnabled()
@@ -209,6 +232,7 @@ class DavModule extends AApiModule
 	
 	/**
 	 * Sets mobile sync enabled/disabled.
+	 * 
 	 * @param bool $MobileSyncEnable Indicates if mobile sync should be enabled.
 	 * @return bool
 	 */
@@ -223,6 +247,7 @@ class DavModule extends AApiModule
 	
 	/**
 	 * Tests connection and returns **true** if connection was successful.
+	 * 
 	 * @return bool
 	 */
 	public function TestConnection()
@@ -236,6 +261,7 @@ class DavModule extends AApiModule
 	
 	/**
 	 * Deletes principal.
+	 * 
 	 * @return bool
 	 */
 	public function DeletePrincipal()
@@ -249,6 +275,7 @@ class DavModule extends AApiModule
 	
 	/**
 	 * Returns public user.
+	 * 
 	 * @return string
 	 */
 	public function GetPublicUser()
