@@ -72,14 +72,12 @@ class DavModule extends AApiModule
 
 		@set_time_limit(3000);
 
-		$sBaseUri = '/';
 		$oHttp = \MailSo\Base\Http::NewInstance();
-		if (false !== \strpos($oHttp->GetUrl(), 'index.php/dav/'))
+		if (false !== \strpos($oHttp->GetUrl(), '/?dav/'))
 		{
 			$aPath = \trim($oHttp->GetPath(), '/\\ ');
-			$sBaseUri = (0 < \strlen($aPath) ? '/'.$aPath : '').'/index.php/dav/';
+			$sBaseUri = (0 < \strlen($aPath) ? '/'.$aPath : '').'/?dav/';
 		}
-		
 		\Afterlogic\DAV\Server::getInstance($sBaseUri)->exec();
 		return '';
 	}
