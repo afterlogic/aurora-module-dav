@@ -5,7 +5,7 @@
 /**
  * @package Dav
  */
-class CApiDavManager extends AApiManager
+class CApiDavManager extends AApiManagerWithStorage
 {
 	/**
 	 * @var array
@@ -19,7 +19,7 @@ class CApiDavManager extends AApiManager
 	 */
 	public function __construct(CApiGlobalManager &$oManager, $sForcedStorage = '', AApiModule $oModule = null)
 	{
-		parent::__construct('', $oManager, $oModule);
+		parent::__construct('', $oManager, $sForcedStorage, $oModule);
 
 		$this->aDavClients = array();
 	}
@@ -257,4 +257,26 @@ class CApiDavManager extends AApiManager
 	{
 		return \Sabre\VObject\Reader::read($sData, \Sabre\VObject\Reader::OPTION_IGNORE_INVALID_LINES);
 	}
+	
+	/**
+	 * Creates tables required for module work by executing create.sql file.
+	 * 
+	 * @return boolean
+	 */
+	public function createTablesFromFile()
+	{
+		$bResult = true;
+		
+		try
+		{
+			$sFilePath = dirname(__FILE__) . '/storages/db/sql/create.sql';
+			$bResult = $this->oStorage->executeSqlFile($sFilePath);
+		}
+		catch (CApiBaseException $oException)
+		{
+			$this->setLastException($oException);
+		}
+
+		return $bResult;
+	}	
 }

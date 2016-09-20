@@ -25,6 +25,7 @@ class DavModule extends AApiModule
 		
 		$this->subscribeEvent('Calendar::GetCalendars::after', array($this, 'onAfterGetCalendars'));
 		$this->subscribeEvent('MobileSync::GetInfo', array($this, 'onGetMobileSyncInfo'));
+		$this->subscribeEvent('Core::CreateTables::after', array($this, 'onAfterCreateTables'));
 	}
 	
 	/**
@@ -283,4 +284,14 @@ class DavModule extends AApiModule
 		return \Afterlogic\DAV\Constants::DAV_PUBLIC_PRINCIPAL;
 	}
 	/***** public functions might be called with web API *****/
+	
+	/**
+	 * Creates tables required for module work. Called by event subscribe.
+	 * 
+	 * @param array $aParams Parameters
+	 */
+	public function onAfterCreateTables($aParams)
+	{
+		$aParams['@Result'] = $this->oApiDavManager->createTablesFromFile();
+	}	
 }
