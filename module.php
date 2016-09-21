@@ -1,4 +1,20 @@
 <?php
+/*
+ * @copyright Copyright (c) 2016, Afterlogic Corp.
+ * @license AGPL-3.0
+ *
+ * This code is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License, version 3,
+ * as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License, version 3,
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
+ */
 
 class DavModule extends AApiModule
 {
@@ -58,6 +74,17 @@ class DavModule extends AApiModule
 		$aData['Dav']['Server'] = $sDavServer;
 		$aData['Dav']['PrincipalUrl'] = $this->GetPrincipalUrl();
 	}
+	
+	/**
+	 * Creates tables required for module work. Called by event subscribe.
+	 * 
+	 * @ignore
+	 * @param array $aParams Parameters
+	 */
+	public function onAfterCreateTables($aParams)
+	{
+		$aParams['@Result'] = $this->oApiDavManager->createTablesFromFile();
+	}	
 	/***** private functions *****/
 	
 	/***** public functions *****/
@@ -284,14 +311,4 @@ class DavModule extends AApiModule
 		return \Afterlogic\DAV\Constants::DAV_PUBLIC_PRINCIPAL;
 	}
 	/***** public functions might be called with web API *****/
-	
-	/**
-	 * Creates tables required for module work. Called by event subscribe.
-	 * 
-	 * @param array $aParams Parameters
-	 */
-	public function onAfterCreateTables($aParams)
-	{
-		$aParams['@Result'] = $this->oApiDavManager->createTablesFromFile();
-	}	
 }
