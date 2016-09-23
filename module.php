@@ -137,6 +137,39 @@ class DavModule extends AApiModule
 	
 	/***** public functions might be called with web API *****/
 	/**
+	 * Obtaines list of module settings for authenticated user.
+	 * 
+	 * @return array
+	 */
+	public function GetAppData()
+	{
+		\CApi::checkUserRoleIsAtLeast(\EUserRole::Anonymous);
+		
+		return array(
+			'ExternalHostNameOfDAVServer' => $this->getConfig('ExternalHostNameOfDAVServer', ''),
+		);
+	}
+	
+	/**
+	 * Updates module's settings - saves them to config.json file.
+	 * 
+	 * @param string $ExternalHostNameOfDAVServer
+	 * @return boolean
+	 */
+	public function UpdateSettings($ExternalHostNameOfDAVServer)
+	{
+		\CApi::checkUserRoleIsAtLeast(\EUserRole::TenantAdmin);
+		
+		if (!empty($ExternalHostNameOfDAVServer))
+		{
+			$this->setConfig('ExternalHostNameOfDAVServer', $ExternalHostNameOfDAVServer);
+			$this->saveModuleConfig();
+			return true;
+		}
+		
+		return false;
+	}
+	/**
 	 * Broadcasts Login event to attempt to authenticate user. Method is called from mobile devices when dav-URL for syncronization is opened.
 	 * 
 	 * @param string $Login Account login.
