@@ -139,6 +139,44 @@ class DavModule extends AApiModule
 	
 	/***** public functions might be called with web API *****/
 	/**
+	 * @api {post} ?/Api/ GetAppData
+	 * @apiName GetAppData
+	 * @apiGroup Dav
+	 * @apiDescription Obtaines list of module settings for authenticated user.
+	 * 
+	 * @apiParam {string=Dav} Module Module name.
+	 * @apiParam {string=GetAppData} Method Method name.
+	 * @apiParam {string} AuthToken Auth token.
+	 * 
+	 * @apiParamExample {json} Request-Example:
+	 * {
+	 *	Module: 'Dav',
+	 *	Method: 'GetAppData',
+	 *	AuthToken: 'token_value'
+	 * }
+	 * 
+	 * @apiSuccess {string} Module Module name.
+	 * @apiSuccess {string} Method Method name.
+	 * @apiSuccess {mixed} Result Object in case of success, otherwise - false.
+	 * @apiSuccess {string} Result.ExternalHostNameOfDAVServer External host name of DAV server.
+	 * @apiSuccess {int} [ErrorCode] Error code.
+	 * 
+	 * @apiSuccessExample {json} Success response example:
+	 * {
+	 *	Module: 'Dav',
+	 *	Method: 'GetAppData',
+	 *	Result: [{ExternalHostNameOfDAVServer: 'host_value'}]
+	 * }
+	 * 
+	 * @apiSuccessExample {json} Error response example:
+	 * {
+	 *	Module: 'Dav',
+	 *	Method: 'GetAppData',
+	 *	Result: false,
+	 *	ErrorCode: 102
+	 * }
+	 */
+	/**
 	 * Obtaines list of module settings for authenticated user.
 	 * 
 	 * @return array
@@ -153,10 +191,49 @@ class DavModule extends AApiModule
 	}
 	
 	/**
+	 * @api {post} ?/Api/ UpdateSettings
+	 * @apiName UpdateSettings
+	 * @apiGroup Dav
+	 * @apiDescription Updates module's settings - saves them to config.json file.
+	 * 
+	 * @apiParam {string=Dav} Module Module name.
+	 * @apiParam {string=UpdateSettings} Method Method name.
+	 * @apiParam {string} AuthToken Auth token.
+	 * @apiParam {string} ExternalHostNameOfDAVServer External host name of DAV server.
+	 * 
+	 * @apiParamExample {json} Request-Example:
+	 * {
+	 *	Module: 'Dav',
+	 *	Method: 'UpdateSettings',
+	 *	AuthToken: 'token_value',
+	 *  ExternalHostNameOfDAVServer: 'host_value'
+	 * }
+	 * 
+	 * @apiSuccess {string} Module Module name.
+	 * @apiSuccess {string} Method Method name.
+	 * @apiSuccess {bool} Result Indicates if settings were updated successfully.
+	 * @apiSuccess {int} [ErrorCode] Error code.
+	 * 
+	 * @apiSuccessExample {json} Success response example:
+	 * {
+	 *	Module: 'Dav',
+	 *	Method: 'UpdateSettings',
+	 *	Result: true
+	 * }
+	 * 
+	 * @apiSuccessExample {json} Error response example:
+	 * {
+	 *	Module: 'Dav',
+	 *	Method: 'UpdateSettings',
+	 *	Result: false,
+	 *	ErrorCode: 102
+	 * }
+	 */
+	/**
 	 * Updates module's settings - saves them to config.json file.
 	 * 
-	 * @param string $ExternalHostNameOfDAVServer
-	 * @return boolean
+	 * @param string $ExternalHostNameOfDAVServer External host name of DAV server.
+	 * @return bool
 	 */
 	public function UpdateSettings($ExternalHostNameOfDAVServer)
 	{
@@ -171,13 +248,55 @@ class DavModule extends AApiModule
 		
 		return false;
 	}
+	
+	/**
+	 * @api {post} ?/Api/ Login
+	 * @apiName Login
+	 * @apiGroup Dav
+	 * @apiDescription Broadcasts Login event to attempt to authenticate user. Method is called from mobile devices when dav-URL for syncronization is opened.
+	 * 
+	 * @apiParam {string=Dav} Module Module name.
+	 * @apiParam {string=Login} Method Method name.
+	 * @apiParam {string} AuthToken Auth token.
+	 * @apiParam {string} Login Account login.
+	 * @apiParam {string} Password Account password.
+	 * 
+	 * @apiParamExample {json} Request-Example:
+	 * {
+	 *	Module: 'Dav',
+	 *	Method: 'Login',
+	 *	AuthToken: 'token_value',
+	 *  Login: 'login_value',
+	 *  Password: 'password_value'
+	 * }
+	 * 
+	 * @apiSuccess {string} Module Module name.
+	 * @apiSuccess {string} Method Method name.
+	 * @apiSuccess {bool} Result Indicates if logging in was successful.
+	 * @apiSuccess {int} [ErrorCode] Error code.
+	 * 
+	 * @apiSuccessExample {json} Success response example:
+	 * {
+	 *	Module: 'Dav',
+	 *	Method: 'Login',
+	 *	Result: true
+	 * }
+	 * 
+	 * @apiSuccessExample {json} Error response example:
+	 * {
+	 *	Module: 'Dav',
+	 *	Method: 'Login',
+	 *	Result: false,
+	 *	ErrorCode: 102
+	 * }
+	 */
 	/**
 	 * Broadcasts Login event to attempt to authenticate user. Method is called from mobile devices when dav-URL for syncronization is opened.
 	 * 
 	 * @param string $Login Account login.
 	 * @param string $Password Account password.
 	 * 
-	 * @return boolean
+	 * @return bool
 	 */
 	public function Login($Login, $Password)
 	{
@@ -195,6 +314,43 @@ class DavModule extends AApiModule
 	}
 	
 	/**
+	 * @api {post} ?/Api/ GetServerUrl
+	 * @apiName GetServerUrl
+	 * @apiGroup Dav
+	 * @apiDescription Returns DAV server URL.
+	 * 
+	 * @apiParam {string=Dav} Module Module name.
+	 * @apiParam {string=GetServerUrl} Method Method name.
+	 * @apiParam {string} AuthToken Auth token.
+	 * 
+	 * @apiParamExample {json} Request-Example:
+	 * {
+	 *	Module: 'Dav',
+	 *	Method: 'GetServerUrl',
+	 *	AuthToken: 'token_value'
+	 * }
+	 * 
+	 * @apiSuccess {string} Module Module name.
+	 * @apiSuccess {string} Method Method name.
+	 * @apiSuccess {mixed} Result DAV server URL in case of success, otherwise - false.
+	 * @apiSuccess {int} [ErrorCode] Error code.
+	 * 
+	 * @apiSuccessExample {json} Success response example:
+	 * {
+	 *	Module: 'Dav',
+	 *	Method: 'GetServerUrl',
+	 *	Result: 'url_value'
+	 * }
+	 * 
+	 * @apiSuccessExample {json} Error response example:
+	 * {
+	 *	Module: 'Dav',
+	 *	Method: 'GetServerUrl',
+	 *	Result: false,
+	 *	ErrorCode: 102
+	 * }
+	 */
+	/**
 	 * Returns DAV server URL.
 	 * 
 	 * @return string
@@ -209,6 +365,43 @@ class DavModule extends AApiModule
 	}
 	
 	/**
+	 * @api {post} ?/Api/ GetServerHost
+	 * @apiName GetServerHost
+	 * @apiGroup Dav
+	 * @apiDescription Returns DAV server host.
+	 * 
+	 * @apiParam {string=Dav} Module Module name.
+	 * @apiParam {string=GetServerHost} Method Method name.
+	 * @apiParam {string} AuthToken Auth token.
+	 * 
+	 * @apiParamExample {json} Request-Example:
+	 * {
+	 *	Module: 'Dav',
+	 *	Method: 'GetServerHost',
+	 *	AuthToken: 'token_value'
+	 * }
+	 * 
+	 * @apiSuccess {string} Module Module name.
+	 * @apiSuccess {string} Method Method name.
+	 * @apiSuccess {mixed} Result DAV server host in case of success, otherwise - false.
+	 * @apiSuccess {int} [ErrorCode] Error code.
+	 * 
+	 * @apiSuccessExample {json} Success response example:
+	 * {
+	 *	Module: 'Dav',
+	 *	Method: 'GetServerHost',
+	 *	Result: 'host_value'
+	 * }
+	 * 
+	 * @apiSuccessExample {json} Error response example:
+	 * {
+	 *	Module: 'Dav',
+	 *	Method: 'GetServerHost',
+	 *	Result: false,
+	 *	ErrorCode: 102
+	 * }
+	 */
+	/**
 	 * Returns DAV server host.
 	 * 
 	 * @return string
@@ -222,6 +415,43 @@ class DavModule extends AApiModule
 		);
 	}
 	
+	/**
+	 * @api {post} ?/Api/ GetServerPort
+	 * @apiName GetServerPort
+	 * @apiGroup Dav
+	 * @apiDescription Returns DAV server port.
+	 * 
+	 * @apiParam {string=Dav} Module Module name.
+	 * @apiParam {string=GetServerPort} Method Method name.
+	 * @apiParam {string} AuthToken Auth token.
+	 * 
+	 * @apiParamExample {json} Request-Example:
+	 * {
+	 *	Module: 'Dav',
+	 *	Method: 'GetServerPort',
+	 *	AuthToken: 'token_value'
+	 * }
+	 * 
+	 * @apiSuccess {string} Module Module name.
+	 * @apiSuccess {string} Method Method name.
+	 * @apiSuccess {mixed} Result DAV server post in case of success, otherwise - false.
+	 * @apiSuccess {int} [ErrorCode] Error code.
+	 * 
+	 * @apiSuccessExample {json} Success response example:
+	 * {
+	 *	Module: 'Dav',
+	 *	Method: 'GetServerPort',
+	 *	Result: 'port_value'
+	 * }
+	 * 
+	 * @apiSuccessExample {json} Error response example:
+	 * {
+	 *	Module: 'Dav',
+	 *	Method: 'GetServerPort',
+	 *	Result: false,
+	 *	ErrorCode: 102
+	 * }
+	 */
 	/**
 	 * Returns DAV server port.
 	 * 
