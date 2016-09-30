@@ -310,6 +310,17 @@ class DavModule extends AApiModule
 			&$mResult
 		));
 		
+		if (isset($mResult['id']))
+		{
+			$oManagerApi = \CApi::GetSystemManager('eav', 'db');
+			$oEntity = $oManagerApi->getEntityById((int) $mResult['id']);
+			$mResult = $oEntity->sUUID;
+		}
+		else 
+		{
+			$mResult = false;
+		}
+		
 		return $mResult;
 	}
 	
@@ -503,9 +514,9 @@ class DavModule extends AApiModule
 	{
 		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
 		
-		return $this->oApiDavManager->getLogin(
-			\CApi::getAuthenticatedUserId()
-		);
+		$oManagerApi = \CApi::GetSystemManager('eav', 'db');
+		$oEntity = $oManagerApi->getEntityById((int) \CApi::getAuthenticatedUserId());
+		return $oEntity->sUUID;
 	}
 	
 	/**
