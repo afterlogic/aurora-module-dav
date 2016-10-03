@@ -157,7 +157,7 @@ class DavModule extends AApiModule
 	 * 
 	 * @apiSuccess {string} Module Module name.
 	 * @apiSuccess {string} Method Method name.
-	 * @apiSuccess {mixed} Result Object in case of success, otherwise - false.
+	 * @apiSuccess {mixed} Result Object in case of success, otherwise **false**.
 	 * @apiSuccess {string} Result.ExternalHostNameOfDAVServer External host name of DAV server.
 	 * @apiSuccess {int} [ErrorCode] Error code.
 	 * 
@@ -199,14 +199,17 @@ class DavModule extends AApiModule
 	 * @apiParam {string=Dav} Module Module name.
 	 * @apiParam {string=UpdateSettings} Method Method name.
 	 * @apiParam {string} AuthToken Auth token.
-	 * @apiParam {string} ExternalHostNameOfDAVServer External host name of DAV server.
+	 * @apiParam {string} Parameters JSON.stringified object <br>
+	 * {<br>
+	 * &emsp; **ExternalHostNameOfDAVServer** *string* External host name of DAV server.<br>
+	 * }
 	 * 
 	 * @apiParamExample {json} Request-Example:
 	 * {
 	 *	Module: 'Dav',
 	 *	Method: 'UpdateSettings',
 	 *	AuthToken: 'token_value',
-	 *  ExternalHostNameOfDAVServer: 'host_value'
+	 *	Parameters: '{ ExternalHostNameOfDAVServer: "host_value" }'
 	 * }
 	 * 
 	 * @apiSuccess {string} Module Module name.
@@ -258,16 +261,18 @@ class DavModule extends AApiModule
 	 * @apiParam {string=Dav} Module Module name.
 	 * @apiParam {string=Login} Method Method name.
 	 * @apiParam {string} AuthToken Auth token.
-	 * @apiParam {string} Login Account login.
-	 * @apiParam {string} Password Account password.
+	 * @apiParam {string} Parameters JSON.stringified object <br>
+	 * {<br>
+	 * &emsp; **Login** *string* Account login.<br>
+	 * &emsp; **Password** *string* Account password.<br>
+	 * }
 	 * 
 	 * @apiParamExample {json} Request-Example:
 	 * {
 	 *	Module: 'Dav',
 	 *	Method: 'Login',
 	 *	AuthToken: 'token_value',
-	 *  Login: 'login_value',
-	 *  Password: 'password_value'
+	 *	Parameters: '{ Login: "login_value", Password: "password_value" }'
 	 * }
 	 * 
 	 * @apiSuccess {string} Module Module name.
@@ -295,7 +300,6 @@ class DavModule extends AApiModule
 	 * 
 	 * @param string $Login Account login.
 	 * @param string $Password Account password.
-	 * 
 	 * @return bool
 	 */
 	public function Login($Login, $Password)
@@ -343,7 +347,7 @@ class DavModule extends AApiModule
 	 * 
 	 * @apiSuccess {string} Module Module name.
 	 * @apiSuccess {string} Method Method name.
-	 * @apiSuccess {mixed} Result DAV server URL in case of success, otherwise - false.
+	 * @apiSuccess {mixed} Result DAV server URL in case of success, otherwise **false**.
 	 * @apiSuccess {int} [ErrorCode] Error code.
 	 * 
 	 * @apiSuccessExample {json} Success response example:
@@ -394,7 +398,7 @@ class DavModule extends AApiModule
 	 * 
 	 * @apiSuccess {string} Module Module name.
 	 * @apiSuccess {string} Method Method name.
-	 * @apiSuccess {mixed} Result DAV server host in case of success, otherwise - false.
+	 * @apiSuccess {mixed} Result DAV server host in case of success, otherwise **false**.
 	 * @apiSuccess {int} [ErrorCode] Error code.
 	 * 
 	 * @apiSuccessExample {json} Success response example:
@@ -445,7 +449,7 @@ class DavModule extends AApiModule
 	 * 
 	 * @apiSuccess {string} Module Module name.
 	 * @apiSuccess {string} Method Method name.
-	 * @apiSuccess {mixed} Result DAV server post in case of success, otherwise - false.
+	 * @apiSuccess {mixed} Result DAV server post in case of success, otherwise **false**.
 	 * @apiSuccess {int} [ErrorCode] Error code.
 	 * 
 	 * @apiSuccessExample {json} Success response example:
