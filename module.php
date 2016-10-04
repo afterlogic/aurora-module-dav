@@ -490,9 +490,12 @@ class DavModule extends AApiModule
 	{
 		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
 		
-		return $this->oApiDavManager->getPrincipalUrl(
-			\CApi::getAuthenticatedUserId()
-		);
+		$oUser = \CApi::getAuthenticatedUser();
+		if($oUser)
+		{
+			$sUUID = $oUser->sUUID;
+		}
+		return $this->oApiDavManager->getPrincipalUrl($sUUID);
 	}
 	
 	/**
