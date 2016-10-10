@@ -52,11 +52,11 @@ class DavModule extends AApiModule
 	 * @ignore
 	 * @param array $aParameters
 	 */
-	public function onAfterGetCalendars(&$aParameters)
+	public function onAfterGetCalendars(&$aParameters, &$mResult)
 	{
-		if (isset($aParameters['@Result']) && $aParameters['@Result'] !== false)
+		if (isset($mResult) && $mResult !== false)
 		{
-			$aParameters['@Result']['ServerUrl'] = $this->GetServerUrl();
+			$mResult['ServerUrl'] = $this->GetServerUrl();
 		}
 	}
 	
@@ -82,10 +82,11 @@ class DavModule extends AApiModule
 	 * 
 	 * @ignore
 	 * @param array $aParams Parameters
+	 * @param mixed $mResult
 	 */
-	public function onAfterCreateTables($aParams)
+	public function onAfterCreateTables($aParams, &$mResult)
 	{
-		$aParams['@Result'] = $this->oApiDavManager->createTablesFromFile();
+		$mResult = $this->oApiDavManager->createTablesFromFile();
 	}
 	/***** private functions *****/
 	
