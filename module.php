@@ -155,25 +155,30 @@ class DavModule extends AApiModule
 	 *	AuthToken: 'token_value'
 	 * }
 	 * 
-	 * @apiSuccess {string} Module Module name.
-	 * @apiSuccess {string} Method Method name.
-	 * @apiSuccess {mixed} Result Object in case of success, otherwise **false**.
-	 * @apiSuccess {string} Result.ExternalHostNameOfDAVServer External host name of DAV server.
-	 * @apiSuccess {int} [ErrorCode] Error code.
+	 * @apiSuccess {object[]} Result Array of response objects.
+	 * @apiSuccess {string} Result.Module Module name.
+	 * @apiSuccess {string} Result.Method Method name.
+	 * @apiSuccess {mixed} Result.Result Object in case of success, otherwise **false**.
+	 * @apiSuccess {string} Result.Result.ExternalHostNameOfDAVServer External host name of DAV server.
+	 * @apiSuccess {int} [Result.ErrorCode] Error code.
 	 * 
 	 * @apiSuccessExample {json} Success response example:
 	 * {
-	 *	Module: 'Dav',
-	 *	Method: 'GetAppData',
-	 *	Result: [{ExternalHostNameOfDAVServer: 'host_value'}]
+	 *	Result: [{
+	 *		Module: 'Dav',
+	 *		Method: 'GetAppData',
+	 *		Result: [{ExternalHostNameOfDAVServer: 'host_value'}]
+	 *	}]
 	 * }
 	 * 
 	 * @apiSuccessExample {json} Error response example:
 	 * {
-	 *	Module: 'Dav',
-	 *	Method: 'GetAppData',
-	 *	Result: false,
-	 *	ErrorCode: 102
+	 *	Result: [{
+	 *		Module: 'Dav',
+	 *		Method: 'GetAppData',
+	 *		Result: false,
+	 *		ErrorCode: 102
+	 *	}]
 	 * }
 	 */
 	/**
@@ -212,24 +217,29 @@ class DavModule extends AApiModule
 	 *	Parameters: '{ ExternalHostNameOfDAVServer: "host_value" }'
 	 * }
 	 * 
-	 * @apiSuccess {string} Module Module name.
-	 * @apiSuccess {string} Method Method name.
-	 * @apiSuccess {bool} Result Indicates if settings were updated successfully.
-	 * @apiSuccess {int} [ErrorCode] Error code.
+	 * @apiSuccess {object[]} Result Array of response objects.
+	 * @apiSuccess {string} Result.Module Module name.
+	 * @apiSuccess {string} Result.Method Method name.
+	 * @apiSuccess {bool} Result.Result Indicates if settings were updated successfully.
+	 * @apiSuccess {int} [Result.ErrorCode] Error code.
 	 * 
 	 * @apiSuccessExample {json} Success response example:
 	 * {
-	 *	Module: 'Dav',
-	 *	Method: 'UpdateSettings',
-	 *	Result: true
+	 *	Result: [{
+	 *		Module: 'Dav',
+	 *		Method: 'UpdateSettings',
+	 *		Result: true
+	 *	}]
 	 * }
 	 * 
 	 * @apiSuccessExample {json} Error response example:
 	 * {
-	 *	Module: 'Dav',
-	 *	Method: 'UpdateSettings',
-	 *	Result: false,
-	 *	ErrorCode: 102
+	 *	Result: [{
+	 *		Module: 'Dav',
+	 *		Method: 'UpdateSettings',
+	 *		Result: false,
+	 *		ErrorCode: 102
+	 *	}]
 	 * }
 	 */
 	/**
@@ -275,24 +285,29 @@ class DavModule extends AApiModule
 	 *	Parameters: '{ Login: "login_value", Password: "password_value" }'
 	 * }
 	 * 
-	 * @apiSuccess {string} Module Module name.
-	 * @apiSuccess {string} Method Method name.
-	 * @apiSuccess {bool} Result Indicates if logging in was successful.
-	 * @apiSuccess {int} [ErrorCode] Error code.
+	 * @apiSuccess {object[]} Result Array of response objects.
+	 * @apiSuccess {string} Result.Module Module name.
+	 * @apiSuccess {string} Result.Method Method name.
+	 * @apiSuccess {bool} Result.Result Indicates if logging in was successful.
+	 * @apiSuccess {int} [Result.ErrorCode] Error code.
 	 * 
 	 * @apiSuccessExample {json} Success response example:
 	 * {
-	 *	Module: 'Dav',
-	 *	Method: 'Login',
-	 *	Result: true
+	 *	Result: [{
+	 *		Module: 'Dav',
+	 *		Method: 'Login',
+	 *		Result: true
+	 *	}]
 	 * }
 	 * 
 	 * @apiSuccessExample {json} Error response example:
 	 * {
-	 *	Module: 'Dav',
-	 *	Method: 'Login',
-	 *	Result: false,
-	 *	ErrorCode: 102
+	 *	Result: [{
+	 *		Module: 'Dav',
+	 *		Method: 'Login',
+	 *		Result: false,
+	 *		ErrorCode: 102
+	 *	}]
 	 * }
 	 */
 	/**
@@ -345,24 +360,29 @@ class DavModule extends AApiModule
 	 *	AuthToken: 'token_value'
 	 * }
 	 * 
-	 * @apiSuccess {string} Module Module name.
-	 * @apiSuccess {string} Method Method name.
-	 * @apiSuccess {mixed} Result DAV server URL in case of success, otherwise **false**.
-	 * @apiSuccess {int} [ErrorCode] Error code.
+	 * @apiSuccess {object[]} Result Array of response objects.
+	 * @apiSuccess {string} Result.Module Module name.
+	 * @apiSuccess {string} Result.Method Method name.
+	 * @apiSuccess {mixed} Result.Result DAV server URL in case of success, otherwise **false**.
+	 * @apiSuccess {int} [Result.ErrorCode] Error code.
 	 * 
 	 * @apiSuccessExample {json} Success response example:
 	 * {
-	 *	Module: 'Dav',
-	 *	Method: 'GetServerUrl',
-	 *	Result: 'url_value'
+	 *	Result: [{
+	 *		Module: 'Dav',
+	 *		Method: 'GetServerUrl',
+	 *		Result: 'url_value'
+	 *	}]
 	 * }
 	 * 
 	 * @apiSuccessExample {json} Error response example:
 	 * {
-	 *	Module: 'Dav',
-	 *	Method: 'GetServerUrl',
-	 *	Result: false,
-	 *	ErrorCode: 102
+	 *	Result: [{
+	 *		Module: 'Dav',
+	 *		Method: 'GetServerUrl',
+	 *		Result: false,
+	 *		ErrorCode: 102
+	 *	}]
 	 * }
 	 */
 	/**
@@ -396,24 +416,29 @@ class DavModule extends AApiModule
 	 *	AuthToken: 'token_value'
 	 * }
 	 * 
-	 * @apiSuccess {string} Module Module name.
-	 * @apiSuccess {string} Method Method name.
-	 * @apiSuccess {mixed} Result DAV server host in case of success, otherwise **false**.
-	 * @apiSuccess {int} [ErrorCode] Error code.
+	 * @apiSuccess {object[]} Result Array of response objects.
+	 * @apiSuccess {string} Result.Module Module name.
+	 * @apiSuccess {string} Result.Method Method name.
+	 * @apiSuccess {mixed} Result.Result DAV server host in case of success, otherwise **false**.
+	 * @apiSuccess {int} [Result.ErrorCode] Error code.
 	 * 
 	 * @apiSuccessExample {json} Success response example:
 	 * {
-	 *	Module: 'Dav',
-	 *	Method: 'GetServerHost',
-	 *	Result: 'host_value'
+	 *	Result: [{
+	 *		Module: 'Dav',
+	 *		Method: 'GetServerHost',
+	 *		Result: 'host_value'
+	 *	}]
 	 * }
 	 * 
 	 * @apiSuccessExample {json} Error response example:
 	 * {
-	 *	Module: 'Dav',
-	 *	Method: 'GetServerHost',
-	 *	Result: false,
-	 *	ErrorCode: 102
+	 *	Result: [{
+	 *		Module: 'Dav',
+	 *		Method: 'GetServerHost',
+	 *		Result: false,
+	 *		ErrorCode: 102
+	 *	}]
 	 * }
 	 */
 	/**
@@ -447,24 +472,29 @@ class DavModule extends AApiModule
 	 *	AuthToken: 'token_value'
 	 * }
 	 * 
-	 * @apiSuccess {string} Module Module name.
-	 * @apiSuccess {string} Method Method name.
-	 * @apiSuccess {mixed} Result DAV server post in case of success, otherwise **false**.
-	 * @apiSuccess {int} [ErrorCode] Error code.
+	 * @apiSuccess {object[]} Result Array of response objects.
+	 * @apiSuccess {string} Result.Module Module name.
+	 * @apiSuccess {string} Result.Method Method name.
+	 * @apiSuccess {mixed} Result.Result DAV server post in case of success, otherwise **false**.
+	 * @apiSuccess {int} [Result.ErrorCode] Error code.
 	 * 
 	 * @apiSuccessExample {json} Success response example:
 	 * {
-	 *	Module: 'Dav',
-	 *	Method: 'GetServerPort',
-	 *	Result: 'port_value'
+	 *	Result: [{
+	 *		Module: 'Dav',
+	 *		Method: 'GetServerPort',
+	 *		Result: 'port_value'
+	 *	}]
 	 * }
 	 * 
 	 * @apiSuccessExample {json} Error response example:
 	 * {
-	 *	Module: 'Dav',
-	 *	Method: 'GetServerPort',
-	 *	Result: false,
-	 *	ErrorCode: 102
+	 *	Result: [{
+	 *		Module: 'Dav',
+	 *		Method: 'GetServerPort',
+	 *		Result: false,
+	 *		ErrorCode: 102
+	 *	}]
 	 * }
 	 */
 	/**
