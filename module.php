@@ -140,19 +140,19 @@ class DavModule extends AApiModule
 	
 	/***** public functions might be called with web API *****/
 	/**
-	 * @api {post} ?/Api/ GetAppData
-	 * @apiName GetAppData
+	 * @api {post} ?/Api/ GetSettings
+	 * @apiName GetSettings
 	 * @apiGroup Dav
 	 * @apiDescription Obtaines list of module settings for authenticated user.
 	 * 
 	 * @apiParam {string=Dav} Module Module name.
-	 * @apiParam {string=GetAppData} Method Method name.
+	 * @apiParam {string=GetSettings} Method Method name.
 	 * @apiParam {string} AuthToken Auth token.
 	 * 
 	 * @apiParamExample {json} Request-Example:
 	 * {
 	 *	Module: 'Dav',
-	 *	Method: 'GetAppData',
+	 *	Method: 'GetSettings',
 	 *	AuthToken: 'token_value'
 	 * }
 	 * 
@@ -167,7 +167,7 @@ class DavModule extends AApiModule
 	 * {
 	 *	Result: [{
 	 *		Module: 'Dav',
-	 *		Method: 'GetAppData',
+	 *		Method: 'GetSettings',
 	 *		Result: [{ExternalHostNameOfDAVServer: 'host_value'}]
 	 *	}]
 	 * }
@@ -176,7 +176,7 @@ class DavModule extends AApiModule
 	 * {
 	 *	Result: [{
 	 *		Module: 'Dav',
-	 *		Method: 'GetAppData',
+	 *		Method: 'GetSettings',
 	 *		Result: false,
 	 *		ErrorCode: 102
 	 *	}]
@@ -187,7 +187,7 @@ class DavModule extends AApiModule
 	 * 
 	 * @return array
 	 */
-	public function GetAppData()
+	public function GetSettings()
 	{
 		\CApi::checkUserRoleIsAtLeast(\EUserRole::Anonymous);
 		
