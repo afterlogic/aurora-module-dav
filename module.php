@@ -140,11 +140,14 @@ class DavModule extends AApiModule
 	
 	/***** public functions might be called with web API *****/
 	/**
+	 * @apiDefine Dav Dav Module
+	 * Integrate SabreDav framework into Aurora platform
+	 */
+	
+	/**
 	 * @api {post} ?/Api/ GetSettings
 	 * @apiName GetSettings
 	 * @apiGroup Dav
-	 * @apiDefine Dav Module
-	 * Integrate SabreDav framework into Aurora platform
 	 * @apiDescription Obtaines list of module settings for authenticated user.
 	 * 
 	 * @apiParam {string=Dav} Module Module name.
