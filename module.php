@@ -152,7 +152,7 @@ class DavModule extends AApiModule
 	 * 
 	 * @apiParam {string=Dav} Module Module name.
 	 * @apiParam {string=GetSettings} Method Method name.
-	 * @apiParam {string} AuthToken Auth token.
+	 * @apiParam {string} [AuthToken] Auth token.
 	 * 
 	 * @apiParamExample {json} Request-Example:
 	 * {
@@ -276,7 +276,6 @@ class DavModule extends AApiModule
 	 * 
 	 * @apiParam {string=Dav} Module Module name.
 	 * @apiParam {string=Login} Method Method name.
-	 * @apiParam {string} AuthToken Auth token.
 	 * @apiParam {string} Parameters JSON.stringified object <br>
 	 * {<br>
 	 * &emsp; **Login** *string* Account login.<br>
@@ -287,7 +286,6 @@ class DavModule extends AApiModule
 	 * {
 	 *	Module: 'Dav',
 	 *	Method: 'Login',
-	 *	AuthToken: 'token_value',
 	 *	Parameters: '{ Login: "login_value", Password: "password_value" }'
 	 * }
 	 * 
