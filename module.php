@@ -326,14 +326,15 @@ class DavModule extends AApiModule
 	public function Login($Login, $Password)
 	{
 		$mResult = false;
-		$this->broadcastEvent('Login', array(
+		$this->broadcastEvent(
+			'Login', 
 			array (
 				'Login' => $Login,
 				'Password' => $Password,
 				'SignMe' => false
 			),
-			&$mResult
-		));
+			$mResult
+		);
 		
 		if (isset($mResult['id']))
 		{
