@@ -50,9 +50,9 @@ class DavModule extends AApiModule
 	 * Writes in $aParameters DAV server URL.
 	 * 
 	 * @ignore
-	 * @param array $aParameters
+	 * @param array $aArgs
 	 */
-	public function onAfterGetCalendars(&$aParameters, &$mResult)
+	public function onAfterGetCalendars(&$aArgs, &$mResult)
 	{
 		if (isset($mResult) && $mResult !== false)
 		{
@@ -64,27 +64,27 @@ class DavModule extends AApiModule
 	 * Writes in $aData information about DAV server.
 	 * 
 	 * @ignore
-	 * @param array $aData
+	 * @param array $aArgs
 	 */
-    public function onGetMobileSyncInfo(&$aData)
+    public function onGetMobileSyncInfo(&$aArgs)
 	{
 		$sDavLogin = $this->GetLogin();
 		$sDavServer = $this->GetServerUrl();
 		
-		$aData['EnableDav'] = true;
-		$aData['Dav']['Login'] = $sDavLogin;
-		$aData['Dav']['Server'] = $sDavServer;
-		$aData['Dav']['PrincipalUrl'] = $this->GetPrincipalUrl();
+		$aArgs['EnableDav'] = true;
+		$aArgs['Dav']['Login'] = $sDavLogin;
+		$aArgs['Dav']['Server'] = $sDavServer;
+		$aArgs['Dav']['PrincipalUrl'] = $this->GetPrincipalUrl();
 	}
 	
 	/**
 	 * Creates tables required for module work. Called by event subscribe.
 	 * 
 	 * @ignore
-	 * @param array $aParams Parameters
+	 * @param array $aArgs Parameters
 	 * @param mixed $mResult
 	 */
-	public function onAfterCreateTables($aParams, &$mResult)
+	public function onAfterCreateTables($aArgs, &$mResult)
 	{
 		$mResult = $this->oApiDavManager->createTablesFromFile();
 	}
@@ -323,14 +323,15 @@ class DavModule extends AApiModule
 	 */
 	public function Login($Login, $Password)
 	{
+		$aArgs = array (
+			'Login' => $Login,
+			'Password' => $Password,
+			'SignMe' => false
+		);
 		$mResult = false;
 		$this->broadcastEvent(
 			'Login', 
-			array (
-				'Login' => $Login,
-				'Password' => $Password,
-				'SignMe' => false
-			),
+			$aArgs,
 			$mResult
 		);
 		
