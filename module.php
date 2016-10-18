@@ -64,17 +64,17 @@ class DavModule extends AApiModule
 	 * Writes in $aData information about DAV server.
 	 * 
 	 * @ignore
-	 * @param array $aArgs
+	 * @param array $mResult
 	 */
-    public function onGetMobileSyncInfo(&$aArgs)
+    public function onGetMobileSyncInfo($aArgs, &$mResult)
 	{
 		$sDavLogin = $this->GetLogin();
 		$sDavServer = $this->GetServerUrl();
 		
-		$aArgs['EnableDav'] = true;
-		$aArgs['Dav']['Login'] = $sDavLogin;
-		$aArgs['Dav']['Server'] = $sDavServer;
-		$aArgs['Dav']['PrincipalUrl'] = $this->GetPrincipalUrl();
+		$mResult['EnableDav'] = true;
+		$mResult['Dav']['Login'] = $sDavLogin;
+		$mResult['Dav']['Server'] = $sDavServer;
+		$mResult['Dav']['PrincipalUrl'] = $this->GetPrincipalUrl();
 	}
 	
 	/**
