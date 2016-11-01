@@ -276,13 +276,11 @@ class DavModule extends AApiModule
 	 * 
 	 * @apiParam {string=Dav} Module Module name.
 	 * @apiParam {string=GetServerUrl} Method Method name.
-	 * @apiParam {string} AuthToken Auth token.
 	 * 
 	 * @apiParamExample {json} Request-Example:
 	 * {
 	 *	Module: 'Dav',
-	 *	Method: 'GetServerUrl',
-	 *	AuthToken: 'token_value'
+	 *	Method: 'GetServerUrl'
 	 * }
 	 * 
 	 * @apiSuccess {object[]} Result Array of response objects.
@@ -317,11 +315,9 @@ class DavModule extends AApiModule
 	 */
 	public function GetServerUrl()
 	{
-		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
+		\CApi::checkUserRoleIsAtLeast(\EUserRole::Anonymous);
 		
-		return $this->oApiDavManager->getServerUrl(
-			\CApi::getAuthenticatedUserId()
-		);
+		return $this->oApiDavManager->getServerUrl();
 	}
 	
 	/**
@@ -332,13 +328,11 @@ class DavModule extends AApiModule
 	 * 
 	 * @apiParam {string=Dav} Module Module name.
 	 * @apiParam {string=GetServerHost} Method Method name.
-	 * @apiParam {string} AuthToken Auth token.
 	 * 
 	 * @apiParamExample {json} Request-Example:
 	 * {
 	 *	Module: 'Dav',
-	 *	Method: 'GetServerHost',
-	 *	AuthToken: 'token_value'
+	 *	Method: 'GetServerHost'
 	 * }
 	 * 
 	 * @apiSuccess {object[]} Result Array of response objects.
@@ -373,11 +367,9 @@ class DavModule extends AApiModule
 	 */
 	public function GetServerHost()
 	{
-		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
+		\CApi::checkUserRoleIsAtLeast(\EUserRole::Anonymous);
 		
-		return $this->oApiDavManager->getServerHost(
-			\CApi::getAuthenticatedUserId()
-		);
+		return $this->oApiDavManager->getServerHost();
 	}
 	
 	/**
@@ -388,13 +380,11 @@ class DavModule extends AApiModule
 	 * 
 	 * @apiParam {string=Dav} Module Module name.
 	 * @apiParam {string=GetServerPort} Method Method name.
-	 * @apiParam {string} AuthToken Auth token.
 	 * 
 	 * @apiParamExample {json} Request-Example:
 	 * {
 	 *	Module: 'Dav',
-	 *	Method: 'GetServerPort',
-	 *	AuthToken: 'token_value'
+	 *	Method: 'GetServerPort'
 	 * }
 	 * 
 	 * @apiSuccess {object[]} Result Array of response objects.
@@ -429,11 +419,9 @@ class DavModule extends AApiModule
 	 */
 	public function GetServerPort()
 	{
-		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
+		\CApi::checkUserRoleIsAtLeast(\EUserRole::Anonymous);
 		
-		return $this->oApiDavManager->getServerPort(
-			\CApi::getAuthenticatedUserId()
-		);
+		return $this->oApiDavManager->getServerPort();
 	}
 	
 	/**
@@ -458,13 +446,11 @@ class DavModule extends AApiModule
 	 * 
 	 * @return bool
 	 */
-	public function IsUseSsl()
+	public function IsSsl()
 	{
 		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
 		
-		return $this->oApiDavManager->IsUseSsl(
-			\CApi::getAuthenticatedUserId()
-		);
+		return $this->oApiDavManager->isSsl();
 	}
 	
 	/**

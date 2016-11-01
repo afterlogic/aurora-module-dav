@@ -34,7 +34,7 @@ class CApiDavManager extends AApiManagerWithStorage
 		if (!isset($this->aDavClients[$iUserId]))
 		{
 			$this->aDavClients[$iUserId] = new CDAVClient(
-				$this->getServerUrl($iUserId), $iUserId, $iUserId);
+				$this->getServerUrl(), $iUserId, $iUserId);
 		}
 
 		if (isset($this->aDavClients[$iUserId]))
@@ -46,13 +46,10 @@ class CApiDavManager extends AApiManagerWithStorage
 	}
 
 	/**
-	 * @param CAccount $iUserId Default null
-	 * 
 	 * @return string
 	 */
-	public function getServerUrl($iUserId = null)
+	public function getServerUrl()
 	{
-		// TODO: 
 		return $this->oModule->getConfig('ExternalHostNameOfDAVServer', '/');		
 	}
 
@@ -73,14 +70,12 @@ class CApiDavManager extends AApiManagerWithStorage
 	}
 
 	/**
-	 * @param CAccount $oAccount Default null
-	 * 
 	 * @return string
 	 */
-	public function getServerHost($oAccount = null)
+	public function getServerHost()
 	{
 		$mResult = '';
-		$sServerUrl = $this->getServerUrl($oAccount);
+		$sServerUrl = $this->getServerUrl();
 		if (!empty($sServerUrl))
 		{
 			$aUrlParts = parse_url($sServerUrl);
@@ -93,14 +88,12 @@ class CApiDavManager extends AApiManagerWithStorage
 	}
 
 	/**
-	 * @param CAccount $oAccount Default null
-	 * 
 	 * @return bool
 	 */
-	public function isUseSsl($oAccount = null)
+	public function isSsl()
 	{
 		$bResult = false;
-		$sServerUrl = $this->getServerUrl($oAccount);
+		$sServerUrl = $this->getServerUrl();
 		if (!empty($sServerUrl))
 		{
 			$aUrlParts = parse_url($sServerUrl);
@@ -117,19 +110,17 @@ class CApiDavManager extends AApiManagerWithStorage
 	}
 
 	/**
-	 * @param CAccount $oAccount Default null
-	 * 
 	 * @return int
 	 */
-	public function getServerPort($oAccount = null)
+	public function getServerPort()
 	{
 		$iResult = 80;
-		if ($this->isUseSsl($oAccount))
+		if ($this->isSsl())
 		{
 			$iResult = 443;
 		}
 			
-		$sServerUrl = $this->getServerUrl($oAccount);
+		$sServerUrl = $this->getServerUrl();
 		if (!empty($sServerUrl))
 		{
 			$aUrlParts = parse_url($sServerUrl);
@@ -151,7 +142,7 @@ class CApiDavManager extends AApiManagerWithStorage
 		$mResult = false;
 		try
 		{
-			$sServerUrl = $this->getServerUrl($iUserId);
+			$sServerUrl = $this->getServerUrl();
 			if (!empty($sServerUrl))
 			{
 				$aUrlParts = parse_url($sServerUrl);
