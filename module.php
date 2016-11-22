@@ -170,21 +170,17 @@ class DavModule extends AApiModule
 	 * 
 	 * @apiSuccessExample {json} Success response example:
 	 * {
-	 *	Result: [{
-	 *		Module: 'Dav',
-	 *		Method: 'GetSettings',
-	 *		Result: [{ExternalHostNameOfDAVServer: 'host_value'}]
-	 *	}]
+	 *	Module: 'Dav',
+	 *	Method: 'GetSettings',
+	 *	Result: [{ExternalHostNameOfDAVServer: 'host_value'}]
 	 * }
 	 * 
 	 * @apiSuccessExample {json} Error response example:
 	 * {
-	 *	Result: [{
-	 *		Module: 'Dav',
-	 *		Method: 'GetSettings',
-	 *		Result: false,
-	 *		ErrorCode: 102
-	 *	}]
+	 *	Module: 'Dav',
+	 *	Method: 'GetSettings',
+	 *	Result: false,
+	 *	ErrorCode: 102
 	 * }
 	 */
 	/**
@@ -231,21 +227,17 @@ class DavModule extends AApiModule
 	 * 
 	 * @apiSuccessExample {json} Success response example:
 	 * {
-	 *	Result: [{
-	 *		Module: 'Dav',
-	 *		Method: 'UpdateSettings',
-	 *		Result: true
-	 *	}]
+	 *	Module: 'Dav',
+	 *	Method: 'UpdateSettings',
+	 *	Result: true
 	 * }
 	 * 
 	 * @apiSuccessExample {json} Error response example:
 	 * {
-	 *	Result: [{
-	 *		Module: 'Dav',
-	 *		Method: 'UpdateSettings',
-	 *		Result: false,
-	 *		ErrorCode: 102
-	 *	}]
+	 *	Module: 'Dav',
+	 *	Method: 'UpdateSettings',
+	 *	Result: false,
+	 *	ErrorCode: 102
 	 * }
 	 */
 	/**
@@ -291,21 +283,17 @@ class DavModule extends AApiModule
 	 * 
 	 * @apiSuccessExample {json} Success response example:
 	 * {
-	 *	Result: [{
-	 *		Module: 'Dav',
-	 *		Method: 'GetServerUrl',
-	 *		Result: 'url_value'
-	 *	}]
+	 *	Module: 'Dav',
+	 *	Method: 'GetServerUrl',
+	 *	Result: 'url_value'
 	 * }
 	 * 
 	 * @apiSuccessExample {json} Error response example:
 	 * {
-	 *	Result: [{
-	 *		Module: 'Dav',
-	 *		Method: 'GetServerUrl',
-	 *		Result: false,
-	 *		ErrorCode: 102
-	 *	}]
+	 *	Module: 'Dav',
+	 *	Method: 'GetServerUrl',
+	 *	Result: false,
+	 *	ErrorCode: 102
 	 * }
 	 */
 	/**
@@ -343,21 +331,17 @@ class DavModule extends AApiModule
 	 * 
 	 * @apiSuccessExample {json} Success response example:
 	 * {
-	 *	Result: [{
-	 *		Module: 'Dav',
-	 *		Method: 'GetServerHost',
-	 *		Result: 'host_value'
-	 *	}]
+	 *	Module: 'Dav',
+	 *	Method: 'GetServerHost',
+	 *	Result: 'host_value'
 	 * }
 	 * 
 	 * @apiSuccessExample {json} Error response example:
 	 * {
-	 *	Result: [{
-	 *		Module: 'Dav',
-	 *		Method: 'GetServerHost',
-	 *		Result: false,
-	 *		ErrorCode: 102
-	 *	}]
+	 *	Module: 'Dav',
+	 *	Method: 'GetServerHost',
+	 *	Result: false,
+	 *	ErrorCode: 102
 	 * }
 	 */
 	/**
@@ -395,21 +379,17 @@ class DavModule extends AApiModule
 	 * 
 	 * @apiSuccessExample {json} Success response example:
 	 * {
-	 *	Result: [{
-	 *		Module: 'Dav',
-	 *		Method: 'GetServerPort',
-	 *		Result: 'port_value'
-	 *	}]
+	 *	Module: 'Dav',
+	 *	Method: 'GetServerPort',
+	 *	Result: 'port_value'
 	 * }
 	 * 
 	 * @apiSuccessExample {json} Error response example:
 	 * {
-	 *	Result: [{
-	 *		Module: 'Dav',
-	 *		Method: 'GetServerPort',
-	 *		Result: false,
-	 *		ErrorCode: 102
-	 *	}]
+	 *	Module: 'Dav',
+	 *	Method: 'GetServerPort',
+	 *	Result: false,
+	 *	ErrorCode: 102
 	 * }
 	 */
 	/**
