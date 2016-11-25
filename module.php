@@ -443,7 +443,7 @@ class DavModule extends AApiModule
 		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
 		
 		$oManagerApi = \CApi::GetSystemManager('eav', 'db');
-		$oEntity = $oManagerApi->getEntityById((int) \CApi::getAuthenticatedUserId());
+		$oEntity = $oManagerApi->getEntity((int) \CApi::getAuthenticatedUserId());
 		return $oEntity->sUUID;
 	}
 	
