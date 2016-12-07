@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%adav_addressbooks` (
   `uri` varchar(200) default NULL,
   `description` text,
   `ctag` int(11) unsigned NOT NULL default '1',
+  `synctoken` int(11) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
