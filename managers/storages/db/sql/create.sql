@@ -1,13 +1,21 @@
 CREATE TABLE IF NOT EXISTS `%PREFIX%adav_addressbooks` (
-  `id` int(11) unsigned NOT NULL auto_increment,
-  `principaluri` varchar(255) default NULL,
-  `displayname` varchar(255) default NULL,
-  `uri` varchar(200) default NULL,
-  `description` text,
-  `ctag` int(11) unsigned NOT NULL default '1',
-  `synctoken` int(11) unsigned NOT NULL DEFAULT '1',
-  PRIMARY KEY  (`id`)
+    id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    principaluri VARBINARY(255),
+    displayname VARCHAR(255),
+    uri VARBINARY(200),
+    description TEXT,
+    synctoken INT(11) UNSIGNED NOT NULL DEFAULT '1',
+    UNIQUE(principaluri(100), uri(100))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `%PREFIX%adav_addressbookchanges` (
+    id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    uri VARBINARY(200) NOT NULL,
+    synctoken INT(11) UNSIGNED NOT NULL,
+    addressbookid INT(11) UNSIGNED NOT NULL,
+    operation TINYINT(1) NOT NULL,
+    INDEX addressbookid_synctoken (addressbookid, synctoken)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS `%PREFIX%adav_cache` (
   `id` int(11) NOT NULL auto_increment,
@@ -21,38 +29,69 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%adav_cache` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `%PREFIX%adav_calendarobjects` (
-  `id` int(11) unsigned NOT NULL auto_increment,
-  `calendardata` mediumtext,
-  `uri` varchar(255) default NULL,
-  `calendarid` int(11) unsigned NOT NULL,
-  `lastmodified` int(11) default NULL,
-  `etag` varchar(32) NOT NULL default '',
-  `size` int(11) unsigned NOT NULL default '0',
-  `componenttype` varchar(8) NOT NULL default '',
-  `firstoccurence` int(11) unsigned default NULL,
-  `lastoccurence` int(11) unsigned default NULL,
-  `orderID` int(11) default NULL,
-  `orderPosID` int(11) default NULL,
-  PRIMARY KEY  (`id`),
-  KEY `%PREFIX%calendarid_2` (`calendarid`,`componenttype`,`lastoccurence`,`firstoccurence`),
-  KEY `%PREFIX%calendarid` (`calendarid`,`uri`),
-  KEY `%PREFIX%calendarid_3` (`calendarid`)
+    id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    calendardata MEDIUMBLOB,
+    uri VARBINARY(200),
+    calendarid INTEGER UNSIGNED NOT NULL,
+    lastmodified INT(11) UNSIGNED,
+    etag VARBINARY(32),
+    size INT(11) UNSIGNED NOT NULL,
+    componenttype VARBINARY(8),
+    firstoccurence INT(11) UNSIGNED,
+    lastoccurence INT(11) UNSIGNED,
+    uid VARBINARY(200),
+    UNIQUE(calendarid, uri)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `%PREFIX%adav_calendars` (
-  `id` int(11) unsigned NOT NULL auto_increment,
-  `principaluri` varchar(255) default NULL,
-  `displayname` varchar(100) default NULL,
-  `uri` varchar(255) default NULL,
-  `ctag` int(11) unsigned NOT NULL default '0',
-  `description` text,
-  `calendarorder` int(11) unsigned NOT NULL default '0',
-  `calendarcolor` varchar(10) default NULL,
-  `timezone` text,
-  `components` varchar(20) default NULL,
-  `transparent` tinyint(1) NOT NULL default '0',
-  PRIMARY KEY  (`id`)
+    id INTEGER UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    principaluri VARBINARY(100),
+    displayname VARCHAR(100),
+    uri VARBINARY(200),
+    synctoken INTEGER UNSIGNED NOT NULL DEFAULT '1',
+    description TEXT,
+    calendarorder INT(11) UNSIGNED NOT NULL DEFAULT '0',
+    calendarcolor VARBINARY(10),
+    timezone TEXT,
+    components VARBINARY(21),
+    transparent TINYINT(1) NOT NULL DEFAULT '0',
+    UNIQUE(principaluri, uri)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `%PREFIX%adav_calendarchanges` (
+    id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    uri VARBINARY(200) NOT NULL,
+    synctoken INT(11) UNSIGNED NOT NULL,
+    calendarid INT(11) UNSIGNED NOT NULL,
+    operation TINYINT(1) NOT NULL,
+    INDEX calendarid_synctoken (calendarid, synctoken)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `%PREFIX%adav_calendarsubscriptions` (
+    id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    uri VARBINARY(200) NOT NULL,
+    principaluri VARBINARY(100) NOT NULL,
+    source TEXT,
+    displayname VARCHAR(100),
+    refreshrate VARCHAR(10),
+    calendarorder INT(11) UNSIGNED NOT NULL DEFAULT '0',
+    calendarcolor VARBINARY(10),
+    striptodos TINYINT(1) NULL,
+    stripalarms TINYINT(1) NULL,
+    stripattachments TINYINT(1) NULL,
+    lastmodified INT(11) UNSIGNED,
+    UNIQUE(principaluri, uri)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `%PREFIX%schedulingobjects` (
+    id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    principaluri VARBINARY(255),
+    calendardata MEDIUMBLOB,
+    uri VARBINARY(200),
+    lastmodified INT(11) UNSIGNED,
+    etag VARBINARY(32),
+    size INT(11) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4; 
 
 CREATE TABLE IF NOT EXISTS `%PREFIX%adav_calendarshares` (
   `id` int(11) unsigned NOT NULL auto_increment,
@@ -68,13 +107,13 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%adav_calendarshares` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `%PREFIX%adav_cards` (
-  `id` int(11) unsigned NOT NULL auto_increment,
-  `addressbookid` int(11) unsigned NOT NULL,
-  `carddata` mediumtext,
-  `uri` varchar(255) default NULL,
-  `lastmodified` int(11) unsigned default NULL,
-  PRIMARY KEY  (`id`),
-  KEY `%PREFIX%ADAV_CARDS_ADDRESSBOOKID_INDEX` (`addressbookid`)
+    id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    addressbookid INT(11) UNSIGNED NOT NULL,
+    carddata MEDIUMBLOB,
+    uri VARBINARY(200),
+    lastmodified INT(11) UNSIGNED,
+    etag VARBINARY(32),
+    size INT(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `%PREFIX%adav_groupmembers` (
@@ -86,26 +125,35 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%adav_groupmembers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `%PREFIX%adav_locks` (
-  `id` int(11) unsigned NOT NULL auto_increment,
-  `owner` varchar(100) default NULL,
-  `timeout` int(11) unsigned default NULL,
-  `created` int(11) default NULL,
-  `token` varchar(100) default NULL,
-  `scope` tinyint(4) default NULL,
-  `depth` tinyint(4) default NULL,
-  `uri` text,
-  PRIMARY KEY  (`id`)
+    id INTEGER UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    owner VARCHAR(100),
+    timeout INTEGER UNSIGNED,
+    created INTEGER,
+    token VARBINARY(100),
+    scope TINYINT,
+    depth TINYINT,
+    uri VARBINARY(1000),
+    INDEX(token),
+    INDEX(uri(100)) 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `%PREFIX%adav_principals` (
-  `id` int(11) unsigned NOT NULL auto_increment,
-  `uri` varchar(255) NOT NULL,
-  `email` varchar(80) default NULL,
-  `vcardurl` varchar(80) default NULL,
-  `displayname` varchar(80) default NULL,
-  PRIMARY KEY  (`id`),
-  UNIQUE KEY `%PREFIX%ADAV_PRINCIPALS_URI_INDEX` (`uri`)
+    id INTEGER UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    uri VARBINARY(200) NOT NULL,
+    email VARBINARY(80),
+    displayname VARCHAR(80),
+    UNIQUE(uri) 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `%PREFIX%adav_propertystorage` (
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    path VARBINARY(1024) NOT NULL,
+    name VARBINARY(100) NOT NULL,
+    valuetype INT UNSIGNED,
+    value MEDIUMBLOB
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE UNIQUE INDEX path_property ON `%PREFIX%adav_propertystorage` (path(600), name(100));
 
 CREATE TABLE IF NOT EXISTS `%PREFIX%adav_reminders` (
   `id` int(11) unsigned NOT NULL auto_increment,
@@ -117,3 +165,10 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%adav_reminders` (
   `allday` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `%PREFIX%adav_users` (
+    id INTEGER UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    username VARBINARY(50),
+    digesta1 VARBINARY(32),
+    UNIQUE(username)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
