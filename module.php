@@ -148,7 +148,7 @@ class DavModule extends AApiModule
 	 * @api {post} ?/Api/ GetSettings
 	 * @apiName GetSettings
 	 * @apiGroup Dav
-	 * @apiDescription Obtaines list of module settings for authenticated user.
+	 * @apiDescription Obtains list of module settings for authenticated user.
 	 * 
 	 * @apiParam {string=Dav} Module Module name.
 	 * @apiParam {string=GetSettings} Method Method name.
@@ -184,7 +184,7 @@ class DavModule extends AApiModule
 	 * }
 	 */
 	/**
-	 * Obtaines list of module settings for authenticated user.
+	 * Obtains list of module settings for authenticated user.
 	 * 
 	 * @return array
 	 */
