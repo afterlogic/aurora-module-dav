@@ -22,10 +22,6 @@ class DavModule extends AApiModule
 {
 	public $oApiDavManager = null;
 	
-	protected $aSettingsMap = array(
-		'ExternalHostNameOfDAVServer' => array('', 'string')
-	);
-	
 	/***** private functions *****/
 	/**
 	 * Initializes DAV Module.
