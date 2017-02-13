@@ -412,7 +412,7 @@ class DavModule extends AApiModule
 		$oUser = \CApi::getAuthenticatedUser();
 		if($oUser)
 		{
-			$sUUID = $oUser->sUUID;
+			$sUUID = $oUser->UUID;
 		}
 		return $this->oApiDavManager->getPrincipalUrl($sUUID);
 	}
@@ -440,7 +440,7 @@ class DavModule extends AApiModule
 		
 		$oManagerApi = \CApi::GetSystemManager('eav', 'db');
 		$oEntity = $oManagerApi->getEntity((int) \CApi::getAuthenticatedUserId());
-		return $oEntity->sUUID;
+		return $oEntity->UUID;
 	}
 	
 	/**
