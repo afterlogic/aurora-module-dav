@@ -18,7 +18,9 @@
  * @package Modules
  */
 
-class DavModule extends AApiModule
+namespace Aurora\Modules;
+
+class DavModule extends \AApiModule
 {
 	public $oApiDavManager = null;
 	
@@ -465,7 +467,7 @@ class DavModule extends AApiModule
 	{
 		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
 		
-		$oSettings =& CApi::GetSettings();
+		$oSettings =& \CApi::GetSettings();
 		$oSettings->SetConf('Common/EnableMobileSync', $MobileSyncEnable);
 		return (bool) $oSettings->Save();
 	}

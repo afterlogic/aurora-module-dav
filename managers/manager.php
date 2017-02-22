@@ -220,7 +220,7 @@ class CApiDavManager extends AApiManagerWithStorage
 	 */
 	public function isMobileSyncEnabled()
 	{
-		$oSettings =& CApi::GetSettings();
+		$oSettings =&\CApi::GetSettings();
 		return (bool) $oSettings->GetConf('EnableMobileSync');
 	}
 
@@ -232,7 +232,7 @@ class CApiDavManager extends AApiManagerWithStorage
 	 */
 	public function setMobileSyncEnable($bMobileSyncEnable)
 	{
-		$oSettings =& CApi::GetSettings();
+		$oSettings =&\CApi::GetSettings();
 		$oSettings->SetConf('Common/EnableMobileSync', $bMobileSyncEnable);
 		return (bool) $oSettings->Save();
 	}
