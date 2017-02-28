@@ -21,7 +21,7 @@
 /**
  * @package Dav
  */
-class CApiDavManager extends AApiManagerWithStorage
+class CApiDavManager extends \Aurora\System\AbstractManagerWithStorage
 {
 	/**
 	 * @var array
@@ -30,10 +30,10 @@ class CApiDavManager extends AApiManagerWithStorage
 
 	/**
 	 * 
-	 * @param CApiGlobalManager $oManager
+	 * @param \Aurora\System\GlobalManager $oManager
 	 * @param type $sForcedStorage
 	 */
-	public function __construct(CApiGlobalManager &$oManager, $sForcedStorage = '', AApiModule $oModule = null)
+	public function __construct(\Aurora\System\GlobalManager &$oManager, $sForcedStorage = '', \Aurora\System\AbstractModule $oModule = null)
 	{
 		parent::__construct('', $oManager, $sForcedStorage, $oModule);
 
@@ -220,7 +220,7 @@ class CApiDavManager extends AApiManagerWithStorage
 	 */
 	public function isMobileSyncEnabled()
 	{
-		$oSettings =&\CApi::GetSettings();
+		$oSettings =&\Aurora\System\Api::GetSettings();
 		return (bool) $oSettings->GetConf('EnableMobileSync');
 	}
 
@@ -232,7 +232,7 @@ class CApiDavManager extends AApiManagerWithStorage
 	 */
 	public function setMobileSyncEnable($bMobileSyncEnable)
 	{
-		$oSettings =&\CApi::GetSettings();
+		$oSettings =&\Aurora\System\Api::GetSettings();
 		$oSettings->SetConf('Common/EnableMobileSync', $bMobileSyncEnable);
 		return (bool) $oSettings->Save();
 	}

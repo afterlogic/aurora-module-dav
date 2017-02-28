@@ -20,7 +20,7 @@
 
 namespace Aurora\Modules;
 
-class DavModule extends \AApiModule
+class DavModule extends \Aurora\System\AbstractModule
 {
 	public $oApiDavManager = null;
 	
@@ -117,9 +117,9 @@ class DavModule extends \AApiModule
 	 */
 	public function GetDavClient()
 	{
-		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
+		\Aurora\System\Api::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
 		
-		return $this->oApiDavManager->GetDAVClient(\CApi::getAuthenticatedUserId());
+		return $this->oApiDavManager->GetDAVClient(\Aurora\System\Api::getAuthenticatedUserId());
 	}
 	
 	/**
@@ -130,7 +130,7 @@ class DavModule extends \AApiModule
 	 */
 	public function GetVCardObject($Data)
 	{
-		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
+		\Aurora\System\Api::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
 		
 		return $this->oApiDavManager->getVCardObject($Data);
 	}
@@ -188,7 +188,7 @@ class DavModule extends \AApiModule
 	 */
 	public function GetSettings()
 	{
-		\CApi::checkUserRoleIsAtLeast(\EUserRole::Anonymous);
+		\Aurora\System\Api::checkUserRoleIsAtLeast(\EUserRole::Anonymous);
 		
 		return array(
 			'ExternalHostNameOfDAVServer' => $this->getConfig('ExternalHostNameOfDAVServer', ''),
@@ -246,7 +246,7 @@ class DavModule extends \AApiModule
 	 */
 	public function UpdateSettings($ExternalHostNameOfDAVServer)
 	{
-		\CApi::checkUserRoleIsAtLeast(\EUserRole::TenantAdmin);
+		\Aurora\System\Api::checkUserRoleIsAtLeast(\EUserRole::TenantAdmin);
 		
 		if (!empty($ExternalHostNameOfDAVServer))
 		{
@@ -301,7 +301,7 @@ class DavModule extends \AApiModule
 	 */
 	public function GetServerUrl()
 	{
-		\CApi::checkUserRoleIsAtLeast(\EUserRole::Anonymous);
+		\Aurora\System\Api::checkUserRoleIsAtLeast(\EUserRole::Anonymous);
 		
 		return $this->oApiDavManager->getServerUrl();
 	}
@@ -349,7 +349,7 @@ class DavModule extends \AApiModule
 	 */
 	public function GetServerHost()
 	{
-		\CApi::checkUserRoleIsAtLeast(\EUserRole::Anonymous);
+		\Aurora\System\Api::checkUserRoleIsAtLeast(\EUserRole::Anonymous);
 		
 		return $this->oApiDavManager->getServerHost();
 	}
@@ -397,7 +397,7 @@ class DavModule extends \AApiModule
 	 */
 	public function GetServerPort()
 	{
-		\CApi::checkUserRoleIsAtLeast(\EUserRole::Anonymous);
+		\Aurora\System\Api::checkUserRoleIsAtLeast(\EUserRole::Anonymous);
 		
 		return $this->oApiDavManager->getServerPort();
 	}
@@ -409,9 +409,9 @@ class DavModule extends \AApiModule
 	 */
 	public function GetPrincipalUrl()
 	{
-		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
+		\Aurora\System\Api::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
 		
-		$oUser = \CApi::getAuthenticatedUser();
+		$oUser = \Aurora\System\Api::getAuthenticatedUser();
 		if($oUser)
 		{
 			$sUUID = $oUser->UUID;
@@ -426,7 +426,7 @@ class DavModule extends \AApiModule
 	 */
 	public function IsSsl()
 	{
-		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
+		\Aurora\System\Api::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
 		
 		return $this->oApiDavManager->isSsl();
 	}
@@ -438,10 +438,10 @@ class DavModule extends \AApiModule
 	 */
 	public function GetLogin()
 	{
-		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
+		\Aurora\System\Api::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
 		
-		$oManagerApi = \CApi::GetSystemManager('eav', 'db');
-		$oEntity = $oManagerApi->getEntity((int) \CApi::getAuthenticatedUserId());
+		$oManagerApi = \Aurora\System\Api::GetSystemManager('eav', 'db');
+		$oEntity = $oManagerApi->getEntity((int) \Aurora\System\Api::getAuthenticatedUserId());
 		return $oEntity->UUID;
 	}
 	
@@ -452,7 +452,7 @@ class DavModule extends \AApiModule
 	 */
 	public function IsMobileSyncEnabled()
 	{
-		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
+		\Aurora\System\Api::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
 		
 		return $this->oApiDavManager->isMobileSyncEnabled();
 	}
@@ -465,9 +465,9 @@ class DavModule extends \AApiModule
 	 */
 	public function SetMobileSyncEnable($MobileSyncEnable)
 	{
-		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
+		\Aurora\System\Api::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
 		
-		$oSettings =& \CApi::GetSettings();
+		$oSettings =& \Aurora\System\Api::GetSettings();
 		$oSettings->SetConf('Common/EnableMobileSync', $MobileSyncEnable);
 		return (bool) $oSettings->Save();
 	}
@@ -479,10 +479,10 @@ class DavModule extends \AApiModule
 	 */
 	public function TestConnection()
 	{
-		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
+		\Aurora\System\Api::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
 		
 		return $this->oApiDavManager->testConnection(
-			\CApi::getAuthenticatedUserId()
+			\Aurora\System\Api::getAuthenticatedUserId()
 		);
 	}
 	
@@ -493,10 +493,10 @@ class DavModule extends \AApiModule
 	 */
 	public function DeletePrincipal()
 	{
-		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
+		\Aurora\System\Api::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
 		
 		return $this->oApiDavManager->deletePrincipal(
-			\CApi::getAuthenticatedUserId()
+			\Aurora\System\Api::getAuthenticatedUserId()
 		);
 	}
 	
@@ -507,7 +507,7 @@ class DavModule extends \AApiModule
 	 */
 	public function GetPublicUser()
 	{
-		\CApi::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
+		\Aurora\System\Api::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
 		
 		return \Afterlogic\DAV\Constants::DAV_PUBLIC_PRINCIPAL;
 	}

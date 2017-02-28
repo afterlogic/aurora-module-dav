@@ -22,7 +22,7 @@
  * @package Min
  * @subpackage Storages
  */
-class CApiDavCommandCreator extends api_CommandCreator
+class CApiDavCommandCreator extends \Aurora\System\Db\AbstractCommandCreator
 {
 	
 }

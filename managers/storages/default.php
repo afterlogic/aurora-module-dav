@@ -22,12 +22,12 @@
  * @package Min
  * @subpackage Storages
  */
-class CApiDavStorage extends AApiManagerStorage
+class CApiDavStorage extends \Aurora\System\AbstractManagerStorage
 {
 	/**
-	 * @param CApiGlobalManager &$oManager
+	 * @param \Aurora\System\GlobalManager &$oManager
 	 */
-	public function __construct($sStorageName, AApiManager &$oManager)
+	public function __construct($sStorageName, \Aurora\System\AbstractManager &$oManager)
 	{
 		parent::__construct('dav', $sStorageName, $oManager);
 	}

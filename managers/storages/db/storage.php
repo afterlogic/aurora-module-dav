@@ -35,9 +35,9 @@ class CApiDavDbStorage extends CApiDavStorage
 	protected $oCommandCreator;
 
 	/**
-	 * @param CApiGlobalManager &$oManager
+	 * @param \Aurora\System\GlobalManager &$oManager
 	 */
-	public function __construct(AApiManager &$oManager)
+	public function __construct(\Aurora\System\AbstractManager &$oManager)
 	{
 		parent::__construct('db', $oManager);
 
