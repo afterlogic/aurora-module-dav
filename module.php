@@ -20,7 +20,7 @@
 
 namespace Aurora\Modules;
 
-class DavModule extends \Aurora\System\AbstractModule
+class DavModule extends \Aurora\System\Module\AbstractModule
 {
 	public $oApiDavManager = null;
 	
