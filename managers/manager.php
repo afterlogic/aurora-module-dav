@@ -285,7 +285,7 @@ class CApiDavManager extends \Aurora\System\AbstractManagerWithStorage
 			$sFilePath = dirname(__FILE__) . '/storages/db/sql/create.sql';
 			$bResult = $this->oStorage->executeSqlFile($sFilePath);
 		}
-		catch (CApiBaseException $oException)
+		catch (\Aurora\System\Exceptions\BaseException $oException)
 		{
 			$this->setLastException($oException);
 		}
