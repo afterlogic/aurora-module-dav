@@ -18,9 +18,9 @@
  * @package Modules
  */
 
-namespace Aurora\Modules;
+namespace Aurora\Modules\Dav;
 
-class DavModule extends \Aurora\System\Module\AbstractModule
+class Module extends \Aurora\System\Module\AbstractModule
 {
 	public $oApiDavManager = null;
 	
