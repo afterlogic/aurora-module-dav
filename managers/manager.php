@@ -21,7 +21,7 @@
 /**
  * @package Dav
  */
-class CApiDavManager extends \Aurora\System\AbstractManagerWithStorage
+class CApiDavManager extends \Aurora\System\Managers\AbstractManagerWithStorage
 {
 	/**
 	 * @var array
@@ -30,10 +30,10 @@ class CApiDavManager extends \Aurora\System\AbstractManagerWithStorage
 
 	/**
 	 * 
-	 * @param \Aurora\System\GlobalManager $oManager
+	 * @param \Aurora\System\Managers\GlobalManager $oManager
 	 * @param type $sForcedStorage
 	 */
-	public function __construct(\Aurora\System\GlobalManager &$oManager, $sForcedStorage = '', \Aurora\System\Module\AbstractModule $oModule = null)
+	public function __construct(\Aurora\System\Managers\GlobalManager &$oManager, $sForcedStorage = '', \Aurora\System\Module\AbstractModule $oModule = null)
 	{
 		parent::__construct('', $oManager, $sForcedStorage, $oModule);
 
