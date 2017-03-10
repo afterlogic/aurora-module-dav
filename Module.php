@@ -96,12 +96,12 @@ class Module extends \Aurora\System\Module\AbstractModule
 	public function EntryDav()
 	{
 		set_error_handler(function ($errno, $errstr, $errfile, $errline ) {
-			throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+			throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
 		});
 		
 		@set_time_limit(3000);
 		
-		if (false !== \strpos($this->oHttp->GetUrl(), '/?dav/'))
+		if (false !== \strpos($this->oHttp->GetUrl(), '?dav'))
 		{
 			$aPath = \trim($this->oHttp->GetPath(), '/\\ ');
 			$sBaseUri = (0 < \strlen($aPath) ? '/'.$aPath : '').'/?dav/';
