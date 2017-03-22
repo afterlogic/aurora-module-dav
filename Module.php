@@ -467,9 +467,9 @@ class Module extends \Aurora\System\Module\AbstractModule
 	{
 		\Aurora\System\Api::checkUserRoleIsAtLeast(\EUserRole::NormalUser);
 		
-		$oSettings =& \Aurora\System\Api::GetSettings();
-		$oSettings->SetConf('Common/EnableMobileSync', $MobileSyncEnable);
-		return (bool) $oSettings->Save();
+		$oMobileSyncModule = \Aurora\System\Api::GetModule('MobileSync');
+		$oMobileSyncModule->setConfig('Disabled', !$MobileSyncEnable);
+		return $oMobileSyncModule->saveModuleConfig();
 	}
 	
 	/**

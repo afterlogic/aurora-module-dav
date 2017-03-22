@@ -220,8 +220,8 @@ class CApiDavManager extends \Aurora\System\Managers\AbstractManagerWithStorage
 	 */
 	public function isMobileSyncEnabled()
 	{
-		$oSettings =&\Aurora\System\Api::GetSettings();
-		return (bool) $oSettings->GetConf('EnableMobileSync');
+		$oMobileSyncModule = \Aurora\System\Api::GetModule('MobileSync');
+		return !$oMobileSyncModule->getConfig('Disabled');
 	}
 
 	/**
@@ -232,9 +232,9 @@ class CApiDavManager extends \Aurora\System\Managers\AbstractManagerWithStorage
 	 */
 	public function setMobileSyncEnable($bMobileSyncEnable)
 	{
-		$oSettings =&\Aurora\System\Api::GetSettings();
-		$oSettings->SetConf('Common/EnableMobileSync', $bMobileSyncEnable);
-		return (bool) $oSettings->Save();
+		$oMobileSyncModule = \Aurora\System\Api::GetModule('MobileSync');
+		$oMobileSyncModule->setConfig('Disabled', !$bMobileSyncEnable);
+		return $oMobileSyncModule->saveModuleConfig();
 	}
 
 	/**
