@@ -150,10 +150,9 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%adav_propertystorage` (
     path VARBINARY(1024) NOT NULL,
     name VARBINARY(100) NOT NULL,
     valuetype INT UNSIGNED,
-    value MEDIUMBLOB
+    value MEDIUMBLOB,
+	UNIQUE INDEX path_property (path(600), name(100))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-CREATE UNIQUE INDEX path_property ON `%PREFIX%adav_propertystorage` (path(600), name(100));
 
 CREATE TABLE IF NOT EXISTS `%PREFIX%adav_reminders` (
   `id` int(11) unsigned NOT NULL auto_increment,

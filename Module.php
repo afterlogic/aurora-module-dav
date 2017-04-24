@@ -85,7 +85,10 @@ class Module extends \Aurora\System\Module\AbstractModule
 	 */
 	public function onAfterCreateTables($aArgs, &$mResult)
 	{
-		$mResult = $this->oApiDavManager->createTablesFromFile();
+		if ($mResult)
+		{
+			$mResult = $this->oApiDavManager->createTablesFromFile();
+		}
 	}
 	/***** private functions *****/
 	

@@ -276,7 +276,7 @@ class CApiDavManager extends \Aurora\System\Managers\AbstractManagerWithStorage
 	 */
 	public function createTablesFromFile()
 	{
-		$bResult = true;
+		$bResult = false;
 		
 		try
 		{
