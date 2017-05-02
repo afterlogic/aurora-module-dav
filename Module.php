@@ -152,15 +152,19 @@ class Module extends \Aurora\System\Module\AbstractModule
 	 * @apiGroup Dav
 	 * @apiDescription Obtains list of module settings for authenticated user.
 	 * 
+	 * @apiHeader {string} [Authorization] "Bearer " + Authentication token which was received as the result of Core.Login method.
+	 * @apiHeaderExample {json} Header-Example:
+	 *	{
+	 *		"Authorization": "Bearer 32b2ecd4a4016fedc4abee880425b6b8"
+	 *	}
+	 * 
 	 * @apiParam {string=Dav} Module Module name.
 	 * @apiParam {string=GetSettings} Method Method name.
-	 * @apiParam {string} [AuthToken] Auth token.
 	 * 
 	 * @apiParamExample {json} Request-Example:
 	 * {
 	 *	Module: 'Dav',
-	 *	Method: 'GetSettings',
-	 *	AuthToken: 'token_value'
+	 *	Method: 'GetSettings'
 	 * }
 	 * 
 	 * @apiSuccess {object[]} Result Array of response objects.
@@ -205,9 +209,14 @@ class Module extends \Aurora\System\Module\AbstractModule
 	 * @apiGroup Dav
 	 * @apiDescription Updates module's settings - saves them to config.json file.
 	 * 
+	 * @apiHeader {string} Authorization "Bearer " + Authentication token which was received as the result of Core.Login method.
+	 * @apiHeaderExample {json} Header-Example:
+	 *	{
+	 *		"Authorization": "Bearer 32b2ecd4a4016fedc4abee880425b6b8"
+	 *	}
+	 * 
 	 * @apiParam {string=Dav} Module Module name.
 	 * @apiParam {string=UpdateSettings} Method Method name.
-	 * @apiParam {string} AuthToken Auth token.
 	 * @apiParam {string} Parameters JSON.stringified object <br>
 	 * {<br>
 	 * &emsp; **ExternalHostNameOfDAVServer** *string* External host name of DAV server.<br>
@@ -217,7 +226,6 @@ class Module extends \Aurora\System\Module\AbstractModule
 	 * {
 	 *	Module: 'Dav',
 	 *	Method: 'UpdateSettings',
-	 *	AuthToken: 'token_value',
 	 *	Parameters: '{ ExternalHostNameOfDAVServer: "host_value" }'
 	 * }
 	 * 
