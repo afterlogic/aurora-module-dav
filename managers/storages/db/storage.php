@@ -34,7 +34,7 @@ class CApiDavDbStorage extends CApiDavStorage
 		$this->oConnection =& $oManager->GetConnection();
 		$this->oCommandCreator =& $oManager->GetCommandCreator(
 			$this, array(
-				EDbType::MySQL => 'CApiDavCommandCreatorMySQL'
+				\Aurora\System\Enums\DbType::MySQL => 'CApiDavCommandCreatorMySQL'
 			)
 		);
 	}
