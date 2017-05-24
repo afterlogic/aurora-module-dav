@@ -8,10 +8,9 @@
  * For full statements of the licenses see LICENSE-AFTERLOGIC and LICENSE-AGPL3 files.
  */
 
-/**
- * @package Dav
- */
-class CApiDavManager extends \Aurora\System\Managers\AbstractManagerWithStorage
+namespace Aurora\Modules\Dav;
+
+class Manager extends \Aurora\System\Managers\AbstractManagerWithStorage
 {
 	/**
 	 * @var array
@@ -20,13 +19,12 @@ class CApiDavManager extends \Aurora\System\Managers\AbstractManagerWithStorage
 
 	/**
 	 * 
-	 * @param \Aurora\System\Managers\GlobalManager $oManager
 	 * @param type $sForcedStorage
 	 */
 	public function __construct($sForcedStorage = '', \Aurora\System\Module\AbstractModule $oModule = null)
 	{
 		parent::__construct('', $sForcedStorage, $oModule);
-
+		$this->oStorage = new Storages\Db\Storage();
 		$this->aDavClients = array();
 	}
 

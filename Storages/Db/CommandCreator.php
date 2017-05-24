@@ -8,20 +8,9 @@
  * For full statements of the licenses see LICENSE-AFTERLOGIC and LICENSE-AGPL3 files.
  */
 
-/**
- * @package Min
- * @subpackage Storages
- */
-class CApiDavCommandCreator extends \Aurora\System\Db\AbstractCommandCreator
-{
-	
-}
+namespace Aurora\Modules\Dav\Storages\Db;
 
-/**
- * @package Min
- * @subpackage Storages
- */
-class CApiDavCommandCreatorMySQL extends CApiDavCommandCreator
+class CommandCreator extends \Aurora\System\Db\AbstractCommandCreator
 {
 	
 }

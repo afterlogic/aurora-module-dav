@@ -8,11 +8,9 @@
  * For full statements of the licenses see LICENSE-AFTERLOGIC and LICENSE-AGPL3 files.
  */
 
-/**
- * @package Min
- * @subpackage Storages
- */
-class CApiDavDbStorage extends CApiDavStorage
+namespace Aurora\Modules\Dav\Storages\Db;
+
+class Storage extends \Aurora\Modules\Dav\Storages\Storage
 {
 	/**
 	 * @var CDbStorage $oConnection
@@ -32,10 +30,6 @@ class CApiDavDbStorage extends CApiDavStorage
 		parent::__construct('db', $oManager);
 
 		$this->oConnection =& $oManager->GetConnection();
-		$this->oCommandCreator =& $oManager->GetCommandCreator(
-			$this, array(
-				\Aurora\System\Enums\DbType::MySQL => 'CApiDavCommandCreatorMySQL'
-			)
-		);
+		$this->oCommandCreator = new CommandCreator\MySQL();
 	}
 }

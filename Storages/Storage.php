@@ -8,15 +8,10 @@
  * For full statements of the licenses see LICENSE-AFTERLOGIC and LICENSE-AGPL3 files.
  */
 
-/**
- * @package Min
- * @subpackage Storages
- */
-class CApiDavStorage extends \Aurora\System\Managers\AbstractManagerStorage
+namespace Aurora\Modules\Dav\Storages;
+
+class Storage extends \Aurora\System\Managers\AbstractManagerStorage
 {
-	/**
-	 * @param \Aurora\System\Managers\GlobalManager &$oManager
-	 */
 	public function __construct($sStorageName, \Aurora\System\Managers\AbstractManager &$oManager)
 	{
 		parent::__construct('dav', $sStorageName, $oManager);
