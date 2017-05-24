@@ -23,9 +23,9 @@ class CApiDavManager extends \Aurora\System\Managers\AbstractManagerWithStorage
 	 * @param \Aurora\System\Managers\GlobalManager $oManager
 	 * @param type $sForcedStorage
 	 */
-	public function __construct(\Aurora\System\Managers\GlobalManager &$oManager, $sForcedStorage = '', \Aurora\System\Module\AbstractModule $oModule = null)
+	public function __construct($sForcedStorage = '', \Aurora\System\Module\AbstractModule $oModule = null)
 	{
-		parent::__construct('', $oManager, $sForcedStorage, $oModule);
+		parent::__construct('', $sForcedStorage, $oModule);
 
 		$this->aDavClients = array();
 	}

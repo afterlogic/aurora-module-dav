@@ -444,8 +444,8 @@ class Module extends \Aurora\System\Module\AbstractModule
 	{
 		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::NormalUser);
 		
-		$oManagerApi = \Aurora\System\Api::GetSystemManager('eav', 'db');
-		$oEntity = $oManagerApi->getEntity((int) \Aurora\System\Api::getAuthenticatedUserId());
+		$oEavManager = new \Aurora\System\Managers\Eav\Manager();
+		$oEntity = $oEavManager->getEntity((int) \Aurora\System\Api::getAuthenticatedUserId());
 		return $oEntity->UUID;
 	}
 	
