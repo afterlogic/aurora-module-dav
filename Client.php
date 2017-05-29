@@ -15,7 +15,9 @@
 if(!defined('DAV_ROOT')) define('DAV_ROOT', 'dav/server.php/');
 if(!defined('DAV_EMAIL_DEV')) define('DAV_EMAIL_DEV', '@');
 
-class CDAVClient 
+namespace Aurora\Modules\Dav;
+
+class Client 
 {
 	const PROP_RESOURCETYPE = '{DAV:}resourcetype';
 	const PROP_DISPLAYNAME = '{DAV:}displayname';

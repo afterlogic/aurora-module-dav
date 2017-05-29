@@ -27,8 +27,6 @@ class Module extends \Aurora\System\Module\AbstractModule
 	{
 		parent::init();
 		
-		$this->incClass('dav-client');
-		
 		$this->oApiDavManager = new Manager('', $this);
 		$this->AddEntry('dav', 'EntryDav');
 		
@@ -109,7 +107,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 	/**
 	 * Returns DAV client.
 	 * 
-	 * @return CDAVClient|false
+	 * @return \Aurora\Modules\Dav\Client|false
 	 */
 	public function GetDavClient()
 	{

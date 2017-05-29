@@ -29,14 +29,14 @@ class Manager extends \Aurora\System\Managers\AbstractManagerWithStorage
 
 	/**
 	 * @param int $iUserId
-	 * @return CDAVClient|false
+	 * @return \Aurora\Modules\Dav\Client|false
 	 */
 	public function &GetDAVClient($iUserId)
 	{
 		$mResult = false;
 		if (!isset($this->aDavClients[$iUserId]))
 		{
-			$this->aDavClients[$iUserId] = new CDAVClient(
+			$this->aDavClients[$iUserId] = new Client(
 				$this->getServerUrl(), $iUserId, $iUserId);
 		}
 
@@ -60,22 +60,6 @@ class Manager extends \Aurora\System\Managers\AbstractManagerWithStorage
 		}
 		
 		return $sServerUrl;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getCalendarStorageType()
-	{
-		return $this->oManager->GetStorageByType('calendar');
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getContactsStorageType()
-	{
-		return $this->oManager->GetStorageByType('contactsmain');
 	}
 
 	/**
@@ -169,18 +153,7 @@ class Manager extends \Aurora\System\Managers\AbstractManagerWithStorage
 				{
 					$sServerUrl = $aUrlParts['scheme'].'://'.$aUrlParts['host'].$sPort;
 
-					if ($this->getCalendarStorageType() === 'caldav' || $this->getContactsStorageType() === 'carddav')
-					{
-						$oDav =& $this->GetDAVClient($iUserId);
-						if ($oDav && $oDav->Connect())
-						{
-							$mResult = $sServerUrl.$oDav->GetCurrentPrincipal();
-						}
-					}
-					else
-					{
-						$mResult = $sServerUrl . $sPath .'/principals/' . $iUserId;
-					}
+					$mResult = $sServerUrl . $sPath .'/principals/' . $iUserId;
 				}
 			}
 		}
