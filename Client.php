@@ -8,14 +8,14 @@
  * For full statements of the licenses see LICENSE-AFTERLOGIC and LICENSE-AGPL3 files.
  */
 
+namespace Aurora\Modules\Dav;
+
 /**
  * @package Classes
  * @subpackage Dav
  */
 if(!defined('DAV_ROOT')) define('DAV_ROOT', 'dav/server.php/');
 if(!defined('DAV_EMAIL_DEV')) define('DAV_EMAIL_DEV', '@');
-
-namespace Aurora\Modules\Dav;
 
 class Client 
 {
