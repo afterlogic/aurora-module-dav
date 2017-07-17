@@ -242,7 +242,7 @@ class Manager extends \Aurora\System\Managers\AbstractManagerWithStorage
 		
 		try
 		{
-			$sFilePath = dirname(__FILE__) . '/storages/db/sql/create.sql';
+			$sFilePath = dirname(__FILE__) . '/Storages/Db/Sql/create.sql';
 			$bResult = $this->oStorage->executeSqlFile($sFilePath);
 		}
 		catch (\Aurora\System\Exceptions\BaseException $oException)
