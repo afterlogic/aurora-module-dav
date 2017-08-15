@@ -189,7 +189,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::Anonymous);
 		
 		return array(
-			'ExternalHostNameOfDAVServer' => $this->getConfig('ExternalHostNameOfDAVServer', ''),
+			'ExternalHostNameOfDAVServer' => $this->GetServerUrl()
 		);
 	}
 	
