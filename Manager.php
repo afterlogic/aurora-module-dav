@@ -198,7 +198,7 @@ class Manager extends \Aurora\System\Managers\AbstractManagerWithStorage
 	}
 
 	/**
-	 * @param CAccount $oAccount
+	 * @param \Aurora\Modules\StandardAuth\Classes\Account $oAccount
 	 * 
 	 * @return bool
 	 */
@@ -214,7 +214,7 @@ class Manager extends \Aurora\System\Managers\AbstractManagerWithStorage
 	}
 
 	/**
-	 * @param CAccount $oAccount
+	 * @param \Aurora\Modules\StandardAuth\Classes\Account $oAccount
 	 */
 	public function deletePrincipal($oAccount)
 	{

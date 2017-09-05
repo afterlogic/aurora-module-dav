@@ -738,7 +738,7 @@ $sFilter =
 		{
 			if ($props['{DAV:}resourcetype']->is('{'.\Sabre\CalDAV\Plugin::NS_CALDAV.'}calendar')) 
 			{
-				$calendar = new CCalendar($key);
+				$calendar = new \Aurora\Modules\Calendar\Classes\Calendar($key);
 
 				$calendar->CTag = $props[self::PROP_CTAG];
 				$calendar->DisplayName = $props[self::PROP_DISPLAYNAME]; 
