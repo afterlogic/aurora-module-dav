@@ -27,7 +27,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 	{
 		parent::init();
 		
-		$this->oApiDavManager = new Manager('', $this);
+		$this->oApiDavManager = new Manager($this);
 		$this->AddEntry('dav', 'EntryDav');
 		
 		$this->subscribeEvent('Calendar::GetCalendars::after', array($this, 'onAfterGetCalendars'));
