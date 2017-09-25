@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%adav_calendarsubscriptions` (
     UNIQUE(principaluri, uri)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE IF NOT EXISTS `%PREFIX%schedulingobjects` (
+CREATE TABLE IF NOT EXISTS `%PREFIX%adav_schedulingobjects` (
     id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     principaluri VARBINARY(255),
     calendardata MEDIUMBLOB,
