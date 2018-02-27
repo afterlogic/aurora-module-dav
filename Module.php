@@ -412,13 +412,14 @@ class Module extends \Aurora\System\Module\AbstractModule
 	public function GetPrincipalUrl()
 	{
 		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::NormalUser);
+		$mResult = null;
 		
 		$oUser = \Aurora\System\Api::getAuthenticatedUser();
 		if($oUser)
 		{
-			$sUUID = $oUser->UUID;
+			$mResult = $this->oApiDavManager->getPrincipalUrl($oUser->PublicId);			
 		}
-		return $this->oApiDavManager->getPrincipalUrl($sUUID);
+		return $mResult;
 	}
 	
 	/**
@@ -441,10 +442,17 @@ class Module extends \Aurora\System\Module\AbstractModule
 	public function GetLogin()
 	{
 		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::NormalUser);
+		$mResult = null;
 		
-		$oEavManager = new \Aurora\System\Managers\Eav();
-		$oEntity = $oEavManager->getEntity((int) \Aurora\System\Api::getAuthenticatedUserId(), '\Aurora\Modules\Core\Classes\User');
-		return $oEntity->UUID;
+		$oEntity = (new \Aurora\System\Managers\Eav())->getEntity(
+			(int) \Aurora\System\Api::getAuthenticatedUserId(), '\Aurora\Modules\Core\Classes\User'
+		);
+		if (!empty($oEntity))
+		{
+			$mResult = $oEntity->PublicId;
+		}
+		
+		return $mResult;
 	}
 	
 	/**
