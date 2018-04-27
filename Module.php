@@ -96,13 +96,12 @@ class Module extends \Aurora\System\Module\AbstractModule
 		
 		@set_time_limit(3000);
 		
-		if (false !== \strpos($this->oHttp->GetUrl(), '?dav'))
-		{
-			$aPath = \trim($this->oHttp->GetPath(), '/\\ ');
-			$sBaseUri = (0 < \strlen($aPath) ? '/'.$aPath : '').'/?dav/';
-		}
-		\Afterlogic\DAV\Server::getInstance($sBaseUri)->exec();
-		return '';
+		$sCurrentFile = \basename(__FILE__);
+		$sRequestUri = empty($_SERVER['REQUEST_URI']) ? '' : \trim($_SERVER['REQUEST_URI']);
+		$sBaseUri = \substr($sRequestUri, 0, \strpos($sRequestUri,'/'.$sCurrentFile)).'/'.$sCurrentFile.'/';
+		
+		\Afterlogic\DAV\Server::getInstance($sRequestUri)->exec();
+//		var_dump($_SERVER);
 	}
 	
 	/**
