@@ -107,19 +107,6 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%adav_schedulingobjects` (
     size INT(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4; 
 
-CREATE TABLE IF NOT EXISTS `%PREFIX%adav_calendarshares` (
-  `id` int(11) unsigned NOT NULL auto_increment,
-  `calendarid` int(11) unsigned default NULL,
-  `member` int(11) unsigned default NULL,
-  `status` tinyint(2) default NULL,
-  `readonly` tinyint(1) NOT NULL default '0',
-  `summary` varchar(150) default NULL,
-  `displayname` varchar(100) default NULL,
-  `color` varchar(10) default NULL,
-  `principaluri` varchar(255) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 CREATE TABLE IF NOT EXISTS `%PREFIX%adav_cards` (
     id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     addressbookid INT(11) UNSIGNED NOT NULL,
@@ -149,16 +136,6 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%adav_locks` (
     uri VARBINARY(1000),
     INDEX(token),
     INDEX(uri(100)) 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE IF NOT EXISTS `%PREFIX%adav_principals` (
-	`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`uri` VARCHAR(255) NOT NULL,
-	`email` VARCHAR(80) NULL DEFAULT NULL,
-	`vcardurl` VARCHAR(80) NULL DEFAULT NULL,
-	`displayname` VARCHAR(80) NULL DEFAULT NULL,
-	PRIMARY KEY (`id`),
-	UNIQUE INDEX `ADAV_PRINCIPALS_URI_INDEX` (`uri`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `%PREFIX%adav_propertystorage` (
