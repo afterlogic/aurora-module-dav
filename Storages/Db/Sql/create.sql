@@ -157,10 +157,3 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%adav_reminders` (
   `allday` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE IF NOT EXISTS `%PREFIX%adav_users` (
-    id INTEGER UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    username VARBINARY(50),
-    digesta1 VARBINARY(32),
-    UNIQUE(username)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
