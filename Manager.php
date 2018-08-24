@@ -58,7 +58,7 @@ class Manager extends \Aurora\System\Managers\AbstractManagerWithStorage
 		$sServerUrl = $this->oModule->getConfig('ExternalHostNameOfDAVServer', '');		
 		if (empty($sServerUrl))
 		{
-			$sServerUrl = $this->GetModule()->oHttp->GetFullUrl().'dav.php';
+			$sServerUrl = $this->GetModule()->oHttp->GetFullUrl().'dav.php/';
 		}
 		
 		return $sServerUrl;
