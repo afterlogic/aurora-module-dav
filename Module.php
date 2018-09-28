@@ -78,7 +78,17 @@ class Module extends \Aurora\System\Module\AbstractModule
 	{
 		if ($mResult)
 		{
-			$mResult = $this->oApiDavManager->createTablesFromFile();
+			$oDBName = \Aurora\System\Api::GetSettings()->GetConf('DBName');
+			$sCheckTablesQuery = "SELECT count(*) FROM INFORMATION_SCHEMA.TABLES
+				WHERE table_schema = '{$oDBName}'
+				AND table_name LIKE '%adav_%' ";
+			$stmt = \Aurora\System\Api::GetPDO()->prepare($sCheckTablesQuery);
+			$stmt->execute();
+			$iCheckTables = (int) $stmt->fetchColumn();
+			if ($iCheckTables < 1)
+			{
+				$mResult = $this->oApiDavManager->createTablesFromFile();
+			}
 		}
 	}
 	/***** private functions *****/
