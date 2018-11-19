@@ -155,7 +155,7 @@ class Manager extends \Aurora\System\Managers\AbstractManagerWithStorage
 				{
 					$sServerUrl = $aUrlParts['scheme'].'://'.$aUrlParts['host'].$sPort;
 
-					$mResult = $sServerUrl . $sPath .'/principals/' . $iUserId;
+					$mResult = $sServerUrl . $sPath .'/' . \Afterlogic\Dav\Constants::PRINCIPALS_PREFIX . '/' . $iUserId;
 				}
 			}
 		}

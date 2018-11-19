@@ -17,6 +17,17 @@ namespace Aurora\Modules\Dav;
 class Module extends \Aurora\System\Module\AbstractModule
 {
 	public $oApiDavManager = null;
+
+	public function __construct($sPath, $sVersion = '1.0')
+	{
+		parent::__construct($sPath, $sVersion);
+		$this->oApiDavManager = new Manager($this);
+	}
+
+	public function GetModuleManager()
+	{
+		return parent::GetModuleManager();
+	}
 	
 	/***** private functions *****/
 	/**
@@ -26,9 +37,6 @@ class Module extends \Aurora\System\Module\AbstractModule
 	 */
 	public function init()
 	{
-		parent::init();
-		
-		$this->oApiDavManager = new Manager($this);
 		$this->AddEntry('dav', 'EntryDav');
 		
 		$this->subscribeEvent('Calendar::GetCalendars::after', array($this, 'onAfterGetCalendars'));
@@ -58,12 +66,9 @@ class Module extends \Aurora\System\Module\AbstractModule
 	 */
     public function onGetMobileSyncInfo($aArgs, &$mResult)
 	{
-		$sDavLogin = $this->GetLogin();
-		$sDavServer = $this->GetServerUrl();
-		
 		$mResult['EnableDav'] = true;
-		$mResult['Dav']['Login'] = $sDavLogin;
-		$mResult['Dav']['Server'] = $sDavServer;
+		$mResult['Dav']['Login'] = $this->GetLogin();
+		$mResult['Dav']['Server'] = $this->GetServerUrl();
 		$mResult['Dav']['PrincipalUrl'] = $this->GetPrincipalUrl();
 	}
 	
@@ -106,12 +111,12 @@ class Module extends \Aurora\System\Module\AbstractModule
 		
 		@set_time_limit(3000);
 		
-		$sCurrentFile = \basename(__FILE__);
 		$sRequestUri = empty($_SERVER['REQUEST_URI']) ? '' : \trim($_SERVER['REQUEST_URI']);
-		$sBaseUri = \substr($sRequestUri, 0, \strpos($sRequestUri,'/'.$sCurrentFile)).'/'.$sCurrentFile.'/';
-		
-		\Afterlogic\DAV\Server::getInstance($sRequestUri)->exec();
-//		var_dump($_SERVER);
+
+		$oServer = \Afterlogic\DAV\Server::getInstance();
+		$oServer->setBaseUri($sRequestUri);
+
+		\Afterlogic\DAV\Server::getInstance()->exec();
 	}
 	
 	/**
