@@ -16,13 +16,22 @@ namespace Aurora\Modules\Dav;
  */
 class Module extends \Aurora\System\Module\AbstractModule
 {
-	public $oApiDavManager = null;
+	public $oManager = null;
 
 	public function __construct($sPath, $sVersion = '1.0')
 	{
 		parent::__construct($sPath, $sVersion);
-		$this->oApiDavManager = new Manager($this);
 	}
+
+	public function getManager()
+	{
+		if ($this->oManager === null)
+		{
+			$this->oManager = new Manager($this);
+		}
+
+		return $this->oManager;
+	}	
 
 	public function GetModuleManager()
 	{
@@ -92,7 +101,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 			$iCheckTables = (int) $stmt->fetchColumn();
 			if ($iCheckTables < 1)
 			{
-				$mResult = $this->oApiDavManager->createTablesFromFile();
+				$mResult = $this->getManager()->createTablesFromFile();
 			}
 		}
 	}
@@ -128,7 +137,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 	{
 		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::NormalUser);
 		
-		return $this->oApiDavManager->GetDAVClient(\Aurora\System\Api::getAuthenticatedUserId());
+		return $this->getManager()->GetDAVClient(\Aurora\System\Api::getAuthenticatedUserId());
 	}
 	
 	/**
@@ -141,7 +150,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 	{
 		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::NormalUser);
 		
-		return $this->oApiDavManager->getVCardObject($Data);
+		return $this->getManager()->getVCardObject($Data);
 	}
 	/***** public functions *****/
 	
@@ -320,7 +329,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 	{
 		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::Anonymous);
 		
-		return $this->oApiDavManager->getServerUrl();
+		return $this->getManager()->getServerUrl();
 	}
 	
 	/**
@@ -368,7 +377,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 	{
 		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::Anonymous);
 		
-		return $this->oApiDavManager->getServerHost();
+		return $this->getManager()->getServerHost();
 	}
 	
 	/**
@@ -416,7 +425,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 	{
 		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::Anonymous);
 		
-		return $this->oApiDavManager->getServerPort();
+		return $this->getManager()->getServerPort();
 	}
 	
 	/**
@@ -432,7 +441,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 		$oUser = \Aurora\System\Api::getAuthenticatedUser();
 		if($oUser)
 		{
-			$mResult = $this->oApiDavManager->getPrincipalUrl($oUser->PublicId);			
+			$mResult = $this->getManager()->getPrincipalUrl($oUser->PublicId);			
 		}
 		return $mResult;
 	}
@@ -446,7 +455,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 	{
 		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::NormalUser);
 		
-		return $this->oApiDavManager->isSsl();
+		return $this->getManager()->isSsl();
 	}
 	
 	/**
@@ -459,7 +468,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::NormalUser);
 		$mResult = null;
 		
-		$oEntity = (new \Aurora\System\Managers\Eav())->getEntity(
+		$oEntity = \Aurora\System\Managers\Eav::getInstance()->getEntity(
 			(int) \Aurora\System\Api::getAuthenticatedUserId(), '\Aurora\Modules\Core\Classes\User'
 		);
 		if (!empty($oEntity))
@@ -479,7 +488,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 	{
 		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::NormalUser);
 		
-		return $this->oApiDavManager->isMobileSyncEnabled();
+		return $this->getManager()->isMobileSyncEnabled();
 	}
 	
 	/**
@@ -506,7 +515,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 	{
 		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::NormalUser);
 		
-		return $this->oApiDavManager->testConnection(
+		return $this->getManager()->testConnection(
 			\Aurora\System\Api::getAuthenticatedUserId()
 		);
 	}
@@ -520,7 +529,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 	{
 		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::NormalUser);
 		
-		return $this->oApiDavManager->deletePrincipal(
+		return $this->getManager()->deletePrincipal(
 			\Aurora\System\Api::getAuthenticatedUserId()
 		);
 	}
