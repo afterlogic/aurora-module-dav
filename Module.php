@@ -469,7 +469,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 		$mResult = null;
 		
 		$oEntity = \Aurora\System\Managers\Eav::getInstance()->getEntity(
-			(int) \Aurora\System\Api::getAuthenticatedUserId(), '\Aurora\Modules\Core\Classes\User'
+			(int) \Aurora\System\Api::getAuthenticatedUserId(), \Aurora\Modules\Core\Classes\User::class
 		);
 		if (!empty($oEntity))
 		{
@@ -544,6 +544,45 @@ class Module extends \Aurora\System\Module\AbstractModule
 		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::NormalUser);
 		
 		return \Afterlogic\DAV\Constants::DAV_PUBLIC_PRINCIPAL;
+	}
+
+	/**
+	 * 
+	 */
+	public function Login($Login, $Password)
+	{
+		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::Anonymous);
+		$mResult = false;
+		
+		$aArgs = array (
+			'Login' => $Login,
+			'Password' => $Password,
+			'SignMe' => false
+		);
+		$this->broadcastEvent(
+			'Login', 
+			$aArgs,
+			$mResult
+		);
+		
+		if (is_array($mResult))
+		{
+			$sAuthToken = \Aurora\System\Api::UserSession()->Set($mResult, time());
+			
+			//this will store user data in static variable of Api class for later usage
+			$oUser = \Aurora\System\Api::getAuthenticatedUser($sAuthToken);
+			
+			return array(
+				'AuthToken' => $sAuthToken
+			);
+		}
+
+		\Aurora\System\Api::LogEvent('login-failed: ' . $Login, self::GetName());
+		if (!is_writable(\Aurora\System\Api::DataPath()))
+		{
+			throw new \Aurora\System\Exceptions\ApiException(\Aurora\System\Notifications::SystemNotConfigured);
+		}
+		throw new \Aurora\System\Exceptions\ApiException(\Aurora\System\Notifications::AuthError);
 	}
 	/***** public functions might be called with web API *****/
 }
