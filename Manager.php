@@ -155,7 +155,7 @@ class Manager extends \Aurora\System\Managers\AbstractManagerWithStorage
 				{
 					$sServerUrl = $aUrlParts['scheme'].'://'.$aUrlParts['host'].$sPort;
 
-					$mResult = $sServerUrl . $sPath .'/' . \Afterlogic\DAV\Constants::PRINCIPALS_PREFIX . '/' . $iUserId;
+					$mResult = $sServerUrl . $sPath .'/' . \Afterlogic\DAV\Constants::PRINCIPALS_PREFIX . $iUserId;
 				}
 			}
 		}
@@ -221,7 +221,7 @@ class Manager extends \Aurora\System\Managers\AbstractManagerWithStorage
 	public function deletePrincipal($oAccount)
 	{
 		$oPrincipalBackend = \Afterlogic\DAV\Backend::Principal();
-		$oPrincipalBackend->deletePrincipal(\Afterlogic\DAV\Constants::PRINCIPALS_PREFIX . '/' . $oAccount->Email);
+		$oPrincipalBackend->deletePrincipal(\Afterlogic\DAV\Constants::PRINCIPALS_PREFIX . $oAccount->Email);
 	}
 
 	/**

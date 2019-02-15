@@ -92,7 +92,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 	{
 		if ($mResult)
 		{
-			$oDBName = \Aurora\System\Api::GetSettings()->GetConf('DBName');
+			$oDBName = \Aurora\System\Api::GetSettings()->DBName;
 			$sCheckTablesQuery = "SELECT count(*) FROM INFORMATION_SCHEMA.TABLES
 				WHERE table_schema = '{$oDBName}'
 				AND table_name LIKE '%adav_%' ";

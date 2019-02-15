@@ -826,7 +826,7 @@ $sFilter =
 			return false;		
 		}
 
-		$sProxyStr .= '<d:href>' . \Afterlogic\DAV\Constants::PRINCIPALS_PREFIX . '/' . $to . '</d:href>';
+		$sProxyStr .= '<d:href>' . \Afterlogic\DAV\Constants::PRINCIPALS_PREFIX . $to . '</d:href>';
 
 		return $this->client->propPatch($proxy, array('group-member-set'=>$sProxyStr));
 	}
@@ -846,7 +846,7 @@ $sFilter =
 			}
 		}
 
-		$sProxyStr = str_replace('<d:href>' . \Afterlogic\DAV\Constants::PRINCIPALS_PREFIX . '/' . $to . '</d:href>', '', $sProxyStr);
+		$sProxyStr = str_replace('<d:href>' . \Afterlogic\DAV\Constants::PRINCIPALS_PREFIX . $to . '</d:href>', '', $sProxyStr);
 		
 		return $this->client->propPatch(
 				$proxy, 
