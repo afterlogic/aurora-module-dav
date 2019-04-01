@@ -61,7 +61,7 @@ class Manager extends \Aurora\System\Managers\AbstractManagerWithStorage
 			$sServerUrl = $this->GetModule()->oHttp->GetFullUrl().'dav.php/';
 		}
 		
-		return $sServerUrl;
+		return \rtrim($sServerUrl, '/') . '/';
 	}
 
 	/**
