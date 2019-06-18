@@ -554,18 +554,8 @@ class Module extends \Aurora\System\Module\AbstractModule
 	public function Login($Login, $Password)
 	{
 		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::Anonymous);
-		$mResult = false;
 		
-		$aArgs = array (
-			'Login' => $Login,
-			'Password' => $Password,
-			'SignMe' => false
-		);
-		$this->broadcastEvent(
-			'Login', 
-			$aArgs,
-			$mResult
-		);
+		$mResult = \Aurora\Modules\Core\Module::Decorator()->Login($Login, $Password);
 		
 		if (is_array($mResult))
 		{
