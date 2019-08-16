@@ -554,23 +554,13 @@ class Module extends \Aurora\System\Module\AbstractModule
 	public function Login($Login, $Password)
 	{
 		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::Anonymous);
-		$mResult = false;
 		
-		$aArgs = array (
-			'Login' => $Login,
-			'Password' => $Password,
-			'SignMe' => false
-		);
-		$this->broadcastEvent(
-			'Login', 
-			$aArgs,
-			$mResult
-		);
+		$mResult = \Aurora\Modules\Core\Module::Decorator()->Login($Login, $Password, false);
 
-		if (is_array($mResult))
+		if (is_array($mResult) && isset($mResult['AuthToken']))
 		{
-			$sAuthToken = \Aurora\System\Api::UserSession()->Set($mResult, time());
-			
+			$sAuthToken = $mResult['AuthToken'];
+
 			//this will store user data in static variable of Api class for later usage
 			$oUser = \Aurora\System\Api::getAuthenticatedUser($sAuthToken);
 			
