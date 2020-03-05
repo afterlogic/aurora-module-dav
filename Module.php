@@ -567,7 +567,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 	{
 		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::Anonymous);
 		
-		$mResult = \Aurora\Modules\Core\Module::Decorator()->Login($Login, $Password, false);
+		$mResult = \Aurora\Modules\Core\Module::Decorator()->Login($Login, $Password, '', false);
 
 		if (is_array($mResult) && isset($mResult['AuthToken']))
 		{
