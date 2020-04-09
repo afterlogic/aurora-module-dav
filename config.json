@@ -30,5 +30,13 @@
     "ExternalHostNameOfDAVServer": [
         "",
         "string"
+    ],
+	"UseFullEmailForLogin": [
+		true,
+		"bool"
+	],
+    "DomainForLoginWithoutEmail": [
+        "",
+        "string"
     ]
 }
