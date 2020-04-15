@@ -1,8 +1,11 @@
+/*
+* Attention! 'uri' and 'uid' fields need to be at least 255 length
+*/
 CREATE TABLE IF NOT EXISTS `%PREFIX%adav_addressbooks` (
     id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     principaluri VARBINARY(255),
     displayname VARCHAR(255),
-    uri VARBINARY(200),
+    uri VARBINARY(255),
     description TEXT,
     synctoken INT(11) UNSIGNED NOT NULL DEFAULT '1',
     UNIQUE(principaluri(100), uri(100))
@@ -10,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%adav_addressbooks` (
 
 CREATE TABLE IF NOT EXISTS `%PREFIX%adav_addressbookchanges` (
     id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    uri VARBINARY(200) NOT NULL,
+    uri VARBINARY(255) NOT NULL,
     synctoken INT(11) UNSIGNED NOT NULL,
     addressbookid INT(11) UNSIGNED NOT NULL,
     operation TINYINT(1) NOT NULL,
@@ -34,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%adav_calendarinstances` (
 	`principaluri` VARBINARY(100) NULL DEFAULT NULL,
 	`access` TINYINT(1) NOT NULL DEFAULT '1' COMMENT '1 = owner, 2 = read, 3 = readwrite',
 	`displayname` VARCHAR(100) NULL DEFAULT NULL,
-	`uri` VARBINARY(200) NULL DEFAULT NULL,
+	`uri` VARBINARY(255) NULL DEFAULT NULL,
 	`description` TEXT NULL,
 	`calendarorder` INT(11) UNSIGNED NOT NULL DEFAULT '0',
 	`calendarcolor` VARBINARY(10) NULL DEFAULT NULL,
@@ -53,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%adav_calendarinstances` (
 CREATE TABLE IF NOT EXISTS `%PREFIX%adav_calendarobjects` (
     id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     calendardata MEDIUMBLOB,
-    uri VARBINARY(200),
+    uri VARBINARY(255),
     calendarid INTEGER UNSIGNED NOT NULL,
     lastmodified INT(11) UNSIGNED,
     etag VARBINARY(32),
@@ -61,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%adav_calendarobjects` (
     componenttype VARBINARY(8),
     firstoccurence INT(11) UNSIGNED,
     lastoccurence INT(11) UNSIGNED,
-    uid VARBINARY(200),
+    uid VARBINARY(255),
     UNIQUE(calendarid, uri)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -74,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%adav_calendars` (
 
 CREATE TABLE IF NOT EXISTS `%PREFIX%adav_calendarchanges` (
     id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    uri VARBINARY(200) NOT NULL,
+    uri VARBINARY(255) NOT NULL,
     synctoken INT(11) UNSIGNED NOT NULL,
     calendarid INT(11) UNSIGNED NOT NULL,
     operation TINYINT(1) NOT NULL,
@@ -83,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%adav_calendarchanges` (
 
 CREATE TABLE IF NOT EXISTS `%PREFIX%adav_calendarsubscriptions` (
     id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    uri VARBINARY(200) NOT NULL,
+    uri VARBINARY(255) NOT NULL,
     principaluri VARBINARY(100) NOT NULL,
     source TEXT,
     displayname VARCHAR(100),
@@ -101,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%adav_schedulingobjects` (
     id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     principaluri VARBINARY(255),
     calendardata MEDIUMBLOB,
-    uri VARBINARY(200),
+    uri VARBINARY(255),
     lastmodified INT(11) UNSIGNED,
     etag VARBINARY(32),
     size INT(11) UNSIGNED NOT NULL
@@ -111,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `%PREFIX%adav_cards` (
     id INT(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     addressbookid INT(11) UNSIGNED NOT NULL,
     carddata MEDIUMBLOB,
-    uri VARBINARY(200),
+    uri VARBINARY(255),
     lastmodified INT(11) UNSIGNED,
     etag VARBINARY(32),
     size INT(11) UNSIGNED NOT NULL
