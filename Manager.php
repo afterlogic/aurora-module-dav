@@ -12,7 +12,7 @@ namespace Aurora\Modules\Dav;
  * @license https://afterlogic.com/products/common-licensing Afterlogic Software License
  * @copyright Copyright (c) 2019, Afterlogic Corp.
  */
-class Manager extends \Aurora\System\Managers\AbstractManagerWithStorage
+class Manager extends \Aurora\System\Managers\AbstractManager
 {
 	/**
 	 * @var array
@@ -25,7 +25,7 @@ class Manager extends \Aurora\System\Managers\AbstractManagerWithStorage
 	 */
 	public function __construct(\Aurora\System\Module\AbstractModule $oModule = null)
 	{
-		parent::__construct($oModule, new Storages\Db\Storage($this));
+		parent::__construct($oModule);
 		$this->aDavClients = array();
 	}
 
