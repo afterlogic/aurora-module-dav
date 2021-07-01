@@ -52,7 +52,6 @@ class Module extends \Aurora\System\Module\AbstractModule
 
 		$this->subscribeEvent('Calendar::GetCalendars::after', array($this, 'onAfterGetCalendars'));
 		$this->subscribeEvent('MobileSync::GetInfo', array($this, 'onGetMobileSyncInfo'));
-		$this->subscribeEvent('Core::CreateTables::after', array($this, 'onAfterCreateTables'));
 	}
 
 	/**
@@ -100,27 +99,6 @@ class Module extends \Aurora\System\Module\AbstractModule
 	/***** private functions *****/
 
 	/***** public functions *****/
-
-	public function CreateTables()
-	{
-		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::NormalUser);
-
-		$mResult = true;
-
-		$oDBName = \Aurora\System\Api::GetSettings()->DBName;
-		$sCheckTablesQuery = "SELECT count(*) FROM INFORMATION_SCHEMA.TABLES
-			WHERE table_schema = '{$oDBName}'
-			AND table_name LIKE '%adav_%' ";
-		$stmt = \Aurora\System\Api::GetPDO()->prepare($sCheckTablesQuery);
-		$stmt->execute();
-		$iCheckTables = (int) $stmt->fetchColumn();
-		if ($iCheckTables < 1)
-		{
-			$mResult = $this->getManager()->createTablesFromFile();
-		}
-
-		return $mResult;
-	}
 
 	/**
 	 * @ignore

@@ -12,7 +12,7 @@ namespace Aurora\Modules\Dav;
  * @license https://afterlogic.com/products/common-licensing Afterlogic Software License
  * @copyright Copyright (c) 2019, Afterlogic Corp.
  */
-class Manager extends \Aurora\System\Managers\AbstractManagerWithStorage
+class Manager extends \Aurora\System\Managers\AbstractManager
 {
 	/**
 	 * @var array
@@ -20,12 +20,12 @@ class Manager extends \Aurora\System\Managers\AbstractManagerWithStorage
 	protected $aDavClients;
 
 	/**
-	 * 
+	 *
 	 * @param \Aurora\System\Module\AbstractModule $oModule
 	 */
 	public function __construct(\Aurora\System\Module\AbstractModule $oModule = null)
 	{
-		parent::__construct($oModule, new Storages\Db\Storage($this));
+		parent::__construct($oModule);
 		$this->aDavClients = array();
 	}
 
@@ -55,12 +55,12 @@ class Manager extends \Aurora\System\Managers\AbstractManagerWithStorage
 	 */
 	public function getServerUrl()
 	{
-		$sServerUrl = $this->oModule->getConfig('ExternalHostNameOfDAVServer', '');		
+		$sServerUrl = $this->oModule->getConfig('ExternalHostNameOfDAVServer', '');
 		if (empty($sServerUrl))
 		{
 			$sServerUrl = $this->GetModule()->oHttp->GetFullUrl().'dav.php/';
 		}
-		
+
 		return \rtrim($sServerUrl, '/') . '/';
 	}
 
@@ -114,7 +114,7 @@ class Manager extends \Aurora\System\Managers\AbstractManagerWithStorage
 		{
 			$iResult = 443;
 		}
-			
+
 		$sServerUrl = $this->getServerUrl();
 		if (!empty($sServerUrl))
 		{
@@ -129,7 +129,7 @@ class Manager extends \Aurora\System\Managers\AbstractManagerWithStorage
 
 	/**
 	 * @param int $iUserId
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getPrincipalUrl($iUserId)
@@ -169,7 +169,7 @@ class Manager extends \Aurora\System\Managers\AbstractManagerWithStorage
 
 	/**
 	 * @param int $iUserId
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getLogin($iUserId)
@@ -187,9 +187,9 @@ class Manager extends \Aurora\System\Managers\AbstractManagerWithStorage
 	}
 
 	/**
-	 * 
+	 *
 	 * @param bool $bMobileSyncEnable
-	 * 
+	 *
 	 * @return bool
 	 */
 	public function setMobileSyncEnable($bMobileSyncEnable)
@@ -201,7 +201,7 @@ class Manager extends \Aurora\System\Managers\AbstractManagerWithStorage
 
 	/**
 	 * @param \Aurora\Modules\StandardAuth\Classes\Account $oAccount
-	 * 
+	 *
 	 * @return bool
 	 */
 	public function testConnection($oAccount)
@@ -232,26 +232,4 @@ class Manager extends \Aurora\System\Managers\AbstractManagerWithStorage
 	{
 		return \Sabre\VObject\Reader::read($sData, \Sabre\VObject\Reader::OPTION_IGNORE_INVALID_LINES);
 	}
-	
-	/**
-	 * Creates tables required for module work by executing create.sql file.
-	 * 
-	 * @return boolean
-	 */
-	public function createTablesFromFile()
-	{
-		$bResult = false;
-		
-		try
-		{
-			$sFilePath = dirname(__FILE__) . '/Storages/Db/Sql/create.sql';
-			$bResult = \Aurora\System\Managers\Db::getInstance()->executeSqlFile($sFilePath);
-		}
-		catch (\Aurora\System\Exceptions\BaseException $oException)
-		{
-			$this->setLastException($oException);
-		}
-
-		return $bResult;
-	}	
 }
