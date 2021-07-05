@@ -91,10 +91,10 @@ class Module extends \Aurora\System\Module\AbstractModule
 	 */
 	public function onAfterCreateTables($aArgs, &$mResult)
 	{
-		if ($mResult)
-		{
-			$mResult = self::Decorator()->CreateTables();
-		}
+		// if ($mResult)
+		// {
+		// 	$mResult = self::Decorator()->CreateTables();
+		// }
 	}
 	/***** private functions *****/
 
