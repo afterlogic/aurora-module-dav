@@ -459,10 +459,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 	{
 		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::NormalUser);
 		$mResult = null;
-
-		$oEntity = \Aurora\System\Managers\Eav::getInstance()->getEntity(
-			(int) \Aurora\System\Api::getAuthenticatedUserId(), \Aurora\Modules\Core\Classes\User::class
-		);
+		$oEntity = \Aurora\Modules\Core\Models\User::find(\Aurora\System\Api::getAuthenticatedUserId());
 		if (!empty($oEntity))
 		{
 			$mResult = $oEntity->PublicId;
