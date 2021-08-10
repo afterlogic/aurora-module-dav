@@ -7,6 +7,8 @@
 
 namespace Aurora\Modules\Dav;
 
+use Aurora\System\Application;
+
 /**
  * @license https://www.gnu.org/licenses/agpl-3.0.html AGPL-3.0
  * @license https://afterlogic.com/products/common-licensing Afterlogic Software License
@@ -58,7 +60,7 @@ class Manager extends \Aurora\System\Managers\AbstractManager
 		$sServerUrl = $this->oModule->getConfig('ExternalHostNameOfDAVServer', '');
 		if (empty($sServerUrl))
 		{
-			$sServerUrl = $this->GetModule()->oHttp->GetFullUrl().'dav.php/';
+			$sServerUrl = Application::getBaseUrl() .'dav.php/';
 		}
 
 		return \rtrim($sServerUrl, '/') . '/';
