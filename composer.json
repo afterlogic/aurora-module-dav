@@ -5,7 +5,7 @@
 		"php": ">=5.4.0",
 		"afterlogic/aurora-framework": "~0.10.0",
 		"afterlogic/dav": "~3.0.0",
-		"afterlogc/sabre-dav": "3.2.*"
+		"afterlogic/sabre-dav": "3.2.*"
 	},
 	"extra": {
 		"installer-name": "Dav"
