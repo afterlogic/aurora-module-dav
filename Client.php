@@ -7,6 +7,12 @@
 
 namespace Aurora\Modules\Dav;
 
+use Afterlogic\DAV\CalDAV\Plugin;
+use Aurora\Modules\Calendar\Enums\Permission;
+use Sabre\DAV\Xml\Element\Sharee;
+
+use function Sabre\Uri\split;
+
 /**
  * @license https://www.gnu.org/licenses/agpl-3.0.html AGPL-3.0
  * @license https://afterlogic.com/products/common-licensing Afterlogic Software License
@@ -32,6 +38,7 @@ class Client
 	const PROP_ETAG = '{DAV:}getetag';
 	const PROP_CURRENT_USER_PRINCIPAL = '{DAV:}current-user-principal';
 	const PROP_CALENDAR_HOME_SET = '{urn:ietf:params:xml:ns:caldav}calendar-home-set';
+	const PROP_CALENDAR_INVITE = '{' . Plugin::NS_CALENDARSERVER . '}invite';
 	const PROP_ADDRESSBOOK_HOME_SET = '{urn:ietf:params:xml:ns:carddav}addressbook-home-set';
 	const PROP_GROUP_MEMBERSHIP = '{DAV:}group-membership';
 	const PROP_GROUP_MEMBER_SET = '{DAV:}group-member-set';
@@ -730,14 +737,16 @@ $sFilter =
 					self::PROP_CTAG, 
 					self::PROP_CALENDAR_DESCRIPTION, 
 					self::PROP_CALENDAR_COLOR, 
-					self::PROP_CALENDAR_ORDER
+					self::PROP_CALENDAR_ORDER,
+					self::PROP_CALENDAR_INVITE
 				), 
 				1
 		);
 		
-		foreach($aProps as $key=>$props)
+		foreach($aProps as $key => $props)
 		{
-			if ($props['{DAV:}resourcetype']->is('{'.\Sabre\CalDAV\Plugin::NS_CALDAV.'}calendar')) 
+			if ($props['{DAV:}resourcetype']->is('{'.\Sabre\CalDAV\Plugin::NS_CALDAV.'}calendar') &&
+				!$props['{DAV:}resourcetype']->is('{'.\Sabre\CalDAV\Plugin::NS_CALENDARSERVER.'}shared'))
 			{
 				$calendar = new \Aurora\Modules\Calendar\Classes\Calendar($key);
 
@@ -754,6 +763,37 @@ $sFilter =
 				if (isset($props[self::PROP_CALENDAR_ORDER]))
 				{
 					$calendar->Order = $props[self::PROP_CALENDAR_ORDER];
+				}
+				if (isset($props[self::PROP_CALENDAR_INVITE])) {
+					$aInvitesProp = $props[self::PROP_CALENDAR_INVITE];
+
+					foreach ($aInvitesProp as $aInviteProp) {
+						if ($aInviteProp['name'] === '{' . Plugin::NS_CALENDARSERVER . '}user') {
+							
+							$aShare = [];
+							
+							foreach ($aInviteProp['value'] as $aValue) {
+
+								switch ($aValue['name'])
+								{
+									case '{DAV:}href':
+										list(, $aShare['email']) = split($aValue['value']);
+								
+										break;
+									case '{http://calendarserver.org/ns/}access':
+										if (isset($aValue['value'][0])) {
+											$aShare['access'] = $aValue['value'][0]['name'] === '{' . Plugin::NS_CALENDARSERVER . '}read-write'
+												? Permission::Write
+												: Permission::Read;
+										}
+										break;
+								}
+							}
+							if (!empty($aShare)) {
+								$calendar->Shares[] = $aShare;
+							}
+						}
+					}
 				}
 
 				$calendars[$calendar->Id] = $calendar;
