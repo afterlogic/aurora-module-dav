@@ -391,16 +391,13 @@ class Client
 	*
 	* @return array
 	*/
-	function QueryCard($filter, $url = '') 
+	function QueryCardsInfo($filter, $url = '') 
 	{
 		$xml = 
 '<?xml version="1.0" encoding="utf-8" ?>
 <c:addressbook-query xmlns:d="DAV:" xmlns:c="'.\Sabre\CardDAV\Plugin::NS_CARDDAV.'">
 	<d:prop>
 		<d:getetag/>
-		<c:address-data>
-			<c:allprop />
-		</c:address-data>
 	</d:prop>
 	'.$filter.'
 </c:addressbook-query>';
@@ -431,14 +428,70 @@ class Client
 			$response = array();
 			$response['href'] = basename($key);
 			$response['etag'] = isset($props[200]) ? preg_replace('/^"?([^"]+)"?/', '$1', $props[200][self::PROP_ETAG]) : '';
-			$response['data'] = isset($props[200]) ? $props[200][self::PROP_ADDRESSBOOK_DATA] : '';
+			$response['data'] = isset($props[200]) && isset($props[200][self::PROP_ADDRESSBOOK_DATA]) ? $props[200][self::PROP_ADDRESSBOOK_DATA] : '';
 			
 			$report[] = $response;
         }		
 		return $report;
 	}
 
-	function GetVcards($url = '', $sSearch = '', $sGroupId = '') 
+		/**
+	* @param string $filter
+	* @param string $url
+	*
+	* @return array
+	*/
+	function QueryCards($calendar_url, $urls = []) 
+	{
+		$aHrefs = [];
+		foreach ($urls as $url) {
+			$aHrefs[] = '	<d:href>' . $url . '</d:href>';
+		}
+		$sHrefs = implode("\n", $aHrefs);
+		$xml = 
+'<?xml version="1.0" encoding="utf-8" ?>
+<c:addressbook-multiget xmlns:d="DAV:" xmlns:c="'.\Sabre\CardDAV\Plugin::NS_CARDDAV.'">
+	<d:prop>
+		<d:getetag />
+		<c:address-data />
+	</d:prop>
+' . $sHrefs . '
+</c:addressbook-multiget>';
+
+		$res = array();
+		try
+		{
+			$res = $this->client->request(
+					'REPORT', 
+					$calendar_url, 
+					$xml, 
+					array(
+						'Content-Type' => 'application/xml', 
+						'Depth' => '1'
+					)
+			);
+		}
+		catch(\Sabre\DAV\Exception $ex)
+		{
+			return false;
+		}
+
+		$aStatus = $this->client->parseMultiStatus($res['body']);
+
+        $report = array();
+		foreach($aStatus as $key => $props) 
+		{
+			$response = array();
+			$response['href'] = basename($key);
+			$response['etag'] = isset($props[200]) ? preg_replace('/^"?([^"]+)"?/', '$1', $props[200][self::PROP_ETAG]) : '';
+			$response['data'] = isset($props[200]) && isset($props[200][self::PROP_ADDRESSBOOK_DATA]) ? $props[200][self::PROP_ADDRESSBOOK_DATA] : '';
+			
+			$report[] = $response;
+        }		
+		return $report;
+	}
+
+	function GetVcardsInfo($url = '', $sSearch = '', $sGroupId = '') 
 	{    
 		$sFilter = '';
 		$sGroupFilter = '';
@@ -478,7 +531,12 @@ $sFilter =
   </c:filter>';			
 		}
 		
-		return $this->QueryCard($sFilter, $url);
+		return $this->QueryCardsInfo($sFilter, $url);
+	}
+
+	function GetVcards($calendar_url, $urls = []) 
+	{ 		
+		return $this->QueryCards($calendar_url, $urls);
 	}
 	
 	/**
@@ -817,7 +875,7 @@ $sFilter =
 </c:filter>';
 		}
 
-		return $this->QueryCard($filter, $url);
+		return $this->QueryCardsInfo($filter, $url);
 	}
 	
 	function GetProxies($sProxy) 
