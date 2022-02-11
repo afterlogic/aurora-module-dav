@@ -530,13 +530,17 @@ $sFilter =
   . $sGroupFilter . '
   </c:filter>';			
 		}
-		
+
 		return $this->QueryCardsInfo($sFilter, $url);
 	}
 
-	function GetVcards($calendar_url, $urls = []) 
+	function GetVcards($url, $urls = []) 
 	{ 		
-		return $this->QueryCards($calendar_url, $urls);
+
+		list($path, $name) = split($url);
+		$url = $path . '/' . rawurlencode($name);
+
+		return $this->QueryCards($url, $urls);
 	}
 	
 	/**
@@ -576,7 +580,8 @@ $sFilter =
 	{
 		$timeRange = $this->GetTimeRange($start, $finish);
 		$url = rtrim($url, '/') . '/';
-
+		list($path, $name) = split($url);
+		$url = $path . '/' . rawurlencode($name);
 		$filter = 
 '<c:filter>
 	<c:comp-filter name="VCALENDAR">
