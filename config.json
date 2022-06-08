@@ -1,82 +1,82 @@
 {
-  "Disabled": [
-    false,
-    "bool"
-  ],
-  "Disabled_Description": [
-    "",
-    "string"
-  ],
-  "AdminPrincipal": [
-    false,
-    "bool"
-  ],
-  "AdminPrincipal_Description": [
-    "",
-    "string"
-  ],
-  "CaldavNotification": [
-    false,
-    "bool"
-  ],
-  "CaldavNotification_Description": [
-    "",
-    "string"
-  ],
-  "FilesSharing": [
-    false,
-    "bool"
-  ],
-  "FilesSharing_Description": [
-    "",
-    "string"
-  ],
-  "LogBody": [
-    false,
-    "bool"
-  ],
-  "LogBody_Description": [
-    "",
-    "string"
-  ],
-  "UseBrowserPlugin": [
-    false,
-    "bool"
-  ],
-  "UseBrowserPlugin_Description": [
-    "",
-    "string"
-  ],
-  "UseDigestAuth": [
-    false,
-    "bool"
-  ],
-  "UseDigestAuth_Description": [
-    "",
-    "string"
-  ],
-  "ExternalHostNameOfDAVServer": [
-    "",
-    "string"
-  ],
-  "ExternalHostNameOfDAVServer_Description": [
-    "",
-    "string"
-  ],
-  "UseFullEmailForLogin": [
-    true,
-    "bool"
-  ],
-  "UseFullEmailForLogin_Description": [
-    "",
-    "string"
-  ],
-  "DomainForLoginWithoutEmail": [
-    "",
-    "string"
-  ],
-  "DomainForLoginWithoutEmail_Description": [
-    "",
-    "string"
-  ]
+	"Disabled": [
+		false,
+		"bool"
+	],
+	"Disabled_Description": [
+		"",
+		"string"
+	],
+	"AdminPrincipal": [
+		false,
+		"bool"
+	],
+	"AdminPrincipal_Description": [
+		"",
+		"string"
+	],
+	"CaldavNotification": [
+		false,
+		"bool"
+	],
+	"CaldavNotification_Description": [
+		"",
+		"string"
+	],
+	"FilesSharing": [
+		false,
+		"bool"
+	],
+	"FilesSharing_Description": [
+		"",
+		"string"
+	],
+	"LogBody": [
+		false,
+		"bool"
+	],
+	"LogBody_Description": [
+		"",
+		"string"
+	],
+	"UseBrowserPlugin": [
+		false,
+		"bool"
+	],
+	"UseBrowserPlugin_Description": [
+		"",
+		"string"
+	],
+	"UseDigestAuth": [
+		false,
+		"bool"
+	],
+	"UseDigestAuth_Description": [
+		"",
+		"string"
+	],
+	"ExternalHostNameOfDAVServer": [
+		"",
+		"string"
+	],
+	"ExternalHostNameOfDAVServer_Description": [
+		"",
+		"string"
+	],
+	"UseFullEmailForLogin": [
+		true,
+		"bool"
+	],
+	"UseFullEmailForLogin_Description": [
+		"",
+		"string"
+	],
+	"DomainForLoginWithoutEmail": [
+		"",
+		"string"
+	],
+	"DomainForLoginWithoutEmail_Description": [
+		"",
+		"string"
+	]
 }
