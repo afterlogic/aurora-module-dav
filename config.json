@@ -4,7 +4,7 @@
 		"bool"
 	],
 	"Disabled_Description": [
-		"",
+		"Setting to true disables the module",
 		"string"
 	],
 	"AdminPrincipal": [
@@ -44,7 +44,7 @@
 		"bool"
 	],
 	"UseBrowserPlugin_Description": [
-		"",
+		"If true, allows for accessing DAV URL from web browser and navigating the account structure and data",
 		"string"
 	],
 	"UseDigestAuth": [
@@ -52,7 +52,7 @@
 		"bool"
 	],
 	"UseDigestAuth_Description": [
-		"",
+		"If true, enables the use of Digest auth instead of default Basic auth",
 		"string"
 	],
 	"ExternalHostNameOfDAVServer": [
@@ -60,7 +60,7 @@
 		"string"
 	],
 	"ExternalHostNameOfDAVServer_Description": [
-		"",
+		"Denotes hostname for DAV server access",
 		"string"
 	],
 	"UseFullEmailForLogin": [
@@ -68,7 +68,7 @@
 		"bool"
 	],
 	"UseFullEmailForLogin_Description": [
-		"",
+		"If true, full email address is used for DAV login; if fals, username part of email address is used",
 		"string"
 	],
 	"DomainForLoginWithoutEmail": [
@@ -76,7 +76,7 @@
 		"string"
 	],
 	"DomainForLoginWithoutEmail_Description": [
-		"",
+		"If UseFullEmailForLogin is false, this value denotes domain part of user's email address",
 		"string"
 	]
 }
