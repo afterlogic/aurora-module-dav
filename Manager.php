@@ -161,7 +161,7 @@ class Manager extends \Aurora\System\Managers\AbstractManager
 				}
 			}
 		}
-		catch (Exception $oException)
+		catch (\Exception $oException)
 		{
 			$mResult = false;
 			$this->setLastException($oException);

@@ -20,11 +20,6 @@ class Module extends \Aurora\System\Module\AbstractModule
 {
 	public $oManager = null;
 
-	public function __construct($sPath, $sVersion = '1.0')
-	{
-		parent::__construct($sPath, $sVersion);
-	}
-
 	public function getManager()
 	{
 		if ($this->oManager === null)
@@ -102,7 +97,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 
 	/**
 	 * @ignore
-	 * @return string
+	 * @return void
 	 */
 	public function EntryDav()
 	{

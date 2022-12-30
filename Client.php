@@ -629,7 +629,7 @@ $sFilter =
 	*/
 	function GetItem($url = '') 
 	{
-		$res = $this->clietn->request('GET', $url);
+		$res = $this->client->request('GET', $url);
 		if ($res !== false)
 		{
 			return $res['body'];
@@ -738,9 +738,9 @@ $sFilter =
 					1
 			);
 		}
-		catch(Exception $ex)
+		catch(\Exception $ex)
 		{
-			return array();
+			return [];
 		}
 
 		return $res[self::PROP_GROUP_MEMBERSHIP];
@@ -896,9 +896,9 @@ $sFilter =
 					1
 			);
 		}
-		catch(Exception $ex)
+		catch(\Exception $ex)
 		{
-			return array();
+			return [];
 		}
 
 		return $res[self::PROP_GROUP_MEMBER_SET];
@@ -990,10 +990,10 @@ $sFilter =
 		
 		if(isset($res['body']))
 		{
-			$data = new DOMDocument();
+			$data = new \DOMDocument();
 			
 			$data->loadXML($res['body'], LIBXML_NOERROR | LIBXML_NOWARNING | LIBXML_NSCLEAN);
-			$xp = new DOMXPath($data);
+			$xp = new \DOMXPath($data);
 
 			$xp->registerNamespace('c', \Sabre\CalDAV\Plugin::NS_CALDAV);
 			$xp->registerNamespace('cs', \Sabre\CalDAV\Plugin::NS_CALENDARSERVER);
