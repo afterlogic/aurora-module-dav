@@ -9,8 +9,6 @@ namespace Aurora\Modules\Dav;
 
 use Afterlogic\DAV\CalDAV\Plugin;
 use Aurora\Modules\Calendar\Enums\Permission;
-use Sabre\DAV\Xml\Element\Sharee;
-
 use function Sabre\Uri\split;
 
 /**
@@ -790,79 +788,81 @@ $sFilter =
 	function getCalendars($url = '')
 	{
 		$calendars = array();
-				
-		$aProps = $this->client->propFind(
-				$url, 
-				array(
-					self::PROP_RESOURCETYPE,
-					self::PROP_DISPLAYNAME,
-					self::PROP_OWNER,
-					self::PROP_CTAG, 
-					self::PROP_CALENDAR_DESCRIPTION, 
-					self::PROP_CALENDAR_COLOR, 
-					self::PROP_CALENDAR_ORDER,
-					self::PROP_CALENDAR_INVITE
-				), 
-				1
-		);
-		
-		foreach($aProps as $key => $props)
-		{
-			if ($props['{DAV:}resourcetype']->is('{'.\Sabre\CalDAV\Plugin::NS_CALDAV.'}calendar') &&
-				!$props['{DAV:}resourcetype']->is('{'.\Sabre\CalDAV\Plugin::NS_CALENDARSERVER.'}shared'))
+
+		if (class_exists('\Aurora\Modules\Calendar\Classes\Calendar')) {
+					
+			$aProps = $this->client->propFind(
+					$url, 
+					array(
+						self::PROP_RESOURCETYPE,
+						self::PROP_DISPLAYNAME,
+						self::PROP_OWNER,
+						self::PROP_CTAG, 
+						self::PROP_CALENDAR_DESCRIPTION, 
+						self::PROP_CALENDAR_COLOR, 
+						self::PROP_CALENDAR_ORDER,
+						self::PROP_CALENDAR_INVITE
+					), 
+					1
+			);
+			
+			foreach($aProps as $key => $props)
 			{
-				$calendar = new \Aurora\Modules\Calendar\Classes\Calendar($key);
-
-				$calendar->CTag = $props[self::PROP_CTAG];
-				$calendar->DisplayName = $props[self::PROP_DISPLAYNAME]; 
-				$calendar->Principals[] = isset($props[self::PROP_OWNER])?$props[self::PROP_OWNER]:'';
-				$calendar->Description = isset($props[self::PROP_CALENDAR_DESCRIPTION])?$props[self::PROP_CALENDAR_DESCRIPTION]:'';
-				$calendar->Color = isset($props[self::PROP_CALENDAR_COLOR])?$props[self::PROP_CALENDAR_COLOR]:'';
-				if (strlen($calendar->Color) > 7)
+				if ($props['{DAV:}resourcetype']->is('{'.\Sabre\CalDAV\Plugin::NS_CALDAV.'}calendar') &&
+					!$props['{DAV:}resourcetype']->is('{'.\Sabre\CalDAV\Plugin::NS_CALENDARSERVER.'}shared'))
 				{
-					$calendar->Color = substr($calendar->Color, 0, 7);
-				}
+					$calendar = new \Aurora\Modules\Calendar\Classes\Calendar($key);
 
-				if (isset($props[self::PROP_CALENDAR_ORDER]))
-				{
-					$calendar->Order = $props[self::PROP_CALENDAR_ORDER];
-				}
-				if (isset($props[self::PROP_CALENDAR_INVITE])) {
-					$aInvitesProp = $props[self::PROP_CALENDAR_INVITE];
+					$calendar->CTag = $props[self::PROP_CTAG];
+					$calendar->DisplayName = $props[self::PROP_DISPLAYNAME]; 
+					$calendar->Principals[] = isset($props[self::PROP_OWNER])?$props[self::PROP_OWNER]:'';
+					$calendar->Description = isset($props[self::PROP_CALENDAR_DESCRIPTION])?$props[self::PROP_CALENDAR_DESCRIPTION]:'';
+					$calendar->Color = isset($props[self::PROP_CALENDAR_COLOR])?$props[self::PROP_CALENDAR_COLOR]:'';
+					if (strlen($calendar->Color) > 7)
+					{
+						$calendar->Color = substr($calendar->Color, 0, 7);
+					}
 
-					foreach ($aInvitesProp as $aInviteProp) {
-						if ($aInviteProp['name'] === '{' . Plugin::NS_CALENDARSERVER . '}user') {
-							
-							$aShare = [];
-							
-							foreach ($aInviteProp['value'] as $aValue) {
+					if (isset($props[self::PROP_CALENDAR_ORDER]))
+					{
+						$calendar->Order = $props[self::PROP_CALENDAR_ORDER];
+					}
+					if (isset($props[self::PROP_CALENDAR_INVITE])) {
+						$aInvitesProp = $props[self::PROP_CALENDAR_INVITE];
 
-								switch ($aValue['name'])
-								{
-									case '{DAV:}href':
-										list(, $aShare['email']) = split($aValue['value']);
+						foreach ($aInvitesProp as $aInviteProp) {
+							if ($aInviteProp['name'] === '{' . Plugin::NS_CALENDARSERVER . '}user') {
 								
-										break;
-									case '{http://calendarserver.org/ns/}access':
-										if (isset($aValue['value'][0])) {
-											$aShare['access'] = $aValue['value'][0]['name'] === '{' . Plugin::NS_CALENDARSERVER . '}read-write'
-												? Permission::Write
-												: Permission::Read;
-										}
-										break;
+								$aShare = [];
+								
+								foreach ($aInviteProp['value'] as $aValue) {
+
+									switch ($aValue['name'])
+									{
+										case '{DAV:}href':
+											list(, $aShare['email']) = split($aValue['value']);
+									
+											break;
+										case '{http://calendarserver.org/ns/}access':
+											if (isset($aValue['value'][0])) {
+												$aShare['access'] = $aValue['value'][0]['name'] === '{' . Plugin::NS_CALENDARSERVER . '}read-write'
+													? \Afterlogic\DAV\Permission::Write
+													: \Afterlogic\DAV\Permission::Read;
+											}
+											break;
+									}
 								}
-							}
-							if (!empty($aShare)) {
-								$calendar->Shares[] = $aShare;
+								if (!empty($aShare)) {
+									$calendar->Shares[] = $aShare;
+								}
 							}
 						}
 					}
-				}
 
-				$calendars[$calendar->Id] = $calendar;
+					$calendars[$calendar->Id] = $calendar;
+				}
 			}
 		}
-
 		return $calendars;
 	}	
 	
