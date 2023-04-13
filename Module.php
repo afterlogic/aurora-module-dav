@@ -21,6 +21,14 @@ class Module extends \Aurora\System\Module\AbstractModule
     public $oManager = null;
 
     /**
+     * @return Module
+     */
+    public static function Decorator()
+    {
+        return parent::Decorator();
+    }
+
+    /**
      * @return Manager
      */
     public function getManager()
