@@ -20,6 +20,9 @@ class Module extends \Aurora\System\Module\AbstractModule
 {
     public $oManager = null;
 
+    /**
+     * @return Manager
+     */
     public function getManager()
     {
         if ($this->oManager === null) {
@@ -129,7 +132,7 @@ class Module extends \Aurora\System\Module\AbstractModule
      * Returns VCARD object.
      *
      * @param string|resource $Data
-     * @return Document
+     * @return \Sabre\VObject\Document
      */
     public function GetVCardObject($Data)
     {
@@ -451,7 +454,7 @@ class Module extends \Aurora\System\Module\AbstractModule
         \Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::NormalUser);
         $mResult = null;
         $oEntity = \Aurora\Modules\Core\Models\User::find(\Aurora\System\Api::getAuthenticatedUserId());
-        if (!empty($oEntity)) {
+        if ($oEntity) {
             $mResult = $oEntity->PublicId;
         }
 

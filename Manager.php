@@ -187,7 +187,7 @@ class Manager extends \Aurora\System\Managers\AbstractManager
     }
 
     /**
-     * @param \Aurora\Modules\StandardAuth\Classes\Account $oAccount
+     * @param \Aurora\Modules\StandardAuth\Models\Account $oAccount
      *
      * @return bool
      */
@@ -202,17 +202,15 @@ class Manager extends \Aurora\System\Managers\AbstractManager
     }
 
     /**
-     * @param \Aurora\Modules\StandardAuth\Classes\Account $oAccount
+     * @param \Aurora\Modules\StandardAuth\Models\Account $oAccount
      */
     public function deletePrincipal($oAccount)
     {
-        $oPrincipalBackend = \Afterlogic\DAV\Backend::Principal();
-        $oPrincipalBackend->deletePrincipal(\Afterlogic\DAV\Constants::PRINCIPALS_PREFIX . $oAccount->Email);
     }
 
     /**
      * @param string $sData
-     * @return mixed
+     * @return \Sabre\VObject\Document
      */
     public function getVCardObject($sData)
     {

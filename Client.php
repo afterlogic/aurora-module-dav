@@ -229,7 +229,7 @@ class Client
 
     /**
     * @param string $url
-    * @param string $icalData
+    * @param string $newUrl
     *
     * @return string
     */
@@ -431,8 +431,8 @@ class Client
     }
 
         /**
-    * @param string $filter
-    * @param string $url
+    * @param string $calendar_url
+    * @param array<string> $urls
     *
     * @return array
     */
@@ -531,8 +531,8 @@ class Client
     }
 
     /**
-    * @param timestamp $start
-    * @param timestamp $end
+    * @param int|null $start
+    * @param int|null $end
     *
     * @return string
     */
@@ -554,9 +554,9 @@ class Client
     }
 
     /**
-    * @param string    $url
-    * @param timestamp $start
-    * @param timestamp $finish
+    * @param string   $url
+    * @param int|null $start
+    * @param int|null $finish
     *
     * @return array
     */
@@ -619,8 +619,8 @@ class Client
 
     /**
     * @param string    $url
-    * @param timestamp $start
-    * @param timestamp $finish
+    * @param int|null $start
+    * @param int|null $finish
     *
     * @return array
     */
@@ -646,8 +646,8 @@ class Client
 
 
     /**
-    * @param timestamp $start
-    * @param timestamp $finish
+    * @param int $start
+    * @param int $finish
     * @param boolean   $completed
     * @param boolean   $cancelled
     * @param string    $url
@@ -681,7 +681,7 @@ class Client
     }
 
     /**
-    * @param string url
+    * @param string $url
     *
     * @return array
     */
