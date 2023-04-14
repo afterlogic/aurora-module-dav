@@ -262,8 +262,7 @@ class Client
         $iOrder,
         $sColor,
         $sCalendarHome
-    )
-    {
+    ) {
         $xml =
 '<?xml version="1.0" encoding="UTF-8" ?>
 <c:mkcalendar xmlns:c="'.\Sabre\CalDAV\Plugin::NS_CALDAV.'" xmlns:d="DAV:" xmlns:ic="http://apple.com/ns/ical/">
