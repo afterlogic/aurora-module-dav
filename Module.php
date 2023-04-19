@@ -14,6 +14,8 @@ namespace Aurora\Modules\Dav;
  * @license https://afterlogic.com/products/common-licensing Afterlogic Software License
  * @copyright Copyright (c) 2023, Afterlogic Corp.
  *
+ * @property Settings $oModuleSettings
+ *
  * @package Modules
  */
 class Module extends \Aurora\System\Module\AbstractModule
@@ -554,8 +556,8 @@ class Module extends \Aurora\System\Module\AbstractModule
 
         $oTenant = \Aurora\System\Api::getTenantByWebDomain();
 
-        if (!$this->getConfig('UseFullEmailForLogin', true)) {
-            $Login = $Login . '@' . $this->getConfig('DomainForLoginWithoutEmail', '');
+        if (!$this->oModuleSettings->UseFullEmailForLogin) {
+            $Login = $Login . '@' . $this->oModuleSettings->DomainForLoginWithoutEmail;
         }
 
         $mResult = \Aurora\Modules\Core\Module::Decorator()->Login($Login, $Password, '', false);
