@@ -13,6 +13,8 @@ use Aurora\System\Application;
  * @license https://www.gnu.org/licenses/agpl-3.0.html AGPL-3.0
  * @license https://afterlogic.com/products/common-licensing Afterlogic Software License
  * @copyright Copyright (c) 2023, Afterlogic Corp.
+ *
+ * @property Module $oModule
  */
 class Manager extends \Aurora\System\Managers\AbstractManager
 {
@@ -58,7 +60,7 @@ class Manager extends \Aurora\System\Managers\AbstractManager
      */
     public function getServerUrl()
     {
-        $sServerUrl = $this->oModule->getConfig('ExternalHostNameOfDAVServer', '');
+        $sServerUrl = $this->oModule->oModuleSettings->ExternalHostNameOfDAVServer;
         if (empty($sServerUrl)) {
             $sServerUrl = Application::getBaseUrl() .'dav.php/';
         }
@@ -169,8 +171,14 @@ class Manager extends \Aurora\System\Managers\AbstractManager
      */
     public function isMobileSyncEnabled()
     {
-        $oMobileSyncModule = \Aurora\System\Api::GetModule('MobileSync');
-        return !$oMobileSyncModule->getConfig('Disabled');
+        $bResult = false;
+
+        if (class_exists('\Aurora\Modules\MobileSync\Module')) {
+            $oMobileSyncModule = \Aurora\Modules\MobileSync\Module::getInstance();
+            $bResult = !$oMobileSyncModule->oModuleSettings->Disabled;
+        }
+
+        return $bResult;
     }
 
     /**
