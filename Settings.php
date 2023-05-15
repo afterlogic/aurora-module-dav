@@ -18,6 +18,7 @@ use Aurora\System\SettingsProperty;
  * @property bool $UseBrowserPlugin
  * @property bool $UseDigestAuth
  * @property string $ExternalHostNameOfDAVServer
+ * @property string $ProductUrlForExternalClients
  * @property bool $UseFullEmailForLogin
  * @property string $DomainForLoginWithoutEmail
  */
@@ -74,6 +75,12 @@ class Settings extends \Aurora\System\Module\Settings
                 "string",
                 null,
                 "Denotes hostname for DAV server access",
+            ),
+            "ProductUrlForExternalClients" => new SettingsProperty(
+                "",
+                "string",
+                null,
+                "Product url for external clients",
             ),
             "UseFullEmailForLogin" => new SettingsProperty(
                 true,
