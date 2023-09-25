@@ -49,7 +49,7 @@ class Manager extends \Aurora\System\Managers\AbstractManager
         }
 
         if (isset($this->aDavClients[$iUserId])) {
-            $mResult =& $this->aDavClients[$iUserId];
+            $mResult = &$this->aDavClients[$iUserId];
         }
 
         return $mResult;
@@ -62,7 +62,7 @@ class Manager extends \Aurora\System\Managers\AbstractManager
     {
         $sServerUrl = $this->oModule->oModuleSettings->ExternalHostNameOfDAVServer;
         if (empty($sServerUrl)) {
-            $sServerUrl = Application::getBaseUrl() .'dav.php/';
+            $sServerUrl = Application::getBaseUrl() . 'dav.php/';
         }
 
         return \rtrim($sServerUrl, '/') . '/';
@@ -137,16 +137,16 @@ class Manager extends \Aurora\System\Managers\AbstractManager
                 $aUrlParts = parse_url($sServerUrl);
                 $sPort = $sPath = '';
                 if (!empty($aUrlParts['port']) && (int)$aUrlParts['port'] !== 80) {
-                    $sPort = ':'.$aUrlParts['port'];
+                    $sPort = ':' . $aUrlParts['port'];
                 }
                 if (!empty($aUrlParts['path'])) {
                     $sPath = $aUrlParts['path'];
                 }
 
                 if (!empty($aUrlParts['scheme']) && !empty($aUrlParts['host'])) {
-                    $sServerUrl = $aUrlParts['scheme'].'://'.$aUrlParts['host'].$sPort;
+                    $sServerUrl = $aUrlParts['scheme'] . '://' . $aUrlParts['host'] . $sPort;
 
-                    $mResult = $sServerUrl . \rtrim($sPath, '/') .'/' . \Afterlogic\DAV\Constants::PRINCIPALS_PREFIX . $iUserId;
+                    $mResult = $sServerUrl . \rtrim($sPath, '/') . '/' . \Afterlogic\DAV\Constants::PRINCIPALS_PREFIX . $iUserId;
                 }
             }
         } catch (\Exception $oException) {
@@ -202,7 +202,7 @@ class Manager extends \Aurora\System\Managers\AbstractManager
     public function testConnection($oAccount)
     {
         $bResult = false;
-        $oDav =& $this->GetDAVClient($oAccount);
+        $oDav = &$this->GetDAVClient($oAccount);
         if ($oDav && $oDav->Connect()) {
             $bResult = true;
         }
@@ -212,9 +212,7 @@ class Manager extends \Aurora\System\Managers\AbstractManager
     /**
      * @param \Aurora\Modules\StandardAuth\Models\Account $oAccount
      */
-    public function deletePrincipal($oAccount)
-    {
-    }
+    public function deletePrincipal($oAccount) {}
 
     /**
      * @param string $sData

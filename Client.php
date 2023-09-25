@@ -265,20 +265,20 @@ class Client
     ) {
         $xml =
 '<?xml version="1.0" encoding="UTF-8" ?>
-<c:mkcalendar xmlns:c="'.\Sabre\CalDAV\Plugin::NS_CALDAV.'" xmlns:d="DAV:" xmlns:ic="http://apple.com/ns/ical/">
+<c:mkcalendar xmlns:c="' . \Sabre\CalDAV\Plugin::NS_CALDAV . '" xmlns:d="DAV:" xmlns:ic="http://apple.com/ns/ical/">
 	<d:set>
 		<d:prop>
-			<d:displayname>'.$sDisplayName.'</d:displayname>
-			<c:calendar-description>'.$sDescription.'</c:calendar-description>
-			<ic:calendar-order>'.$iOrder.'</ic:calendar-order>
-			<ic:calendar-color>'.$sColor.'</ic:calendar-color>
+			<d:displayname>' . $sDisplayName . '</d:displayname>
+			<c:calendar-description>' . $sDescription . '</c:calendar-description>
+			<ic:calendar-order>' . $iOrder . '</ic:calendar-order>
+			<ic:calendar-color>' . $sColor . '</ic:calendar-color>
 		</d:prop>
 	</d:set>
 </c:mkcalendar>';
 
         return $this->client->request(
             'MKCALENDAR',
-            $sCalendarHome.$sSystemName,
+            $sCalendarHome . $sSystemName,
             $xml,
             array(
                 'Content-Type' => 'application/xml',
@@ -343,12 +343,12 @@ class Client
     {
         $xml =
 '<?xml version="1.0" encoding="utf-8" ?>
-<c:calendar-query xmlns:d="DAV:" xmlns:c="'.\Sabre\CalDAV\Plugin::NS_CALDAV.'">
+<c:calendar-query xmlns:d="DAV:" xmlns:c="' . \Sabre\CalDAV\Plugin::NS_CALDAV . '">
 	<d:prop>
 		<d:getetag/>
         <c:calendar-data/>
 	</d:prop>
-	'.$filter.'
+	' . $filter . '
 </c:calendar-query>';
 
         $res = array();
@@ -393,11 +393,11 @@ class Client
     {
         $xml =
 '<?xml version="1.0" encoding="utf-8" ?>
-<c:addressbook-query xmlns:d="DAV:" xmlns:c="'.\Sabre\CardDAV\Plugin::NS_CARDDAV.'">
+<c:addressbook-query xmlns:d="DAV:" xmlns:c="' . \Sabre\CardDAV\Plugin::NS_CARDDAV . '">
 	<d:prop>
 		<d:getetag/>
 	</d:prop>
-	'.$filter.'
+	' . $filter . '
 </c:addressbook-query>';
 
         $res = array();
@@ -429,7 +429,7 @@ class Client
         return $report;
     }
 
-        /**
+    /**
     * @param string $calendar_url
     * @param array<string> $urls
     *
@@ -444,7 +444,7 @@ class Client
         $sHrefs = implode("\n", $aHrefs);
         $xml =
 '<?xml version="1.0" encoding="utf-8" ?>
-<c:addressbook-multiget xmlns:d="DAV:" xmlns:c="'.\Sabre\CardDAV\Plugin::NS_CARDDAV.'">
+<c:addressbook-multiget xmlns:d="DAV:" xmlns:c="' . \Sabre\CardDAV\Plugin::NS_CARDDAV . '">
 	<d:prop>
 		<d:getetag />
 		<c:address-data />
@@ -490,23 +490,23 @@ class Client
         if (!empty($sGroupId)) {
             $sGroupFilter =
 '	<c:prop-filter name="CATEGORIES">
-		<c:text-match icollation="i;octet" match-type="contains">'.$sGroupId.'</c:text-match>
+		<c:text-match icollation="i;octet" match-type="contains">' . $sGroupId . '</c:text-match>
 	</c:prop-filter>';
         }
 
         if (!empty($sSearch)) {
             $sSearchFilter =
 '	<c:prop-filter name="FN">
-		<c:text-match icollation="i;octet" match-type="contains">'.$sSearch.'</c:text-match>
+		<c:text-match icollation="i;octet" match-type="contains">' . $sSearch . '</c:text-match>
 	</c:prop-filter>
 	<c:prop-filter name="N">
-		<c:text-match icollation="i;octet" match-type="contains">'.$sSearch.'</c:text-match>
+		<c:text-match icollation="i;octet" match-type="contains">' . $sSearch . '</c:text-match>
 	</c:prop-filter>
 	<c:prop-filter name="EMAIL">
-		<c:text-match icollation="i;octet" match-type="contains">'.$sSearch.'</c:text-match>
+		<c:text-match icollation="i;octet" match-type="contains">' . $sSearch . '</c:text-match>
 	</c:prop-filter>
 	<c:prop-filter name="NICKNAME">
-		<c:text-match icollation="i;octet" match-type="contains">'.$sSearch.'</c:text-match>
+		<c:text-match icollation="i;octet" match-type="contains">' . $sSearch . '</c:text-match>
 	</c:prop-filter>';
         }
 
@@ -542,10 +542,10 @@ class Client
         $endRange = '';
         if (isset($start) || isset($end)) {
             if (isset($start)) {
-                $startRange = 'start="'.$start.'"';
+                $startRange = 'start="' . $start . '"';
             }
             if (isset($end)) {
-                $endRange = 'end="'.$end.'"';
+                $endRange = 'end="' . $end . '"';
             }
             $timeRange = sprintf('<c:time-range %s %s/>', $startRange, $endRange);
         }
@@ -569,7 +569,7 @@ class Client
 '<c:filter>
 	<c:comp-filter name="VCALENDAR">
 		<c:comp-filter name="VEVENT">
-			'.$timeRange.'
+			' . $timeRange . '
 		</c:comp-filter>
 	</c:comp-filter>
 </c:filter>';
@@ -589,7 +589,7 @@ class Client
     <c:comp-filter name="VCALENDAR">
           <c:comp-filter name="VEVENT">
                 <c:prop-filter name="UID">
-                        <c:text-match icollation="i;octet">'.$sUid.'</c:text-match>
+                        <c:text-match icollation="i;octet">' . $sUid . '</c:text-match>
                 </c:prop-filter>
           </c:comp-filter>
     </c:comp-filter>
@@ -633,7 +633,7 @@ class Client
 	<c:comp-filter name="VCALENDAR">
 		<c:comp-filter name="VEVENT">
 			<c:comp-filter name="VALARM">
-				'.$timeRange.'
+				' . $timeRange . '
 			</c:comp-filter>
 		</c:comp-filter>
 	</c:comp-filter>
@@ -666,10 +666,10 @@ class Client
 	<c:comp-filter name="VCALENDAR">
 		<c:comp-filter name="VTODO">
 			<c:prop-filter name="STATUS">
-				<c:text-match negate-condition="'.$negateCompleted.'">COMPLETED</c:text-match>
+				<c:text-match negate-condition="' . $negateCompleted . '">COMPLETED</c:text-match>
 			</c:prop-filter>
 			<c:prop-filter name="STATUS">
-				<C:text-match negate-condition="'.$negateCancelled.'">CANCELLED</c:text-match>
+				<C:text-match negate-condition="' . $negateCancelled . '">CANCELLED</c:text-match>
 			</c:prop-filter>
 			' . $timeRange . '
 		</c:comp-filter>
@@ -784,8 +784,8 @@ class Client
             );
 
             foreach ($aProps as $key => $props) {
-                if ($props['{DAV:}resourcetype']->is('{'.\Sabre\CalDAV\Plugin::NS_CALDAV.'}calendar') &&
-                    !$props['{DAV:}resourcetype']->is('{'.\Sabre\CalDAV\Plugin::NS_CALENDARSERVER.'}shared')) {
+                if ($props['{DAV:}resourcetype']->is('{' . \Sabre\CalDAV\Plugin::NS_CALDAV . '}calendar') &&
+                    !$props['{DAV:}resourcetype']->is('{' . \Sabre\CalDAV\Plugin::NS_CALENDARSERVER . '}shared')) {
                     $calendar = new \Aurora\Modules\Calendar\Classes\Calendar($key);
 
                     $calendar->CTag = $props[self::PROP_CTAG];
@@ -844,7 +844,7 @@ class Client
             $filter =
 '<c:filter>
 	<c:prop-filter name="UID">
-		<c:text-match collation="i;unicode-casemap" match-type="equals">'.$uid.'</c:text-match>
+		<c:text-match collation="i;unicode-casemap" match-type="equals">' . $uid . '</c:text-match>
 	</c:prop-filter>
 </c:filter>';
         }
@@ -893,7 +893,7 @@ class Client
 
         $sProxyStr .= '<d:href>' . \Afterlogic\DAV\Constants::PRINCIPALS_PREFIX . $to . '</d:href>';
 
-        return $this->client->propPatch($proxy, array('group-member-set'=>$sProxyStr));
+        return $this->client->propPatch($proxy, array('group-member-set' => $sProxyStr));
     }
 
     public function DeleteProxy($proxy, $to)
@@ -914,7 +914,7 @@ class Client
         return $this->client->propPatch(
             $proxy,
             array(
-                'group-member-set'=>$sProxyStr
+                'group-member-set' => $sProxyStr
             )
         );
     }
@@ -930,11 +930,11 @@ class Client
         $body =
 '<?xml version="1.0"?>
 <d:expand-property xmlns:d="DAV:">
-    <d:property name="calendar-proxy-read-for" namespace="'.\Sabre\CalDAV\Plugin::NS_CALENDARSERVER.'">
-        <d:property name="calendar-home-set" namespace="'.\Sabre\CalDAV\Plugin::NS_CALDAV.'" />
+    <d:property name="calendar-proxy-read-for" namespace="' . \Sabre\CalDAV\Plugin::NS_CALENDARSERVER . '">
+        <d:property name="calendar-home-set" namespace="' . \Sabre\CalDAV\Plugin::NS_CALDAV . '" />
     </d:property>
-    <d:property name="calendar-proxy-write-for" namespace="'.\Sabre\CalDAV\Plugin::NS_CALENDARSERVER.'">
-        <d:property name="calendar-home-set" namespace="'.\Sabre\CalDAV\Plugin::NS_CALDAV.'" />
+    <d:property name="calendar-proxy-write-for" namespace="' . \Sabre\CalDAV\Plugin::NS_CALENDARSERVER . '">
+        <d:property name="calendar-home-set" namespace="' . \Sabre\CalDAV\Plugin::NS_CALDAV . '" />
     </d:property>
 </d:expand-property>';
 
