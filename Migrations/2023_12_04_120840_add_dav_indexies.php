@@ -13,11 +13,14 @@ class AddDavIndexies extends Migration
      */
     public function up()
     {
-        Capsule::schema()->table('adav_cards', function (Blueprint $table) {
-            $table->index('addressbookid', 'addressbookid_index');
-            $table->index('lastmodified', 'lastmodified_index');
-            $table->index('uri', 'uri_index');
-        });
+        try {
+            Capsule::schema()->table('adav_cards', function (Blueprint $table) {
+                $table->index('addressbookid', 'addressbookid_index');
+                $table->index('lastmodified', 'lastmodified_index');
+                $table->index('uri', 'uri_index');
+            });
+        } catch (\Exception $e) {
+        }
     }
 
     /**
