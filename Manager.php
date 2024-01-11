@@ -7,6 +7,8 @@
 
 namespace Aurora\Modules\Dav;
 
+use Aurora\Modules\Core\Module as CoreModule;
+use Aurora\System\Api;
 use Aurora\System\Application;
 
 /**
@@ -34,22 +36,26 @@ class Manager extends \Aurora\System\Managers\AbstractManager
     }
 
     /**
-     * @param int $iUserId
-     * @return \Aurora\Modules\Dav\Client|false
+     * @param \Aurora\System\Classes\Account $oAccount
+     * @return Client|false
      */
-    public function &GetDAVClient($iUserId)
+    public function &GetDAVClient($oAccount)
     {
         $mResult = false;
-        if (!isset($this->aDavClients[$iUserId])) {
-            $this->aDavClients[$iUserId] = new Client(
-                $this->getServerUrl(),
-                $iUserId,
-                $iUserId
-            );
-        }
 
-        if (isset($this->aDavClients[$iUserId])) {
-            $mResult = &$this->aDavClients[$iUserId];
+        if ($oAccount instanceof \Aurora\System\Classes\Account) {
+            $login = $oAccount->getLogin();
+            if (!isset($this->aDavClients[$login])) {
+                $this->aDavClients[$login] = new Client(
+                    $this->getServerUrl(),
+                    $login,
+                    $oAccount->getPassword()
+                );
+            }
+
+            if (isset($this->aDavClients[$login])) {
+                $mResult = &$this->aDavClients[$login];
+            }
         }
 
         return $mResult;
@@ -195,24 +201,32 @@ class Manager extends \Aurora\System\Managers\AbstractManager
     }
 
     /**
-     * @param \Aurora\Modules\StandardAuth\Models\Account $oAccount
+     * @param int $UserId
      *
      * @return bool
      */
-    public function testConnection($oAccount)
+    public function testConnection($UserId)
     {
         $bResult = false;
-        $oDav = &$this->GetDAVClient($oAccount);
-        if ($oDav && $oDav->Connect()) {
-            $bResult = true;
+
+        $Login = Api::getUserPublicIdById($UserId);
+        if (!empty($Login)) {
+            $oAccount = CoreModule::Decorator()->GetAccountUsedToAuthorize($Login);
+            if ($oAccount) {
+                $oDav = &$this->GetDAVClient($oAccount);
+                if ($oDav && $oDav->Connect()) {
+                    $bResult = true;
+                }
+            }
         }
+
         return $bResult;
     }
 
     /**
-     * @param \Aurora\Modules\StandardAuth\Models\Account $oAccount
+     * @param int $UserId
      */
-    public function deletePrincipal($oAccount) {}
+    public function deletePrincipal($UserId) {}
 
     /**
      * @param string $sData
