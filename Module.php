@@ -569,14 +569,14 @@ class Module extends \Aurora\System\Module\AbstractModule
 
         $mResult = \Aurora\Modules\Core\Module::Decorator()->Login($Login, $Password, '', false);
 
-        if (is_array($mResult) && isset($mResult['AuthToken'])) {
-            $sAuthToken = $mResult['AuthToken'];
+        if (is_array($mResult) && isset($mResult[\Aurora\System\Application::AUTH_TOKEN_KEY])) {
+            $sAuthToken = $mResult[\Aurora\System\Application::AUTH_TOKEN_KEY];
 
             //this will store user data in static variable of Api class for later usage
             $oUser = \Aurora\System\Api::getAuthenticatedUser($sAuthToken);
 
             return array(
-                'AuthToken' => $sAuthToken
+                \Aurora\System\Application::AUTH_TOKEN_KEY => $sAuthToken
             );
         }
 
