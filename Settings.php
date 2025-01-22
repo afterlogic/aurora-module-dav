@@ -94,6 +94,12 @@ class Settings extends \Aurora\System\Module\Settings
                 null,
                 "If UseFullEmailForLogin is false, this value denotes domain part of user's email address",
             ),
+            "Skip2FA" => new SettingsProperty(
+                false,
+                "bool",
+                null,
+                "Skip two-factor authentication",
+            ),
         ];
     }
 }

@@ -7,6 +7,9 @@
 
 namespace Aurora\Modules\Dav;
 
+use Aurora\Modules\Core\Models\User;
+use Aurora\System\Api;
+
 /**
  * Integrate SabreDav framework into Aurora platform.
  *
@@ -21,6 +24,8 @@ namespace Aurora\Modules\Dav;
 class Module extends \Aurora\System\Module\AbstractModule
 {
     public $oManager = null;
+
+    protected $Skip2FA = false;
 
     /**
      * @return Module
@@ -75,6 +80,8 @@ class Module extends \Aurora\System\Module\AbstractModule
 
         $this->subscribeEvent('Calendar::GetCalendars::after', array($this, 'onAfterGetCalendars'));
         $this->subscribeEvent('MobileSync::GetInfo', array($this, 'onGetMobileSyncInfo'));
+        $this->subscribeEvent('Core::Authenticate::after', array($this, 'onAfterAuthenticate'), 90);
+        $this->subscribeEvent('Core::GetDigestHash', array($this, 'onGetDigestHash'), 90);
     }
 
     /**
@@ -117,6 +124,41 @@ class Module extends \Aurora\System\Module\AbstractModule
         // {
         // 	$mResult = self::Decorator()->CreateTables();
         // }
+    }
+
+    /**
+     * Skips 2FA if the Skip2FA variable is true
+     *
+     * @param array $aArgs
+     * @param array $mResult
+     */
+    public function onAfterAuthenticate($aArgs, &$mResult)
+    {
+        if ($this->Skip2FA) {
+            return true;
+        }
+    }
+
+    /**
+     * Checks if the user has TwoFactorAuth enabled and skips if the Skip2FA configuration is true
+     *
+     * @param array $aArgs
+     * @param array $mResult
+     */
+    public function onGetDigestHash($aArgs, &$mResult)
+    {
+        $module2FA = Api::GetModule('TwoFactorAuth');
+        if ($module2FA && method_exists($module2FA, 'GetUserSettings')) {
+            $oUser = Api::getUserByPublicId($aArgs['Login']);
+            if ($oUser instanceof User && $oUser->isNormalOrTenant()) {
+                $userSettings = $module2FA->GetUserSettings($oUser->Id);
+                $Skip2FA = $this->getConfig('Skip2FA', false);
+                if ($userSettings && isset($userSettings['TwoFactorAuthEnabled']) && $userSettings['TwoFactorAuthEnabled'] && !$Skip2FA) {
+                    $mResult = null;
+                    return true;
+                }
+            }
+        }
     }
     /***** private functions *****/
 
@@ -561,13 +603,13 @@ class Module extends \Aurora\System\Module\AbstractModule
     {
         \Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::Anonymous);
 
-        $oTenant = \Aurora\System\Api::getTenantByWebDomain();
-
         if (!$this->oModuleSettings->UseFullEmailForLogin) {
             $Login = $Login . '@' . $this->oModuleSettings->DomainForLoginWithoutEmail;
         }
 
+        $this->Skip2FA = $this->getConfig('Skip2FA', false);
         $mResult = \Aurora\Modules\Core\Module::Decorator()->Login($Login, $Password, '', false);
+        $this->Skip2FA = false;
 
         if (is_array($mResult) && isset($mResult[\Aurora\System\Application::AUTH_TOKEN_KEY])) {
             $sAuthToken = $mResult[\Aurora\System\Application::AUTH_TOKEN_KEY];
