@@ -81,7 +81,11 @@ class Module extends \Aurora\System\Module\AbstractModule
         $this->subscribeEvent('Calendar::GetCalendars::after', array($this, 'onAfterGetCalendars'));
         $this->subscribeEvent('MobileSync::GetInfo', array($this, 'onGetMobileSyncInfo'));
         $this->subscribeEvent('Core::Authenticate::after', array($this, 'onAfterAuthenticate'), 90);
-        $this->subscribeEvent('Core::GetDigestHash', array($this, 'onGetDigestHash'), 90);
+        $this->subscribeEvent(self::GetName() . '::GetDigestHash::after', array($this, 'onAfterGetDigestHash'), 90);
+
+        $this->denyMethodsCallByWebApi([
+            'GetDigestHash'
+        ]);
     }
 
     /**
@@ -145,7 +149,7 @@ class Module extends \Aurora\System\Module\AbstractModule
      * @param array $aArgs
      * @param array $mResult
      */
-    public function onGetDigestHash($aArgs, &$mResult)
+    public function onAfterGetDigestHash($aArgs, &$mResult)
     {
         $module2FA = Api::GetModule('TwoFactorAuth');
         if ($module2FA && method_exists($module2FA, 'GetUserSettings')) {
@@ -527,6 +531,20 @@ class Module extends \Aurora\System\Module\AbstractModule
         }
 
         return $mResult;
+    }
+
+    /**
+     *
+     * @param string $Login
+     * @param string $Realm
+     * @param string $Type
+     * @return string|null
+     */
+    public function GetDigestHash($Login, $Realm, $Type)
+    {
+        /** This method is restricted to be called by web API (see denyMethodsCallByWebApi method). **/
+
+        return null;
     }
 
     /**
