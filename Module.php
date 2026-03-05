@@ -9,6 +9,7 @@ namespace Aurora\Modules\Dav;
 
 use Aurora\Modules\Core\Models\User;
 use Aurora\System\Api;
+use Aurora\System\Facades\Route;
 
 /**
  * Integrate SabreDav framework into Aurora platform.
@@ -76,7 +77,12 @@ class Module extends \Aurora\System\Module\AbstractModule
      */
     public function init()
     {
-        $this->AddEntry('dav', 'EntryDav');
+        Route::add(
+            $this,
+            [
+                'dav' => 'EntryDav'
+            ]
+        );
 
         $this->subscribeEvent('Calendar::GetCalendars::after', array($this, 'onAfterGetCalendars'));
         $this->subscribeEvent('MobileSync::GetInfo', array($this, 'onGetMobileSyncInfo'));
