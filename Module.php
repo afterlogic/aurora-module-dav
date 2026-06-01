@@ -28,6 +28,8 @@ class Module extends \Aurora\System\Module\AbstractModule
 
     protected $Skip2FA = false;
 
+    protected $DavLogin = false;
+
     /**
      * @return Module
      */
@@ -88,6 +90,7 @@ class Module extends \Aurora\System\Module\AbstractModule
         $this->subscribeEvent('MobileSync::GetInfo', array($this, 'onGetMobileSyncInfo'));
         $this->subscribeEvent('Core::Authenticate::after', array($this, 'onAfterAuthenticate'), 90);
         $this->subscribeEvent(self::GetName() . '::GetDigestHash::after', array($this, 'onAfterGetDigestHash'), 90);
+        $this->subscribeEvent('Core::SetAuthDataAndGetAuthToken::after', array($this, 'onAfterSetAuthDataAndGetAuthToken'), 5);
 
         $this->denyMethodsCallByWebApi([
             'GetDigestHash'
@@ -170,6 +173,15 @@ class Module extends \Aurora\System\Module\AbstractModule
                     return true;
                 }
             }
+        }
+    }
+
+    public function onAfterSetAuthDataAndGetAuthToken(&$aArgs, &$mResult)
+    {
+        // skip used devices functionality for DAV logins
+        if ($this->DavLogin) {
+            $this->DavLogin = false; // reset variable for future logins
+            return true; // skip event handlers with lower priority to avoid storing auth token in cache for DAV login
         }
     }
     /***** private functions *****/
@@ -634,6 +646,7 @@ class Module extends \Aurora\System\Module\AbstractModule
         }
 
         $this->Skip2FA = $this->getConfig('Skip2FA', false);
+        $this->DavLogin = true;
         $mResult = \Aurora\Modules\Core\Module::Decorator()->Login($Login, $Password, '', false);
         $this->Skip2FA = false;
 
