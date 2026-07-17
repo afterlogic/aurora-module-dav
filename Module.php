@@ -200,7 +200,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 
         @set_time_limit(3000);
 
-        $sRequestUri = empty($_SERVER['REQUEST_URI']) ? '' : \trim($_SERVER['REQUEST_URI']);
+        $sRequestUri = \Aurora\System\Utils::RequestUri();
 
         $oServer = \Afterlogic\DAV\Server::getInstance();
         $oServer->setBaseUri($sRequestUri);
