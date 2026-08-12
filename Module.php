@@ -165,8 +165,11 @@ class Module extends \Aurora\System\Module\AbstractModule
             $oUser = Api::getUserByPublicId($aArgs['Login']);
             if ($oUser instanceof User && $oUser->isNormalOrTenant()) {
                 $prevState = Api::skipCheckUserRole(true);
-                $userSettings = $module2FA->GetUserSettings($oUser->Id);
-                Api::skipCheckUserRole($prevState);
+                try {
+                    $userSettings = $module2FA->GetUserSettings($oUser->Id);
+                } finally {
+                    Api::skipCheckUserRole($prevState);
+                }
                 $Skip2FA = $this->getConfig('Skip2FA', false);
                 if ($userSettings && isset($userSettings['TwoFactorAuthEnabled']) && $userSettings['TwoFactorAuthEnabled'] && !$Skip2FA) {
                     $mResult = null;
