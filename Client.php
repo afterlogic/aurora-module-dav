@@ -263,6 +263,8 @@ class Client
         $sColor,
         $sCalendarHome
     ) {
+        $sDisplayName = strip_tags($sDisplayName);
+        $sDescription = strip_tags($sDescription);
         $xml =
 '<?xml version="1.0" encoding="UTF-8" ?>
 <c:mkcalendar xmlns:c="' . \Sabre\CalDAV\Plugin::NS_CALDAV . '" xmlns:d="DAV:" xmlns:ic="http://apple.com/ns/ical/">
@@ -298,6 +300,8 @@ class Client
     */
     public function updateCalendar($sCalendarId, $sDisplayName, $sDescription, $iOrder, $sColor)
     {
+        $sDisplayName = strip_tags($sDisplayName);
+        $sDescription = strip_tags($sDescription);
         return $this->client->propPatch(
             $sCalendarId,
             array(
