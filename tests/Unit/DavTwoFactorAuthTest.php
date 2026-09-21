@@ -92,7 +92,6 @@ class DavTwoFactorAuthTest extends PHPUnit\Framework\TestCase
             Api::GetModuleManager()->setModuleConfigValue($moduleName, 'Disabled', false);
             $moduleManager = Api::GetModuleManager();
             $reflection = new \ReflectionMethod($moduleManager, 'loadModule');
-            $reflection->setAccessible(true);
             $reflection->invoke($moduleManager, $moduleName);
             $module = Api::GetModule($moduleName);
         }

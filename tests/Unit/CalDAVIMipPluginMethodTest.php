@@ -20,7 +20,6 @@ class CalDAVIMipPluginMethodTest extends TestCase
         // Use reflection to test the private method logic
         $reflection = new \ReflectionClass($plugin);
         $method = $reflection->getMethod('schedule');
-        $method->setAccessible(true);
         
         // We can't easily test without the full setup, so we test the logic directly
         // by examining the code structure
@@ -54,7 +53,6 @@ class CalDAVIMipPluginEventPastTest extends TestCase
     {
         $reflection = new \ReflectionClass($this->plugin);
         $method = $reflection->getMethod('isEventInPast');
-        $method->setAccessible(true);
 
         $iTipMessage = new ITipMessage();
         $vCal = new VCalendar();
@@ -73,7 +71,6 @@ class CalDAVIMipPluginEventPastTest extends TestCase
     {
         $reflection = new \ReflectionClass($this->plugin);
         $method = $reflection->getMethod('isEventInPast');
-        $method->setAccessible(true);
 
         $iTipMessage = new ITipMessage();
         $vCal = new VCalendar();
@@ -92,7 +89,6 @@ class CalDAVIMipPluginEventPastTest extends TestCase
     {
         $reflection = new \ReflectionClass($this->plugin);
         $method = $reflection->getMethod('isEventInPast');
-        $method->setAccessible(true);
 
         $iTipMessage = new ITipMessage();
         $vCal = new VCalendar();
@@ -112,7 +108,6 @@ class CalDAVIMipPluginEventPastTest extends TestCase
     {
         $reflection = new \ReflectionClass($this->plugin);
         $method = $reflection->getMethod('isEventInPast');
-        $method->setAccessible(true);
 
         $iTipMessage = new ITipMessage();
         $vCal = new VCalendar();
