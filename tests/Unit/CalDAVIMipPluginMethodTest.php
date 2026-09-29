@@ -8,32 +8,38 @@ use Sabre\VObject\ITip\Message as ITipMessage;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Test for IMipPlugin schedule() method logic
- * Tests the REPLY, REQUEST, CANCEL method handling added in the fix
+ * Tests which locally delivered iTIP messages IMipPlugin::schedule() still sends by email
  */
 class CalDAVIMipPluginMethodTest extends TestCase
 {
-    public function testMethodDispatchReply(): void
+    private function isEmailAlreadySentByWebmail(string $method, bool $davRequest): bool
     {
         $plugin = new IMipPlugin();
-        
-        // Use reflection to test the private method logic
-        $reflection = new \ReflectionClass($plugin);
-        $method = $reflection->getMethod('schedule');
-        
-        // We can't easily test without the full setup, so we test the logic directly
-        // by examining the code structure
-        $this->assertTrue(true, 'Test placeholder - actual logic tested in integration');
+        $reflectionMethod = (new \ReflectionClass($plugin))->getMethod('isEmailAlreadySentByWebmail');
+
+        $iTipMessage = new ITipMessage();
+        $iTipMessage->method = $method;
+
+        return $reflectionMethod->invoke($plugin, $iTipMessage, $davRequest);
     }
 
-    public function testMethodDispatchRequest(): void
+    public function testRequestIsEmailedForWebmailAndDavChanges(): void
     {
-        $this->assertTrue(true, 'Test placeholder');
+        $this->assertFalse($this->isEmailAlreadySentByWebmail('REQUEST', false));
+        $this->assertFalse($this->isEmailAlreadySentByWebmail('REQUEST', true));
     }
 
-    public function testMethodDispatchCancel(): void
+    public function testReplyAndCancelFromDavClientAreEmailed(): void
     {
-        $this->assertTrue(true, 'Test placeholder');
+        $this->assertFalse($this->isEmailAlreadySentByWebmail('REPLY', true));
+        $this->assertFalse($this->isEmailAlreadySentByWebmail('CANCEL', true));
+    }
+
+    public function testReplyAndCancelFromWebmailAreNotEmailedTwice(): void
+    {
+        $this->assertTrue($this->isEmailAlreadySentByWebmail('REPLY', false));
+        $this->assertTrue($this->isEmailAlreadySentByWebmail('CANCEL', false));
+        $this->assertTrue($this->isEmailAlreadySentByWebmail('cancel', false));
     }
 }
 
