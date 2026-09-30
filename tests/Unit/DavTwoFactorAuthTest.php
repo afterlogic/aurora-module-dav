@@ -28,36 +28,32 @@ class DavTwoFactorAuthTest extends PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
+        $login = get_cfg_var('dav_test_login');
+        $password = get_cfg_var('dav_test_password');
+
+        if ($login === false || $login === '' || $password === false || $password === '') {
+            $this->markTestSkipped(
+                "Integration test: it needs a running database and an existing user.\n" .
+                "Run it through php with -d dav_test_login=... -d dav_test_password=... (phpunit's own -d option is not visible to get_cfg_var()), for example:\n" .
+                "php -d dav_test_login='user@example.com' -d dav_test_password='...' vendor/bin/phpunit modules/Dav/tests/Unit/DavTwoFactorAuthTest.php"
+            );
+        }
+
         if (!defined('AU_APP_ROOT_PATH')) {
-            define('AU_APP_ROOT_PATH', rtrim(realpath(__DIR__ . '/../../'), '\/') . '/');
+            define('AU_APP_ROOT_PATH', rtrim(realpath(__DIR__ . '/../../../../'), '\/') . '/');
         }
 
         require_once AU_APP_ROOT_PATH . 'system/autoload.php';
         require_once AU_APP_ROOT_PATH . 'vendor/autoload.php';
 
-        if (!defined('AU_API_INIT')) {
-            Api::Init(true);
-        }
+        try {
+            if (!defined('AU_API_INIT')) {
+                Api::Init(true);
+            }
 
-        Api::SetUserSession([]);
-
-        $login = get_cfg_var('dav_test_login');
-        $password = get_cfg_var('dav_test_password');
-
-        if ($login === false || $login === '') {
-            throw new \RuntimeException(
-                "Test user login is not set.\n" .
-                "Run the test with -d dav_test_login=..., for example:\n" .
-                "vendor/bin/phpunit -d dav_test_login='user@example.com' -d dav_test_password='...' tests/Unit/DavTwoFactorAuthTest.php"
-            );
-        }
-
-        if ($password === false || $password === '') {
-            throw new \RuntimeException(
-                "Test user password is not set.\n" .
-                "Run the test with -d dav_test_password=..., for example:\n" .
-                "vendor/bin/phpunit -d dav_test_login='user@example.com' -d dav_test_password='...' tests/Unit/DavTwoFactorAuthTest.php"
-            );
+            Api::SetUserSession([]);
+        } catch (\Throwable $e) {
+            $this->markTestSkipped('Aurora API could not be initialized (is the database available?): ' . $e->getMessage());
         }
 
         $this->testLogin = $login;
