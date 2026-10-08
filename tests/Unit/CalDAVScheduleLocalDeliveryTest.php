@@ -190,7 +190,6 @@ class CalDAVScheduleLocalDeliveryTest extends TestCase
 
         $plugin = new Plugin();
         $property = new \ReflectionProperty(\Sabre\CalDAV\Schedule\Plugin::class, 'server');
-        $property->setAccessible(true);
         $property->setValue($plugin, $server);
 
         return $plugin;
