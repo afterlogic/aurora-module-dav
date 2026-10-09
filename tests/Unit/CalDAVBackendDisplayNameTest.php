@@ -98,8 +98,11 @@ class CalDAVBackendDisplayNameTest extends \PHPUnit\Framework\TestCase
         $row = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         $this->assertNotFalse($row, 'Calendar instance should exist');
-        $this->assertSame($expected, $row['displayname'],
-            'displayname should have HTML tags stripped by strip_tags()');
+        $this->assertSame(
+            $expected,
+            $row['displayname'],
+            'displayname should have HTML tags stripped by strip_tags()'
+        );
     }
 
     public function testUpdateCalendarStripsTagsFromDisplayname()
@@ -142,8 +145,11 @@ class CalDAVBackendDisplayNameTest extends \PHPUnit\Framework\TestCase
         $stmt->execute([$instanceId]);
         $row = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-        $this->assertSame($expected, $row['displayname'],
-            'displayname should have HTML tags stripped during updateCalendar');
+        $this->assertSame(
+            $expected,
+            $row['displayname'],
+            'displayname should have HTML tags stripped during updateCalendar'
+        );
     }
 
     public function testCreateCalendarPreservesCleanDisplayname()
@@ -165,7 +171,10 @@ class CalDAVBackendDisplayNameTest extends \PHPUnit\Framework\TestCase
         $stmt->execute(['cal-003']);
         $row = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-        $this->assertSame($safeName, $row['displayname'],
-            'Clean displayname should be preserved unchanged');
+        $this->assertSame(
+            $safeName,
+            $row['displayname'],
+            'Clean displayname should be preserved unchanged'
+        );
     }
 }

@@ -22,7 +22,6 @@ use Aurora\System\SettingsProperty;
  * @property bool $UseFullEmailForLogin
  * @property string $DomainForLoginWithoutEmail
  */
-
 class Settings extends \Aurora\System\Module\Settings
 {
     protected function initDefaults()

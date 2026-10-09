@@ -26,7 +26,7 @@ class CalDAVScheduleDefaultCalendarTest extends TestCase
 
     private function getScheduleDefaultCalendar(array $children)
     {
-        $home = new class($children) {
+        $home = new class ($children) {
             private $children;
 
             public function __construct(array $children)

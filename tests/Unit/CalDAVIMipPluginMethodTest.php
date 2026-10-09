@@ -62,6 +62,7 @@ class CalDAVIMipPluginEventPastTest extends TestCase
 
         $iTipMessage = new ITipMessage();
         $vCal = new VCalendar();
+        /** @var \Sabre\VObject\Component\VEvent $event */
         $event = $vCal->add('VEVENT');
         $event->add('UID', 'test-uid');
         $event->add('DTSTART', new \DateTime('2020-01-01 10:00:00', new \DateTimeZone('UTC')));
@@ -80,6 +81,7 @@ class CalDAVIMipPluginEventPastTest extends TestCase
 
         $iTipMessage = new ITipMessage();
         $vCal = new VCalendar();
+        /** @var \Sabre\VObject\Component\VEvent $event */
         $event = $vCal->add('VEVENT');
         $event->add('UID', 'test-uid');
         $event->add('DTSTART', new \DateTime('+1 year 10:00:00', new \DateTimeZone('UTC')));
@@ -98,6 +100,7 @@ class CalDAVIMipPluginEventPastTest extends TestCase
 
         $iTipMessage = new ITipMessage();
         $vCal = new VCalendar();
+        /** @var \Sabre\VObject\Component\VEvent $event */
         $event = $vCal->add('VEVENT');
         $event->add('UID', 'test-uid');
         $event->add('DTSTART', new \DateTime('2020-01-01 10:00:00', new \DateTimeZone('UTC')));
@@ -117,6 +120,7 @@ class CalDAVIMipPluginEventPastTest extends TestCase
 
         $iTipMessage = new ITipMessage();
         $vCal = new VCalendar();
+        /** @var \Sabre\VObject\Component\VEvent $event */
         $event = $vCal->add('VEVENT');
         $event->add('UID', 'test-uid');
         $event->add('SUMMARY', 'Event without DTSTART');

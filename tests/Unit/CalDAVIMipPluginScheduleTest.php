@@ -21,6 +21,7 @@ class CalDAVIMipPluginScheduleTest extends TestCase
     private function message(string $method, string $start, ?string $scheduleStatus, bool $significantChange = true): ITipMessage
     {
         $vCal = new VCalendar();
+        /** @var \Sabre\VObject\Component\VEvent $event */
         $event = $vCal->add('VEVENT');
         $event->add('UID', 'test-uid');
         $event->add('DTSTART', new \DateTime($start, new \DateTimeZone('UTC')));

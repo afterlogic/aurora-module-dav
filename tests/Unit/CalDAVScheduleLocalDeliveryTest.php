@@ -54,9 +54,7 @@ class InMemoryCalDAVBackend extends AbstractBackend implements SchedulingSupport
         return $this->addCalendar($principalUri, $calendarUri)['id'];
     }
 
-    public function deleteCalendar($calendarId)
-    {
-    }
+    public function deleteCalendar($calendarId) {}
 
     public function getCalendarObjects($calendarId)
     {
@@ -126,9 +124,7 @@ class InMemoryCalDAVBackend extends AbstractBackend implements SchedulingSupport
         return [];
     }
 
-    public function deleteSchedulingObject($principalUri, $objectUri)
-    {
-    }
+    public function deleteSchedulingObject($principalUri, $objectUri) {}
 
     public function createSchedulingObject($principalUri, $objectUri, $objectData)
     {
@@ -198,6 +194,7 @@ class CalDAVScheduleLocalDeliveryTest extends TestCase
     private function requestTo(string $recipient): ITipMessage
     {
         $vCal = new VCalendar();
+        /** @var \Sabre\VObject\Component\VEvent $event */
         $event = $vCal->add('VEVENT');
         $event->add('UID', 'meeting-1');
         $event->add('DTSTART', new \DateTime('+1 year', new \DateTimeZone('UTC')));
